@@ -4,6 +4,8 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Timeline from '../components/features/about/Timeline.astro';
 import { getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import { Briefcase, Layers, Cpu } from 'lucide-astro';
 
 const profileEntry = await getEntry('about', 'profile');
 const profile = profileEntry!.data;
@@ -12,67 +14,120 @@ const profile = profileEntry!.data;
 <Layout title="About | gae">
   <Header />
 
-  <main class="pt-32 pb-20 px-4 min-h-screen max-w-4xl mx-auto">
+  <main class="min-h-screen relative overflow-hidden">
+      <!-- Background Blobs -->
+      <div class="absolute top-0 right-0 -z-10 w-2/3 h-screen bg-[radial-gradient(circle_at_top_right,var(--color-neon-violet),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 -z-10 w-2/3 h-[50vh] bg-[radial-gradient(circle_at_bottom_left,var(--color-neon-cyan),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
 
-    <!-- Intro -->
-    <section class="mb-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-centeranimate-fade-in">
-        <div class="perspective-1000">
-             <div class="w-full aspect-square rounded-3xl bg-linear-to-br from-neon-violet to-deep p-1 rotate-3 hover:rotate-0 transition-transform duration-500">
-                <div class="w-full h-full bg-deep rounded-[20px] flex items-center justify-center overflow-hidden relative">
-                    <!-- Placeholder for real image -->
-                    <div class="absolute inset-0 bg-linear-to-tr from-neon-cyan/20 to-transparent"></div>
-                    <span class="text-6xl">👨‍💻</span>
+      <div class="max-w-5xl mx-auto px-4 pt-32 pb-20">
+
+        <!-- Intro Section: Split Layout -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+
+            <!-- Left: Typography & Intro -->
+            <div class="order-2 md:order-1 space-y-8 animate-fade-in">
+                <div class="space-y-4">
+                    <span class="text-xs font-mono font-medium text-neon-cyan tracking-widest uppercase">Profile</span>
+                    <h1 class="text-5xl lg:text-7xl font-display font-bold leading-tight">
+                        Hello, I'm <br />
+                        <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">{profile.name}</span>.
+                    </h1>
                 </div>
-             </div>
-        </div>
-        <div class="space-y-6">
-            <h1 class="text-5xl font-display font-bold">
-                Hello, I'm <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">{profile.name}</span>.
-            </h1>
-            <div class="flex flex-wrap gap-x-8 gap-y-4 pt-4">
-                 {profile.roles.map((role) => (
-                     <div class="flex items-center gap-2 text-text-muted">
-                        <span class="w-2 h-2 rounded-full bg-neon-cyan"></span>
-                        <span>{role}</span>
-                     </div>
-                 ))}
+
+                <div class="flex flex-wrap gap-2">
+                     {profile.roles.map((role) => (
+                         <div class="px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-xs font-medium text-zinc-600">
+                            {role}
+                         </div>
+                     ))}
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 pt-4 max-w-sm">
+                    <div class="glass p-4 rounded-2xl flex flex-col gap-1">
+                        <span class="text-3xl font-display font-bold text-text-main">{profile.stats.experience}</span>
+                        <span class="text-xs text-text-muted uppercase tracking-wider">Years Exp</span>
+                    </div>
+                     <div class="glass p-4 rounded-2xl flex flex-col gap-1">
+                        <span class="text-3xl font-display font-bold text-text-main">{profile.stats.projects}</span>
+                        <span class="text-xs text-text-muted uppercase tracking-wider">Projects</span>
+                    </div>
+                </div>
             </div>
-            <div class="flex gap-4">
-                <div class="flex flex-col">
-                    <span class="text-2xl font-bold font-display">{profile.stats.experience}</span>
-                    <span class="text-xs text-text-muted uppercase tracking-wider">Years Exp</span>
-                </div>
-                 <div class="flex flex-col">
-                    <span class="text-2xl font-bold font-display">{profile.stats.projects}</span>
-                    <span class="text-xs text-text-muted uppercase tracking-wider">Projects</span>
-                </div>
+
+            <!-- Right: Visual Profile Card -->
+            <div class="order-1 md:order-2 flex justify-center md:justify-end animate-slide-up">
+                 <div class="relative w-72 md:w-80 aspect-4/5 glass rounded-[2.5rem] p-4 rotate-3 hover:rotate-0 transition-all duration-500 group shadow-2xl border-t border-white/50">
+                    <div class="relative w-full h-full rounded-4xl bg-zinc-100 overflow-hidden">
+                         <!-- Placeholder/Real Image Area -->
+                         <div class="absolute inset-0 bg-linear-to-br from-violet-100 to-cyan-50 flex items-center justify-center">
+                            <img src="/gae.svg" alt="gae" class="w-32 h-32 opacity-80 mix-blend-multiply" />
+                         </div>
+
+                         <!-- Overlay Content -->
+                         <div class="absolute bottom-0 left-0 w-full p-6 bg-linear-to-t from-white/90 to-transparent">
+                             <div class="flex items-center gap-2 mb-1">
+                                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                <span class="text-xs font-mono text-zinc-500">Online</span>
+                             </div>
+                             <p class="font-display font-bold text-xl text-zinc-800">Tokyo, JPN</p>
+                         </div>
+                    </div>
+                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Timeline -->
-    <section class="mb-20 animate-slide-up" style="animation-delay: 0.2s">
-        <h2 class="text-2xl font-display font-semibold mb-8 flex items-center gap-4">
-                <span class="w-8 h-px bg-neon-cyan"></span>
-                経歴
-        </h2>
-        <Timeline events={profile.timeline} />
-    </section>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
-    <!-- Gear -->
-    <section class="animate-slide-up" style="animation-delay: 0.4s">
-        <h2 class="text-2xl font-display font-semibold mb-8 flex items-center gap-4">
-            <span class="w-8 h-px bg-neon-violet"></span>
-            使用ツール
-        </h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {profile.gear.map(tool => (
-                <div class="p-4 glass rounded-xl text-center text-sm hover:border-neon-violet/50 transition-colors cursor-default">
-                    {tool}
-                </div>
-            ))}
+            <!-- Main Content: Timeline -->
+            <div class="lg:col-span-7 space-y-12">
+                 <section>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="p-2 rounded-lg bg-violet-100 text-neon-violet">
+                            <Briefcase class="w-5 h-5" />
+                        </div>
+                        <h2 class="text-2xl font-display font-bold text-text-main">Career History</h2>
+                    </div>
+
+                    <Timeline events={profile.timeline} />
+                </section>
+            </div>
+
+            <!-- Sidebar: Gear / Stack -->
+            <div class="lg:col-span-5 space-y-12">
+                <section class="sticky top-32">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="p-2 rounded-lg bg-cyan-100 text-neon-cyan">
+                            <Cpu class="w-5 h-5" />
+                        </div>
+                        <h2 class="text-2xl font-display font-bold text-text-main">Tech & Gear</h2>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        {profile.gear.map(tool => (
+                            <div class="group px-4 py-3 glass rounded-xl flex items-center gap-2 hover:border-neon-cyan/50 hover:bg-white/60 transition-all duration-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-zinc-300 group-hover:bg-neon-cyan transition-colors"></span>
+                                <span class="text-sm font-medium text-zinc-700">{tool}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    <!-- Additional decorative box -->
+                    <div class="mt-8 p-6 rounded-3xl bg-linear-to-br from-zinc-900 to-zinc-800 text-white relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-neon-violet/20 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-neon-violet/30 transition-colors"></div>
+
+                        <Layers class="w-8 h-8 text-zinc-400 mb-4" />
+                        <h3 class="text-lg font-bold mb-2">Design Philosophy</h3>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Simplicity is the ultimate sophistication. I strive to create interfaces that feel invisible yet powerful.
+                        </p>
+                    </div>
+
+                </section>
+            </div>
+
         </div>
-    </section>
+
+      </div>
 
   </main>
 
