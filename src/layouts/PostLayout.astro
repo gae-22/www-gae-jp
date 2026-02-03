@@ -1,0 +1,98 @@
+---
+import Layout from './Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, publishedAt, cover, coverAlt } = post.data;
+---
+
+<Layout title={`${title} | gae`} description={description}>
+    <div class="progress-bar fixed top-0 left-0 w-full h-px bg-white/10 z-60">
+        <div class="h-full bg-neon-violet origin-left scale-x-0" id="reading-progress"></div>
+    </div>
+
+    <Header />
+
+    <article class="min-h-screen">
+        <!-- Immersive Header -->
+        <div class="relative h-[60vh] md:h-[80vh] w-full flex items-center justify-center overflow-hidden">
+            <!-- Background Image (Blurred) -->
+            <div class="absolute inset-0 z-0">
+                {cover ? (
+                    <Image src={cover} alt={coverAlt || ""} class="w-full h-full object-cover blur-2xl opacity-50 scale-110" />
+                ) : (
+                    <div class="w-full h-full bg-linear-to-br from-indigo-900/40 to-black"></div>
+                )}
+                <div class="absolute inset-0 bg-deep/60"></div>
+            </div>
+
+            <!-- Content Overlay -->
+            <div class="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-6 animate-slide-up">
+                <div class="flex items-center justify-center gap-2 text-sm text-neon-cyan/80 font-mono uppercase tracking-widest">
+                    <time datetime={publishedAt.toISOString()}>
+                        {publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </time>
+                </div>
+
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight text-white glow-text">
+                    {title}
+                </h1>
+
+                {post.data.tags.length > 0 && (
+                    <div class="flex flex-wrap justify-center gap-2 mt-4">
+                        {post.data.tags.map(tag => (
+                            <span class="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-text-muted backdrop-blur-sm">
+                                #{tag}
+                            </span>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="relative z-20 bg-deep border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-4 py-12 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+                <!-- Sidebar (TOC) Placeholder -->
+                <aside class="hidden lg:block lg:col-span-3 lg:col-start-1">
+                    <div class="sticky top-32 glass rounded-xl p-6">
+                        <h4 class="text-xs font-mono text-text-muted uppercase tracking-wider mb-4">Table of Contents</h4>
+                        <ul class="space-y-2 text-sm text-text-muted">
+                            <li class="pl-2 border-l-2 border-neon-violet text-white">Introduction</li>
+                            <!-- Dynamic TOC would act via JS observer -->
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Prose Content -->
+                <div class="col-span-1 lg:col-span-8 lg:col-start-4 prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-a:text-neon-cyan hover:prose-a:text-neon-violet prose-pre:bg-[#0d1117] prose-pre:border prose-pre:border-white/10">
+                    <slot />
+                </div>
+
+            </div>
+        </div>
+    </article>
+
+    <Footer />
+
+    <script>
+        // Reading Progress Script
+        const progressBar = document.getElementById('reading-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollTop / docHeight;
+            if (progressBar) {
+                progressBar.style.transform = `scaleX(${scrollPercent})`;
+            }
+        });
+    </script>
+</Layout>

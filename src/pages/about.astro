@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Timeline from '../components/features/about/Timeline.astro';
+import { Image } from 'astro:assets';
+---
+
+<Layout title="About | gae">
+  <Header />
+
+  <main class="pt-32 pb-20 px-4 min-h-screen max-w-4xl mx-auto">
+
+    <!-- Intro -->
+    <section class="mb-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-centeranimate-fade-in">
+        <div class="perspective-1000">
+             <div class="w-full aspect-square rounded-3xl bg-linear-to-br from-neon-violet to-deep p-1 rotate-3 hover:rotate-0 transition-transform duration-500">
+                <div class="w-full h-full bg-deep rounded-[20px] flex items-center justify-center overflow-hidden relative">
+                    <!-- Placeholder for real image -->
+                    <div class="absolute inset-0 bg-linear-to-tr from-neon-cyan/20 to-transparent"></div>
+                    <span class="text-6xl">👨‍💻</span>
+                </div>
+             </div>
+        </div>
+        <div class="space-y-6">
+            <h1 class="text-5xl font-display font-bold">
+                Hello, I'm <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">gae</span>.
+            </h1>
+            <p class="text-lg text-text-muted leading-relaxed">
+                I am a developer obsessed with details. I build interfaces that feel alive.
+                My work bridges the gap between design and engineering, ensuring that every pixel serves a purpose.
+            </p>
+            <div class="flex gap-4">
+                <div class="flex flex-col">
+                    <span class="text-2xl font-bold font-display">5+</span>
+                    <span class="text-xs text-text-muted uppercase tracking-wider">Years Exp</span>
+                </div>
+                 <div class="flex flex-col">
+                    <span class="text-2xl font-bold font-display">30+</span>
+                    <span class="text-xs text-text-muted uppercase tracking-wider">Projects</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="mb-20 animate-slide-up" style="animation-delay: 0.2s">
+        <h2 class="text-2xl font-display font-semibold mb-8 flex items-center gap-4">
+            <span class="w-8 h-px bg-neon-cyan"></span>
+            Journey
+        </h2>
+        <Timeline />
+    </section>
+
+    <!-- Gear -->
+    <section class="animate-slide-up" style="animation-delay: 0.4s">
+        <h2 class="text-2xl font-display font-semibold mb-8 flex items-center gap-4">
+            <span class="w-8 h-px bg-neon-violet"></span>
+            Arsenal
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {['VS Code', 'Figma', 'MacBook Pro', 'Arc Browser', 'HHKB', 'Linear', 'Raycast', 'Warp'].map(tool => (
+                <div class="p-4 glass rounded-xl text-center text-sm hover:border-neon-violet/50 transition-colors cursor-default">
+                    {tool}
+                </div>
+            ))}
+        </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

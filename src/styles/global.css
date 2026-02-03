@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@theme {
+    /* Deep Space Palette */
+    --color-deep: #09090b; /* Zinc 950 */
+    --color-surface: rgba(24, 24, 27, 0.7); /* Zinc 900 / 0.7 */
+    --color-surface-hover: rgba(39, 39, 42, 0.8); /* Zinc 800 / 0.8 */
+
+    --color-neon-violet: #8b5cf6; /* Violet 500 */
+    --color-neon-cyan: #06b6d4; /* Cyan 500 */
+    --color-text-main: #f4f4f5; /* Zinc 100 */
+    --color-text-muted: #a1a1aa; /* Zinc 400 */
+
+    /* Typography */
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Animation Config */
+    --animate-fade-in: fade-in 0.5s ease-out forwards;
+    --animate-slide-up: slide-up 0.5s ease-out forwards;
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* Base Styles */
+@layer base {
+    html {
+        @apply scroll-smooth;
+        background-color: var(--color-deep);
+        color: var(--color-text-main);
+    }
+
+    body {
+        @apply font-body antialiased selection:bg-neon-violet selection:text-white;
+        overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-display tracking-tight text-text-main;
+    }
+}
+
+/* Utilities */
+@utility glass {
+    @apply backdrop-blur-md bg-surface border border-white/5 shadow-lg;
+}
+
+@utility glass-deep {
+    @apply backdrop-blur-xl bg-black/40 border border-white/10;
+}
+
+@utility glow-text {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+@utility glow-box {
+    box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.15);
+}

@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+
+// Font Imports
+import '@fontsource/outfit/200.css';
+import '@fontsource/outfit/400.css';
+import '@fontsource/outfit/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/jetbrains-mono/400.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "A sophisticated modern portfolio." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja" class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="min-h-screen relative overflow-x-hidden bg-deep text-text-main">
+        <!-- Background Ambient Noise or Abstract Mesh could go here as a fixed layer -->
+        <div class="fixed inset-0 z-[-1] bg-deep pointer-events-none">
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-neon-violet/5 blur-[120px]"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-neon-cyan/5 blur-[120px]"></div>
+        </div>
+
+        <!-- Contents are here -->
+		<slot />
+	</body>
+</html>

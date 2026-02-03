@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import PostCard from '../../components/features/blog/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => {
+	return import.meta.env.PROD ? !data.draft : true;
+})).sort(
+	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+
+const title = "Writing | gae";
+const description = "Thoughts, tutorials, and insights on web development and design.";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+
+  <main class="pt-32 pb-20 px-4 min-h-screen">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Page Header -->
+      <section class="mb-16 text-center animate-fade-in">
+        <h1 class="text-5xl md:text-7xl font-display font-thin mb-6">
+            Wr<span class="text-white/20">it</span>ing
+        </h1>
+        <p class="text-text-muted max-w-xl mx-auto text-lg">
+            Explorations in code, design, and the digital frontier.
+        </p>
+      </section>
+
+      <!-- Filter/Tags (Placeholder for now) -->
+      <!-- <div class="flex gap-2 overflow-x-auto pb-8 mb-8 justify-center"> ... </div> -->
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-slide-up" style="animation-delay: 0.2s;">
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+        {posts.length === 0 && (
+            <div class="col-span-full text-center py-20 text-text-muted">
+                No posts found. transmission_terminated.
+            </div>
+        )}
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

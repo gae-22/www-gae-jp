@@ -1,0 +1,41 @@
+---
+const events = [
+  {
+    year: '2026',
+    title: 'Senior Frontend Engineer',
+    company: 'Tech Corp',
+    description: 'Leading the design system team and exploring the frontiers of web performance.'
+  },
+  {
+    year: '2024',
+    title: 'Frontend Engineer',
+    company: 'Startup Inc',
+    description: 'Built heavily interactive dashboards using Next.js and WebGL.'
+  },
+  {
+    year: '2022',
+    title: 'Junior Developer',
+    company: 'Web Agency',
+    description: 'Developed 30+ responsive websites for clients.'
+  }
+];
+---
+
+<div class="relative border-l border-white/10 ml-4 space-y-12 py-4">
+  {events.map((event) => (
+    <div class="relative pl-8 group">
+      <!-- Dot -->
+      <div class="absolute -left-1.25 top-2 w-2.5 h-2.5 rounded-full bg-deep border border-white/20 group-hover:bg-neon-violet group-hover:border-neon-violet group-hover:shadow-[0_0_10px_rgba(139,92,246,0.5)] transition-all duration-300"></div>
+
+      <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-2">
+        <span class="text-neon-cyan font-mono text-sm">{event.year}</span>
+        <h3 class="text-xl font-display font-bold">{event.title}</h3>
+        <span class="text-text-muted text-sm">@ {event.company}</span>
+      </div>
+
+      <p class="text-text-muted max-w-lg leading-relaxed">
+        {event.description}
+      </p>
+    </div>
+  ))}
+</div>
