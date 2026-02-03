@@ -18,25 +18,25 @@ import { MousePointer2, MapPin } from 'lucide-astro';
     <div class="relative w-full max-w-5xl h-150 md:h-125">
 
         <!-- Card 1: Profile (Large, Tilted Left) -->
-        <div class="absolute top-10 left-4 md:left-20 w-72 md:w-80 aspect-4/5 glass rounded-3xl p-6 -rotate-6 hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105 cursor-default border-t border-white/20 shadow-2xl">
+        <div class="absolute top-10 left-4 md:left-20 w-72 md:w-80 aspect-4/5 glass rounded-3xl p-6 -rotate-6 hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105 cursor-default border-t border-white/40 shadow-2xl">
             <div class="w-full h-full flex flex-col justify-between">
                 <div class="w-20 h-20 rounded-full bg-linear-to-br from-neon-cyan to-neon-violet mb-4 flex items-center justify-center text-3xl font-bold text-white">
                     g
                 </div>
                 <div>
-                    <h2 class="text-3xl font-display font-bold text-white leading-none mb-1">gae</h2>
+                    <h2 class="text-3xl font-display font-bold text-text-main leading-none mb-1">gae</h2>
                     <p class="text-text-muted text-sm">Frontend Engineer &<br>UI Designer</p>
                 </div>
             </div>
         </div>
 
         <!-- Card 2: Status (Small, Top Right) -->
-        <div class="absolute top-0 right-8 md:right-32 w-48 aspect-video glass rounded-full flex items-center justify-center gap-3 rotate-3 hover:rotate-0 transition-transform duration-300 hover:z-50 border border-green-500/30 bg-green-900/10">
+        <div class="absolute top-0 right-8 md:right-32 w-48 aspect-video glass rounded-full flex items-center justify-center gap-3 rotate-3 hover:rotate-0 transition-transform duration-300 hover:z-50 border border-green-500/20 bg-green-100/50">
             <span class="relative flex h-3 w-3">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
             </span>
-            <span class="text-sm font-medium text-green-400">Open to Work</span>
+            <span class="text-sm font-medium text-green-600">お仕事募集中</span>
         </div>
 
         <!-- Card 3: Clock (Center-ish) -->
@@ -45,19 +45,30 @@ import { MousePointer2, MapPin } from 'lucide-astro';
         </div>
 
         <!-- Card 4: Greeting/Intro (Bottom Left) -->
-        <div class="absolute bottom-10 left-8 md:left-48 w-80 md:w-96 glass-deep rounded-2xl p-6 -rotate-2 hover:rotate-0 transition-transform duration-500 hover:z-50 z-10 border border-white/10">
             <div class="flex items-start gap-3 mb-3">
                 <MousePointer2 class="w-5 h-5 text-neon-cyan" />
-                <span class="text-xs font-mono text-neon-cyan uppercase tracking-widest mt-1">Introduction</span>
+                <span class="text-xs font-bold text-neon-cyan uppercase tracking-widest mt-1">Introduction</span>
             </div>
-            <p class="text-lg md:text-xl font-medium text-white leading-relaxed">
-                Building <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">immersive</span> digital experiences. Focused on performance, aesthetics, and user delight.
-            </p>
-            <div class="mt-4 flex items-center gap-2 text-xs text-text-muted">
+
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-neon-violet"></span>
+                    <span class="text-lg md:text-xl font-medium text-text-main">Engineering</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-neon-cyan"></span>
+                     <span class="text-lg md:text-xl font-medium text-text-main">Design</span>
+                </div>
+                 <div class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-text-main"></span>
+                     <span class="text-lg md:text-xl font-medium text-text-main">Experience</span>
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center gap-2 text-xs text-text-muted">
                 <MapPin class="w-3 h-3" />
-                <span>Tokyo, Japan</span>
+                <span>Tokyo</span>
             </div>
-        </div>
 
     </div>
 </section>

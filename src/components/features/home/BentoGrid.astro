@@ -3,7 +3,7 @@ import BentoItem from './BentoItem.astro';
 import TechStack from './TechStack.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
-import { ArrowUpRight, Music, Github} from 'lucide-astro';
+import { ArrowUpRight, Github, MapPin } from 'lucide-astro';
 
 // Fetch latest featured post
 const posts = await getCollection('blog', ({ data }) => {
@@ -14,13 +14,13 @@ const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.pu
 
 <section class="max-w-6xl mx-auto px-4 pb-32">
     <h2 class="text-3xl font-display font-thin mb-12 text-center">
-        Selected <span class="text-white/30">Works</span>
+        制作 <span class="text-zinc-400">実績</span>
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 grid-rows-auto lg:grid-rows-2 gap-4 h-auto lg:h-150">
 
         <!-- Item 1: Featured Post (Large) -->
-        <BentoItem class="col-span-1 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2 group/post" title="Latest Writing">
+        <BentoItem class="col-span-1 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2 group/post" title="最新の記事">
             {latestPost ? (
                 <a href={`/blog/${latestPost.slug}`} class="block w-full h-full relative">
                      {latestPost.data.cover && (
@@ -41,8 +41,8 @@ const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.pu
                             {latestPost.data.description}
                         </p>
                      </div>
-                     <div class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md opacity-0 group-hover/post:opacity-100 transition-opacity">
-                        <ArrowUpRight class="w-5 h-5 text-white" />
+                     <div class="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/5 flex items-center justify-center backdrop-blur-md opacity-0 group-hover/post:opacity-100 transition-opacity">
+                        <ArrowUpRight class="w-5 h-5 text-zinc-900" />
                      </div>
                 </a>
             ) : (
@@ -52,38 +52,32 @@ const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.pu
             )}
         </BentoItem>
 
-        <!-- Item 2: Tech Stack (Medium Wide) -->
-        <BentoItem class="col-span-1 md:col-span-2 lg:col-span-2 row-span-1" title="Tech Stack">
+        <BentoItem class="col-span-1 md:col-span-2 lg:col-span-2 row-span-1" title="技術スタック">
             <TechStack />
         </BentoItem>
 
         <!-- Item 3: Socials (Small) -->
-        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 flex flex-col items-center justify-center gap-6" title="Connect">
+        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 flex flex-col items-center justify-center gap-6" title="コンタクト">
             <div class="flex gap-6 mt-4">
-                <a href="https://github.com/gae-22" target="_blank" class="p-4 rounded-full bg-white/5 hover:bg-white/10 hover:scale-110 transition-all text-white">
+                <a href="https://github.com/gae-22" target="_blank" class="p-4 rounded-full bg-black/5 hover:bg-black/10 hover:scale-110 transition-all text-zinc-900">
                     <Github class="w-6 h-6" />
                 </a>
             </div>
         </BentoItem>
 
-        <!-- Item 4: Music/Vibe (Small) -->
-        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 bg-linear-to-br from-purple-900/20 to-black" title="Vibe">
-            <div class="w-full h-full flex flex-col items-center justify-center relative p-6">
-                <!-- Music visualizer bars (CSS animation) -->
-                <div class="flex items-end gap-1 h-12 mb-4">
-                    <div class="w-1 bg-neon-violet animate-pulse h-full" style="animation-duration: 0.6s"></div>
-                    <div class="w-1 bg-neon-cyan animate-pulse h-2/3" style="animation-duration: 0.8s"></div>
-                    <div class="w-1 bg-white animate-pulse h-1/2" style="animation-duration: 0.4s"></div>
-                    <div class="w-1 bg-neon-violet animate-pulse h-3/4" style="animation-duration: 0.7s"></div>
-                </div>
-                <div class="flex items-center gap-3 w-full">
-                     <div class="w-10 h-10 rounded-md bg-white/10 flex items-center justify-center">
-                        <Music class="w-5 h-5" />
-                     </div>
-                     <div class="flex-1 min-w-0">
-                        <div class="text-xs font-semibold text-white truncate">Lo-Fi Coding Beats</div>
-                        <div class="text-[10px] text-text-muted truncate">Spotify API</div>
-                     </div>
+        <!-- Item 4: Location (Small) -->
+        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 bg-linear-to-br from-blue-50/50 to-zinc-100 group/location" title="拠点">
+            <div class="h-full flex flex-col items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1988&auto=format&fit=crop')] bg-cover bg-center opacity-20 group-hover/location:opacity-40 transition-opacity duration-500"></div>
+
+                <div class="relative z-10 flex flex-col items-center gap-2">
+                    <div class="p-3 bg-white/60 backdrop-blur-md rounded-full border border-white/40">
+                        <MapPin class="w-6 h-6 text-neon-cyan" />
+                    </div>
+                    <div class="text-center">
+                        <p class="font-bold text-text-main tracking-wider">東京</p>
+                        <p class="text-xs text-text-muted">JPN</p>
+                    </div>
                 </div>
             </div>
         </BentoItem>

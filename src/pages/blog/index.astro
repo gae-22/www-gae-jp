@@ -11,8 +11,8 @@ const posts = (await getCollection('blog', ({ data }) => {
 	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
 );
 
-const title = "Writing | gae";
-const description = "Thoughts, tutorials, and insights on web development and design.";
+const title = "ブログ | gae";
+const description = "ウェブ開発とデザインに関する考察、チュートリアル、洞察。";
 ---
 
 <Layout title={title} description={description}>
@@ -24,10 +24,10 @@ const description = "Thoughts, tutorials, and insights on web development and de
       <!-- Page Header -->
       <section class="mb-16 text-center animate-fade-in">
         <h1 class="text-5xl md:text-7xl font-display font-thin mb-6">
-            Wr<span class="text-white/20">it</span>ing
+            Bl<span class="text-white/20">og</span>
         </h1>
         <p class="text-text-muted max-w-xl mx-auto text-lg">
-            Explorations in code, design, and the digital frontier.
+            コード、デザイン、そしてデジタルの最前線を探求。
         </p>
       </section>
 
@@ -41,7 +41,7 @@ const description = "Thoughts, tutorials, and insights on web development and de
         ))}
         {posts.length === 0 && (
             <div class="col-span-full text-center py-20 text-text-muted">
-                No posts found. transmission_terminated.
+                記事が見つかりませんでした。
             </div>
         )}
       </div>

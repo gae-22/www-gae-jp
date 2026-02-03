@@ -3,44 +3,38 @@ import Layout from '../layouts/Layout.astro';
 import { Rocket } from 'lucide-astro';
 ---
 
-<Layout title="404 | Lost in Space">
-  <main class="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden">
+<Layout title="404 | Page Not Found">
+  <main class="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-white">
 
-    <!-- Background Stars -->
-    <div class="absolute inset-0 z-0">
-        {[...Array(20)].map(() => (
-            <div
-                class="absolute rounded-full bg-white opacity-20 animate-pulse"
-                style={{
-                    top: `${Math.random() * 100}%`,
-                    left: `${Math.random() * 100}%`,
-                    width: `${Math.random() * 4 + 1}px`,
-                    height: `${Math.random() * 4 + 1}px`,
-                    animationDuration: `${Math.random() * 3 + 1}s`
-                }}
-            ></div>
-        ))}
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[20%] left-[20%] w-96 h-96 bg-neon-violet/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[20%] right-[20%] w-96 h-96 bg-neon-cyan/5 rounded-full blur-3xl"></div>
     </div>
 
     <!-- Content -->
-    <div class="relative z-10 text-center space-y-8 animate-fade-in">
-        <div class="relative inline-block">
-            <h1 class="text-[10rem] font-display font-bold leading-none text-transparent bg-clip-text bg-linear-to-b from-white/10 to-transparent">
+    <div class="relative z-10 text-center space-y-6 animate-fade-in px-4">
+        <div class="relative inline-block mb-4">
+            <h1 class="text-[10rem] md:text-[14rem] font-display font-bold leading-none text-zinc-200/50 select-none">
                 404
             </h1>
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <Rocket class="w-20 h-20 text-neon-violet animate-bounce" />
+                <Rocket class="w-16 h-16 md:w-24 md:h-24 text-text-main animate-bounce" />
             </div>
         </div>
 
-        <div class="space-y-2">
-            <h2 class="text-2xl font-bold text-white">Signal Lost</h2>
-            <p class="text-text-muted">The coordinates you are looking for do not exist.</p>
+        <div class="space-y-4 max-w-md mx-auto">
+            <h2 class="text-2xl font-bold text-text-main">ページが見つかりません</h2>
+            <p class="text-text-muted">
+                お探しのページは移動したか、削除された可能性があります。
+            </p>
         </div>
 
-        <a href="/" class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black font-semibold hover:scale-105 transition-transform">
-            Return to Base
-        </a>
+        <div class="pt-8">
+            <a href="/" class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-text-main text-white font-semibold hover:scale-105 hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200">
+                トップページへ戻る
+            </a>
+        </div>
     </div>
 
   </main>

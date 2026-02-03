@@ -3,7 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Timeline from '../components/features/about/Timeline.astro';
-import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+
+const profileEntry = await getEntry('about', 'profile');
+const profile = profileEntry!.data;
 ---
 
 <Layout title="About | gae">
@@ -24,19 +27,23 @@ import { Image } from 'astro:assets';
         </div>
         <div class="space-y-6">
             <h1 class="text-5xl font-display font-bold">
-                Hello, I'm <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">gae</span>.
+                Hello, I'm <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">{profile.name}</span>.
             </h1>
-            <p class="text-lg text-text-muted leading-relaxed">
-                I am a developer obsessed with details. I build interfaces that feel alive.
-                My work bridges the gap between design and engineering, ensuring that every pixel serves a purpose.
-            </p>
+            <div class="flex flex-wrap gap-x-8 gap-y-4 pt-4">
+                 {profile.roles.map((role) => (
+                     <div class="flex items-center gap-2 text-text-muted">
+                        <span class="w-2 h-2 rounded-full bg-neon-cyan"></span>
+                        <span>{role}</span>
+                     </div>
+                 ))}
+            </div>
             <div class="flex gap-4">
                 <div class="flex flex-col">
-                    <span class="text-2xl font-bold font-display">5+</span>
+                    <span class="text-2xl font-bold font-display">{profile.stats.experience}</span>
                     <span class="text-xs text-text-muted uppercase tracking-wider">Years Exp</span>
                 </div>
                  <div class="flex flex-col">
-                    <span class="text-2xl font-bold font-display">30+</span>
+                    <span class="text-2xl font-bold font-display">{profile.stats.projects}</span>
                     <span class="text-xs text-text-muted uppercase tracking-wider">Projects</span>
                 </div>
             </div>
@@ -46,20 +53,20 @@ import { Image } from 'astro:assets';
     <!-- Timeline -->
     <section class="mb-20 animate-slide-up" style="animation-delay: 0.2s">
         <h2 class="text-2xl font-display font-semibold mb-8 flex items-center gap-4">
-            <span class="w-8 h-px bg-neon-cyan"></span>
-            Journey
+                <span class="w-8 h-px bg-neon-cyan"></span>
+                経歴
         </h2>
-        <Timeline />
+        <Timeline events={profile.timeline} />
     </section>
 
     <!-- Gear -->
     <section class="animate-slide-up" style="animation-delay: 0.4s">
         <h2 class="text-2xl font-display font-semibold mb-8 flex items-center gap-4">
             <span class="w-8 h-px bg-neon-violet"></span>
-            Arsenal
+            使用ツール
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {['VS Code', 'Figma', 'MacBook Pro', 'Arc Browser', 'HHKB', 'Linear', 'Raycast', 'Warp'].map(tool => (
+            {profile.gear.map(tool => (
                 <div class="p-4 glass rounded-xl text-center text-sm hover:border-neon-violet/50 transition-colors cursor-default">
                     {tool}
                 </div>

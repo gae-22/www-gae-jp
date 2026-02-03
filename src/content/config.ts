@@ -28,4 +28,25 @@ const blog = defineCollection({
             ),
 });
 
-export const collections = { blog };
+const about = defineCollection({
+    type: 'data',
+    schema: z.object({
+        name: z.string(),
+        roles: z.array(z.string()),
+        stats: z.object({
+            experience: z.string(),
+            projects: z.string(),
+        }),
+        timeline: z.array(
+            z.object({
+                year: z.string(),
+                title: z.string(),
+                company: z.string(),
+                description: z.string().optional(),
+            }),
+        ),
+        gear: z.array(z.string()),
+    }),
+});
+
+export const collections = { blog, about };

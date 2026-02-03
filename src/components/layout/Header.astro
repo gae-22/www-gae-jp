@@ -2,9 +2,9 @@
 import { Home, PenTool, User, Github} from 'lucide-astro';
 
 const navItems = [
-  { label: 'Home', href: '/', icon: Home },
-  { label: 'Writing', href: '/blog', icon: PenTool },
-  { label: 'About', href: '/about', icon: User },
+  { label: 'ホーム', href: '/', icon: Home },
+  { label: 'ブログ', href: '/blog', icon: PenTool },
+  { label: 'プロフィール', href: '/about', icon: User },
 ];
 
 const socialItems = [
@@ -21,7 +21,7 @@ const socialItems = [
         <li>
           <a
             href={item.href}
-            class="flex items-center gap-2 text-sm text-text-muted hover:text-white transition-colors group relative"
+            class="flex items-center gap-2 text-sm text-text-muted hover:text-text-main transition-colors group relative"
           >
             <item.icon class="w-4 h-4" />
             <span class="font-medium">{item.label}</span>
@@ -31,7 +31,7 @@ const socialItems = [
       ))}
     </ul>
 
-    <div class="w-px h-4 bg-white/10 mx-2"></div>
+    <div class="w-px h-4 bg-zinc-200 mx-2"></div>
 
     <!-- Social Links -->
     <ul class="flex items-center gap-4">
@@ -42,7 +42,7 @@ const socialItems = [
             target="_blank"
             rel="noopener noreferrer"
             aria-label={item.label}
-            class="text-text-muted hover:text-white hover:scale-110 transition-all duration-200 block"
+            class="text-text-muted hover:text-text-main hover:scale-110 transition-all duration-200 block"
           >
             <item.icon class="w-4 h-4" />
           </a>

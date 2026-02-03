@@ -1,0 +1,26 @@
+name: 'gae'
+roles:
+    - 'Frontend'
+    - 'UI Design'
+    - 'System Architecture'
+stats:
+    experience: '5+'
+    projects: '30+'
+timeline:
+    - year: '2026'
+      title: 'シニアフロントエンドエンジニア'
+      company: 'Tech Corp'
+      description: 'デザインシステムチームをリードし、Webパフォーマンスの最前線を開拓。'
+    - year: '2024'
+      title: 'フロントエンドエンジニア'
+      company: 'Startup Inc'
+      description: 'Next.jsとWebGLを使用した高度にインタラクティブなダッシュボードを構築。'
+    - year: '2022'
+      title: 'ジュニアエンジニア'
+      company: 'Web Agency'
+      description: 'クライアント向けに30以上のレスポンシブWebサイトを開発。'
+gear:
+    - 'VSCode'
+    - 'Antigravity'
+    - 'Mac'
+    - 'HHKB'
