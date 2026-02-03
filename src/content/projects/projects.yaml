@@ -1,7 +1,7 @@
 - title: 'GitHub'
   description: '個人のGitHubプロフィールページ'
   url: 'https://github.com/gae-22'
-  thumb: '/github.svg'
+  thumb: './images/github.svg'
 
 - title: 'MMA GitLab'
   description: '所属していた大学公認サークル用GitLab'
@@ -10,7 +10,7 @@
       - 'Python'
       - 'Flask'
       - 'Tool'
-  thumb: '/mma-logo.png'
+  thumb: './images/mma-logo.png'
 
 - title: '小テストジェネレータ'
   description: '英単語や古文単語などの小テストを簡単に作成できるWebアプリ（要パスワード）'
@@ -19,7 +19,7 @@
       - 'Python'
       - 'Flask'
       - 'Tailwind'
-  thumb: '/gae.svg'
+  thumb: './images/gae.svg'
 
 - title: '過去問データベース'
   description: '大学入試の過去問を検索・閲覧できるWebアプリ（要パスワード）'
@@ -28,4 +28,4 @@
       - 'Next.js'
       - 'React'
       - 'Tailwind'
-  thumb: '/exam.svg'
+  thumb: './images/exam.svg'
