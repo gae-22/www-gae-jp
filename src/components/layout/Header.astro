@@ -1,10 +1,11 @@
 ---
-import { Home, PenTool, User, Github} from 'lucide-astro';
+import { Home, PenTool, User, Github, Folder } from 'lucide-astro';
 import Discord from '../icons/Discord.astro';
 
 const navItems = [
   { label: 'ホーム', href: '/', icon: Home },
   { label: 'ブログ', href: '/blog', icon: PenTool },
+  { label: 'プロジェクト', href: '/projects', icon: Folder },
   { label: 'プロフィール', href: '/about', icon: User },
 ];
 
@@ -14,7 +15,7 @@ const socialItems = [
 ];
 ---
 
-<header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg px-4">
+<header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4">
   <nav class="glass rounded-full px-6 py-3 flex items-center justify-between transition-all duration-300 hover:glow-box">
 
     <!-- Internal Links -->

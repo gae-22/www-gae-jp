@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background -->
+  <rect width="100" height="100" fill="#2563eb" rx="20"/>
+
+  <!-- Book/Document icon -->
+  <g transform="translate(20, 25)">
+    <!-- Book pages -->
+    <rect x="8" y="5" width="44" height="45" fill="#ffffff" rx="2"/>
+    <rect x="5" y="8" width="44" height="45" fill="#e0e7ff" rx="2"/>
+    <rect x="2" y="11" width="44" height="45" fill="#f1f5f9" rx="2"/>
+
+    <!-- Main book -->
+    <rect x="0" y="0" width="50" height="50" fill="#ffffff" rx="3" stroke="#1e40af" stroke-width="2"/>
+
+    <!-- "過" character stylized as lines (representing exam questions) -->
+    <g transform="translate(8, 12)">
+      <!-- Horizontal lines representing text/questions -->
+      <line x1="2" y1="5" x2="32" y2="5" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="2" y1="12" x2="28" y2="12" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="2" y1="19" x2="32" y2="19" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="2" y1="26" x2="24" y2="26" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>
