@@ -1,4 +1,37 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@font-face {
+    font-family: 'PleckJP';
+    src: url('/fonts/pleckjp/PleckJP-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PleckJP';
+    src: url('/fonts/pleckjp/PleckJP-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PleckJP';
+    src: url('/fonts/pleckjp/PleckJP-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PleckJP';
+    src: url('/fonts/pleckjp/PleckJP-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
 
 @theme {
     /* Light Modern Palette */
@@ -15,6 +48,7 @@
     --font-display: 'Outfit', 'Zen Kaku Gothic New', sans-serif;
     --font-body: 'Zen Kaku Gothic New', 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --font-code: 'PleckJP', 'JetBrains Mono', monospace;
 
     /* Animation Config */
     --animate-fade-in: fade-in 0.5s ease-out forwards;

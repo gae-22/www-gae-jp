@@ -3,6 +3,7 @@ import BentoItem from './BentoItem.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import { ArrowUpRight, Github, MapPin } from 'lucide-astro';
+import Discord from '../../icons/Discord.astro';
 
 // Fetch latest featured post
 const posts = await getCollection('blog', ({ data }) => {
@@ -54,18 +55,31 @@ const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.pu
             )}
         </BentoItem>
 
-        <!-- Item 3: Socials (Small) -->
-        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-2 row-span-1 bg-linear-to-br from-purple-50/50 to-zinc-100 group/socials">
-             <div class="h-full w-full relative overflow-hidden flex items-center px-8">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1788&auto=format&fit=crop')] bg-cover bg-center opacity-10 group-hover/socials:opacity-30 transition-opacity duration-500"></div>
+        <!-- Item 3a: GitHub (Small) -->
+        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 bg-linear-to-br from-purple-50/50 to-zinc-100 group/github">
+             <div class="h-full w-full relative overflow-hidden flex items-center px-6">
+                <!-- Background Image -->
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1788&auto=format&fit=crop')] bg-cover bg-center opacity-10 group-hover/github:opacity-30 transition-opacity duration-500"></div>
 
-                <a href="https://github.com/gae-22" target="_blank" class="relative z-10 w-full flex items-center justify-between group-hover/socials:translate-x-1 transition-transform">
-                    <div class="flex flex-col">
-                        <span class="text-xs font-mono text-text-muted uppercase tracking-widest mb-1">Social Account</span>
-                        <span class="text-2xl font-bold font-display text-text-main">GitHub</span>
+                <a href="https://github.com/gae-22" target="_blank" class="relative z-10 w-full flex items-center justify-between group-hover/github:translate-x-1 transition-transform">
+                    <span class="text-xl font-bold font-display text-text-main">GitHub</span>
+                    <div class="p-3 rounded-full bg-white/60 backdrop-blur-md group-hover/github:bg-white/80 transition-colors text-zinc-900 border border-white/40 shadow-sm">
+                        <Github class="w-5 h-5" />
                     </div>
-                    <div class="p-4 rounded-full bg-white/60 backdrop-blur-md group-hover/socials:bg-white/80 transition-colors text-zinc-900 border border-white/40 shadow-sm">
-                        <Github class="w-6 h-6" />
+                </a>
+            </div>
+        </BentoItem>
+
+        <!-- Item 3b: Discord (Small) -->
+        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 bg-linear-to-br from-indigo-50/50 to-zinc-100 group/discord">
+             <div class="h-full w-full relative overflow-hidden flex items-center px-6">
+                <!-- Background Image (Generated) -->
+                <div class="absolute inset-0 bg-[url('/discord-bg.png')] bg-cover bg-center opacity-20 group-hover/discord:opacity-40 transition-opacity duration-500"></div>
+
+                <a href="https://discord.gg/nqsegJHjBb" target="_blank" class="relative z-10 w-full flex items-center justify-between group-hover/discord:translate-x-1 transition-transform">
+                    <span class="text-xl font-bold font-display text-text-main">Discord</span>
+                    <div class="p-3 rounded-full bg-white/60 backdrop-blur-md group-hover/discord:bg-white/80 transition-colors text-indigo-600 border border-white/40 shadow-sm">
+                        <Discord class="w-5 h-5" />
                     </div>
                 </a>
             </div>

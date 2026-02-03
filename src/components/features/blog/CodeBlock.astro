@@ -1,0 +1,133 @@
+---
+// src/components/features/blog/CodeBlock.astro
+import { Copy, Check } from 'lucide-astro';
+
+const props = Astro.props;
+const className = props.class;
+
+// Shiki (Astro default) adds data-language
+let language = props['data-language'] || 'code';
+
+// Handle metadata (filename, etc)
+const meta = props['data-meta'] || '';
+
+// Support ```typescript:sample.ts syntax
+// When using : shorthand, Shiki might put the whole string in data-language
+// OR it might go into the meta depending on the environment/plugins.
+let filename = null;
+
+// 1. Check if language itself contains a colon (Astro/Shiki often does this)
+if (language.includes(':')) {
+    const parts = language.split(':');
+    language = parts[0];
+    filename = parts[1];
+}
+
+// 2. If no filename yet, check meta for shorthand or explicit assignments
+if (!filename) {
+    if (meta.startsWith(':')) {
+        filename = meta.slice(1);
+    } else {
+        const filenameMatch = meta.match(/filename="([^"]+)"/) || meta.match(/title="([^"]+)"/) || meta.match(/filename=([^ ]+)/);
+        filename = filenameMatch ? filenameMatch[1] : (meta && !meta.includes('=') && !meta.includes(' ') ? meta : null);
+    }
+}
+
+// Remove data attributes from props to avoid duplication on the pre tag if desired,
+// but we'll keep them for Shiki compatibility
+---
+
+<div class="code-block-wrapper group relative my-10 overflow-hidden rounded-2xl border border-zinc-200/50 shadow-2xl shadow-zinc-200/5 bg-[#1e1e1e]">
+    <div class="flex items-center justify-between px-5 py-3 bg-zinc-50 border-b border-zinc-200/50">
+        <div class="flex items-center gap-4">
+            <!-- Decorative dots -->
+            <div class="flex gap-2">
+                <div class="w-3 h-3 rounded-full bg-zinc-200 border border-zinc-300"></div>
+                <div class="w-3 h-3 rounded-full bg-zinc-200 border border-zinc-300"></div>
+                <div class="w-3 h-3 rounded-full bg-zinc-200 border border-zinc-300"></div>
+            </div>
+
+            <div class="flex items-center gap-3 text-[10px] font-mono tracking-[0.2em] uppercase">
+                <span class="text-neon-violet font-bold">{language}</span>
+                {filename && (
+                    <>
+                        <span class="w-px h-3 bg-zinc-200"></span>
+                        <span class="text-text-muted lowercase tracking-normal font-light">{filename}</span>
+                    </>
+                )}
+            </div>
+        </div>
+
+        <button
+            class="copy-button relative z-10 p-2 text-zinc-400 hover:text-neon-violet hover:bg-neon-violet/5 rounded-lg transition-all active:scale-95"
+            aria-label="Copy code"
+        >
+            <div class="copy-icon">
+                <Copy size={16} strokeWidth={1.5} />
+            </div>
+            <div class="check-icon hidden text-emerald-500">
+                <Check size={16} strokeWidth={1.5} />
+            </div>
+        </button>
+    </div>
+
+    <pre {...props} class:list={[className, "m-0 rounded-none! p-10! font-code overflow-x-auto text-[13px] leading-relaxed scrollbar-thin"]}><slot /></pre>
+</div>
+
+<script>
+    function initializeCopyButtons() {
+        document.querySelectorAll('.code-block-wrapper').forEach((wrapper) => {
+            const button = wrapper.querySelector('.copy-button');
+            const pre = wrapper.querySelector('pre');
+            const copyIcon = wrapper.querySelector('.copy-icon');
+            const checkIcon = wrapper.querySelector('.check-icon');
+
+            if (button && pre && !button.hasAttribute('data-initialized')) {
+                button.setAttribute('data-initialized', 'true');
+                button.addEventListener('click', async () => {
+                    // Shiki sometimes wraps code in another element, but textContent should get it all
+                    const code = pre.textContent || "";
+                    try {
+                        await navigator.clipboard.writeText(code);
+
+                        // Toggle icons
+                        copyIcon?.classList.add('hidden');
+                        checkIcon?.classList.remove('hidden');
+
+                        setTimeout(() => {
+                            copyIcon?.classList.remove('hidden');
+                            checkIcon?.classList.add('hidden');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy code:', err);
+                    }
+                });
+            }
+        });
+    }
+
+    // Run on page load
+    initializeCopyButtons();
+
+    // Run on view transitions if enabled
+    document.addEventListener('astro:page-load', initializeCopyButtons);
+</script>
+
+<style>
+    /* Styling to ensure Shiki background is used but we have a fallback for the container */
+    pre {
+        background-color: transparent !important;
+    }
+
+    /* Custom scrollbar for better look */
+    .scrollbar-thin::-webkit-scrollbar {
+        height: 6px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.05);
+        border-radius: 10px;
+    }
+    .scrollbar-thin:hover::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.1);
+    }
+</style>

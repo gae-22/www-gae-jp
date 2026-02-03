@@ -5,43 +5,56 @@ import { Image } from 'astro:assets';
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  variant?: 'featured' | 'basic';
+  class?: string;
 }
 
-const { post } = Astro.props;
+const { post, variant = 'basic', class: className } = Astro.props;
+
+const isFeatured = variant === 'featured';
 ---
 
-<a href={`/blog/${post.slug}`} class="group relative block h-full">
-  <article class="glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500 hover:border-neon-violet/30 hover:shadow-lg hover:shadow-neon-violet/5">
+<a href={`/blog/${post.slug}`} class:list={["group relative block h-full", className]}>
+  <article class:list={[
+    "glass rounded-3xl overflow-hidden h-full flex flex-col transition-all duration-500",
+    "hover:border-neon-violet/30 hover:shadow-2xl hover:shadow-neon-violet/10 hover:-translate-y-1",
+    isFeatured ? "bg-white/5 border-white/20" : "bg-white/2 border-white/10"
+  ]}>
 
     <!-- Cover Image Wrapper -->
-    <div class="aspect-video w-full overflow-hidden bg-white/5 relative">
+    <div class:list={[
+      "w-full overflow-hidden bg-white/5 relative",
+      isFeatured ? "aspect-21/9" : "aspect-video"
+    ]}>
         {post.data.cover ? (
             <Image
                 src={post.data.cover}
                 alt={post.data.coverAlt || post.data.title}
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
             />
         ) : (
-             <div class="w-full h-full bg-linear-to-br from-violet-100/20 to-cyan-100/20 flex items-center justify-center">
+             <div class="w-full h-full bg-linear-to-br from-violet-500/10 to-cyan-500/10 flex items-center justify-center">
                 <span class="font-display font-bold text-4xl text-white/5">gae</span>
             </div>
         )}
 
         <!-- Overlay Gradient -->
-        <div class="absolute inset-0 bg-linear-to-t from-deep/80 via-deep/20 to-transparent opacity-60"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60"></div>
 
         <!-- Tag Badge -->
         {post.data.tags.length > 0 && (
-            <div class="absolute top-4 left-4">
-                <span class="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-mono font-bold text-white uppercase tracking-wider">
-                    {post.data.tags[0]}
-                </span>
+            <div class="absolute top-4 left-4 flex gap-2">
+                {post.data.tags.slice(0, isFeatured ? 3 : 1).map(tag => (
+                   <span class="px-3 py-1 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-[10px] font-mono font-bold text-white uppercase tracking-wider">
+                        {tag}
+                    </span>
+                ))}
             </div>
         )}
     </div>
 
     <!-- Content -->
-    <div class="p-6 lg:p-8 flex-1 flex flex-col">
+    <div class:list={["flex-1 flex flex-col", isFeatured ? "p-8 lg:p-12" : "p-6 lg:p-8"]}>
       <div class="flex items-center gap-3 text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4">
         <time datetime={post.data.publishedAt.toISOString()}>
             {post.data.publishedAt.toLocaleDateString('ja-JP', {
@@ -52,20 +65,26 @@ const { post } = Astro.props;
         </time>
       </div>
 
-      <h3 class="text-xl lg:text-2xl font-display font-bold mb-3 text-text-main group-hover:text-neon-violet transition-colors duration-300 leading-tight">
+      <h3 class:list={[
+        "font-display font-bold mb-4 text-text-main group-hover:text-neon-violet transition-colors duration-300 leading-tight",
+        isFeatured ? "text-3xl lg:text-4xl" : "text-xl lg:text-2xl"
+      ]}>
         {post.data.title}
       </h3>
 
-      <p class="text-text-muted text-sm leading-relaxed line-clamp-2 mb-6 flex-1">
+      <p class:list={[
+        "text-text-muted leading-relaxed mb-8 flex-1",
+        isFeatured ? "text-lg line-clamp-3" : "text-sm line-clamp-2"
+      ]}>
         {post.data.description}
       </p>
 
-      <div class="flex items-center gap-2 text-xs font-bold text-text-main overflow-hidden">
+      <div class="flex items-center gap-2 text-xs font-bold text-text-main group-hover:text-neon-violet transition-colors duration-300">
         <span class="relative">
             Read Article
-            <span class="absolute bottom-0 left-0 w-full h-px bg-neon-violet transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span class="absolute -bottom-1 left-0 w-full h-px bg-current transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
         </span>
-        <span class="transform -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-neon-violet leading-none">
+        <span class="transform -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-lg">
             →
         </span>
       </div>

@@ -18,36 +18,63 @@ const description = "ウェブ開発とデザインに関する考察、チュ�
 <Layout title={title} description={description}>
   <Header />
 
-  <main class="min-h-screen pt-32 pb-32 px-4 relative">
-    <!-- Background Gradient Blob (Subtle) -->
-    <div class="absolute top-0 right-0 -z-10 w-1/2 h-full bg-[radial-gradient(circle_at_center,var(--color-neon-violet),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
+  <main class="min-h-screen pt-40 pb-32 px-4 relative overflow-hidden">
+    <!-- Sophisticated Background Elements -->
+    <div class="absolute top-0 left-1/4 -z-10 w-125 h-125 bg-neon-violet/10 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-0 right-1/4 -z-10 w-150 h-150 bg-neon-cyan/5 rounded-full blur-[150px]"></div>
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto">
 
       <!-- Page Header -->
-      <section class="mb-20 text-center animate-fade-in">
-        <div class="glass inline-block px-4 py-1.5 rounded-full mb-6 cursor-default">
-            <span class="text-xs font-mono font-medium text-zinc-600 tracking-widest uppercase">Latest Updates</span>
+      <section class="mb-24 animate-fade-in">
+        <div class="flex flex-col items-center text-center space-y-6">
+          <div class="glass inline-flex items-center gap-2 px-4 py-2 rounded-full border-white/10">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-violet opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-neon-violet"></span>
+              </span>
+              <span class="text-xs font-mono font-medium text-text-muted tracking-[0.2em] uppercase">Journal & Insights</span>
+          </div>
+
+          <h1 class="text-6xl md:text-8xl lg:text-9xl font-display font-bold tracking-tight text-text-main">
+              Bl<span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet via-neon-cyan to-white/20">og</span>
+          </h1>
+
+          <p class="text-text-muted max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-light">
+            Design, Development, and the Future of Web.<br class="hidden md:block"/>
+            <span class="text-text-main/60">技術とデザインが交差する、デジタルの探求記録。</span>
+          </p>
         </div>
-        <h1 class="text-5xl md:text-7xl font-display font-bold leading-tight text-text-main mb-6">
-            Bl<span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">og</span>
-        </h1>
-        <p class="text-text-muted max-w-xl mx-auto text-lg leading-relaxed">
-            デジタルの最前線から、<br class="md:hidden" />
-            デザインとコードの探求をお届けします。
-        </p>
       </section>
 
-      <!-- Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-slide-up" style="animation-delay: 0.2s;">
-        {posts.map((post) => (
-          <PostCard post={post} />
-        ))}
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-fr">
+        {posts.map((post, index) => {
+          // Different layout based on index for Bento effect
+          const isMainFeatured = index === 0;
+          const isSecondaryFeatured = index === 1 || index === 2;
+
+          let colSpan = "col-span-1 md:col-span-3 lg:col-span-4";
+          let variant: 'featured' | 'basic' = 'basic';
+
+          if (isMainFeatured) {
+            colSpan = "col-span-1 md:col-span-6 lg:col-span-12";
+            variant = 'featured';
+          } else if (isSecondaryFeatured) {
+            colSpan = "col-span-1 md:col-span-3 lg:col-span-6";
+          }
+
+          return (
+            <div class:list={[colSpan, "animate-slide-up"]} style={`animation-delay: ${index * 0.1}s;`}>
+              <PostCard post={post} variant={variant} />
+            </div>
+          );
+        })}
       </div>
 
       {posts.length === 0 && (
-          <div class="text-center py-32 glass rounded-4xl border-dashed border-2 border-zinc-200/50">
-              <p class="text-text-muted font-display text-lg">記事がまだありません。</p>
+          <div class="text-center py-40 glass rounded-4xl border-dashed border-2 border-white/5">
+              <p class="text-text-muted font-display text-xl">No stories found yet.</p>
           </div>
       )}
 
