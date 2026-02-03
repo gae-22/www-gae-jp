@@ -1,38 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Rocket } from 'lucide-astro';
+import { Rocket, Home } from 'lucide-astro';
 ---
 
-<Layout title="404 | Page Not Found">
+<Layout title="404 | Lost in Space">
   <main class="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-white">
 
     <!-- Background Decoration -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-[20%] left-[20%] w-96 h-96 bg-neon-violet/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-[20%] right-[20%] w-96 h-96 bg-neon-cyan/5 rounded-full blur-3xl"></div>
+        <div class="absolute top-[20%] left-[20%] w-96 h-96 bg-neon-violet/5 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-[20%] right-[20%] w-96 h-96 bg-neon-cyan/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
     </div>
 
     <!-- Content -->
-    <div class="relative z-10 text-center space-y-6 animate-fade-in px-4">
-        <div class="relative inline-block mb-4">
-            <h1 class="text-[10rem] md:text-[14rem] font-display font-bold leading-none text-zinc-200/50 select-none">
+    <div class="relative z-10 text-center space-y-8 animate-fade-in px-4">
+        <div class="relative inline-block">
+            <h1 class="text-[8rem] md:text-[12rem] font-display font-bold leading-none text-transparent bg-clip-text bg-gradient-to-b from-zinc-200 to-transparent select-none">
                 404
             </h1>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <Rocket class="w-16 h-16 md:w-24 md:h-24 text-text-main animate-bounce" />
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform hover:rotate-12 transition-transform duration-500">
+                <Rocket class="w-24 h-24 md:w-32 md:h-32 text-neon-cyan drop-shadow-xl" />
             </div>
         </div>
 
-        <div class="space-y-4 max-w-md mx-auto">
-            <h2 class="text-2xl font-bold text-text-main">ページが見つかりません</h2>
-            <p class="text-text-muted">
-                お探しのページは移動したか、削除された可能性があります。
+        <div class="space-y-4 max-w-lg mx-auto glass p-8 rounded-2xl">
+            <h2 class="text-3xl font-bold text-text-main tracking-wide">Lost in the Void?</h2>
+            <p class="text-text-muted text-lg">
+                お探しのページは、デジタルの宇宙の彼方へ旅立ってしまったようです。
             </p>
         </div>
 
-        <div class="pt-8">
-            <a href="/" class="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-text-main text-white font-semibold hover:scale-105 hover:bg-zinc-800 transition-all shadow-xl shadow-zinc-200">
-                トップページへ戻る
+        <div class="pt-4">
+            <a href="/" class="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-text-main text-white hover:bg-zinc-800 transition-all duration-300 hover:scale-105 shadow-xl shadow-zinc-200/50">
+                <Home class="w-5 h-5 text-neon-cyan group-hover:rotate-12 transition-transform" />
+                <span>トップページへ帰還する</span>
             </a>
         </div>
     </div>

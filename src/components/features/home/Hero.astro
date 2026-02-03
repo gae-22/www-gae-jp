@@ -1,74 +1,96 @@
 ---
-import { Image } from 'astro:assets';
 import Clock from './Clock.astro';
-import { MousePointer2, MapPin } from 'lucide-astro';
-
-// Placeholder for profile image (using a colorful div if no image)
-// Real implementation would import a local image
+import { ArrowDownRight, Layers, Code2 } from 'lucide-astro';
 ---
 
-<section class="relative min-h-[80vh] w-full flex items-center justify-center overflow-visible py-20">
+<section class="max-w-6xl mx-auto px-4 pt-24 pb-12 lg:pt-32 lg:pb-24 relative overflow-hidden">
 
-    <!-- Background Elements -->
-    <div class="absolute inset-0 z-0 flex items-center justify-center opacity-30 pointer-events-none">
-        <div class="w-200 h-200 bg-[radial-gradient(closest-side,var(--color-neon-violet),transparent)] opacity-20 blur-3xl animate-pulse" style="animation-duration: 4s;"></div>
-    </div>
+    <!-- Background Gradient Blob (Subtle) -->
+    <div class="absolute top-0 right-0 -z-10 w-1/2 h-full bg-[radial-gradient(circle_at_center,var(--color-neon-violet),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
 
-    <!-- The Scattered Deck -->
-    <div class="relative w-full max-w-5xl h-150 md:h-125">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-        <!-- Card 1: Profile (Large, Tilted Left) -->
-        <div class="absolute top-10 left-4 md:left-20 w-72 md:w-80 aspect-4/5 glass rounded-3xl p-6 -rotate-6 hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105 cursor-default border-t border-white/40 shadow-2xl">
-            <div class="w-full h-full flex flex-col justify-between">
-                <div class="w-20 h-20 rounded-full bg-linear-to-br from-neon-cyan to-neon-violet mb-4 flex items-center justify-center text-3xl font-bold text-white">
-                    g
-                </div>
-                <div>
-                    <h2 class="text-3xl font-display font-bold text-text-main leading-none mb-1">gae</h2>
-                    <p class="text-text-muted text-sm">Frontend Engineer &<br>UI Designer</p>
-                </div>
+        <!-- Left: Introduction Typography -->
+        <div class="flex flex-col items-start space-y-8 z-10">
+            <!-- Status Badge -->
+            <div class="glass px-4 py-1.5 rounded-full flex items-center gap-2.5 transition-transform hover:scale-105 cursor-default">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                </span>
+                <span class="text-xs font-mono font-medium text-zinc-600 tracking-wide uppercase">新規案件募集中</span>
+            </div>
+
+            <div class="space-y-4">
+                <h1 class="text-5xl lg:text-7xl font-display font-bold leading-[1.1] text-text-main tracking-tight">
+                    デジタルの<br />
+                    <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">
+                        現実を創る
+                    </span>
+                </h1>
+                <p class="text-lg text-text-muted max-w-lg leading-relaxed text-balance">
+                    東京を拠点とするフロントエンドエンジニア、<strong>gae</strong>です。<br>
+                    デザインとコードの架け橋となり、堅牢なアプリケーションと直感的なインターフェースを作り上げます。
+                </p>
+            </div>
+
+            <!-- CTA / Links (Optional, simple arrow link) -->
+            <div class="flex items-center gap-4 pt-2">
+                 <a href="#projects" class="group flex items-center gap-2 text-sm font-medium text-text-main border-b border-text-main/20 hover:border-text-main pb-0.5 transition-all">
+                    制作実績を見る
+                    <ArrowDownRight class="w-4 h-4 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" />
+                 </a>
             </div>
         </div>
 
-        <!-- Card 2: Status (Small, Top Right) -->
-        <div class="absolute top-0 right-8 md:right-32 w-48 aspect-video glass rounded-full flex items-center justify-center gap-3 rotate-3 hover:rotate-0 transition-transform duration-300 hover:z-50 border border-green-500/20 bg-green-100/50">
-            <span class="relative flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-            </span>
-            <span class="text-sm font-medium text-green-600">お仕事募集中</span>
+        <!-- Right: Visual Widget Grid -->
+        <div class="relative w-full aspect-square md:aspect-auto md:h-105">
+            <!-- Subtle background backing for the grid area -->
+            <div class="absolute inset-0 bg-linear-to-tr from-violet-100/40 to-cyan-100/40 rounded-4xl blur-2xl opacity-60"></div>
+
+            <div class="relative w-full h-full grid grid-cols-2 grid-rows-2 gap-4">
+
+                <!-- Card 1: Main Profile Identity -->
+                <div class="col-span-1 row-span-2 glass rounded-4xl p-6 flex flex-col justify-between group hover:border-neon-violet/30 transition-colors duration-500">
+                    <div class="relative w-16 h-16 rounded-2xl bg-white p-1 shadow-sm overflow-hidden mb-4">
+                         <img src="/gae.svg" alt="gae branding" class="w-full h-full object-contain" />
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-[10px] font-mono font-bold text-zinc-500 border border-zinc-200">DEV</span>
+                        </div>
+                        <h2 class="font-display font-bold text-2xl text-text-main leading-none mb-1">gae</h2>
+                        <p class="text-xs text-text-muted">Frontend &<br>UI/UX Design</p>
+                    </div>
+                </div>
+
+                <!-- Card 2: Clock Component (Re-using existing component) -->
+                <div class="col-span-1 row-span-1">
+                    <Clock />
+                </div>
+
+                <!-- Card 3: Tech/interest snippet -->
+                <div class="col-span-1 row-span-1 glass rounded-4xl p-5 flex flex-col justify-center gap-3 hover:bg-white/60 transition-colors duration-300">
+                     <span class="text-xs font-mono text-zinc-400 uppercase tracking-wider">Focus</span>
+                     <div class="flex items-center justify-between text-text-main">
+                        <div class="flex flex-col items-center gap-1 group/icon">
+                             <div class="p-2 rounded-xl bg-white/50 border border-white/60 shadow-xs group-hover/icon:scale-110 transition-transform">
+                                <Code2 class="w-5 h-5 text-neon-cyan" />
+                             </div>
+                             <span class="text-[10px] text-zinc-500 opacity-0 group-hover/icon:opacity-100 transition-opacity">Code</span>
+                        </div>
+                         <div class="w-8 h-px bg-zinc-300/50"></div>
+                        <div class="flex flex-col items-center gap-1 group/icon">
+                            <div class="p-2 rounded-xl bg-white/50 border border-white/60 shadow-xs group-hover/icon:scale-110 transition-transform">
+                                <Layers class="w-5 h-5 text-neon-violet" />
+                            </div>
+                            <span class="text-[10px] text-zinc-500 opacity-0 group-hover/icon:opacity-100 transition-opacity">UI</span>
+                        </div>
+                     </div>
+                </div>
+
+            </div>
         </div>
-
-        <!-- Card 3: Clock (Center-ish) -->
-        <div class="absolute bottom-20 right-10 md:right-40 w-56 aspect-square rotate-6 hover:rotate-0 transition-transform duration-500 hover:z-50 hover:scale-105">
-            <Clock />
-        </div>
-
-        <!-- Card 4: Greeting/Intro (Bottom Left) -->
-            <div class="flex items-start gap-3 mb-3">
-                <MousePointer2 class="w-5 h-5 text-neon-cyan" />
-                <span class="text-xs font-bold text-neon-cyan uppercase tracking-widest mt-1">Introduction</span>
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <div class="flex items-center gap-3">
-                    <span class="w-2 h-2 rounded-full bg-neon-violet"></span>
-                    <span class="text-lg md:text-xl font-medium text-text-main">Engineering</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <span class="w-2 h-2 rounded-full bg-neon-cyan"></span>
-                     <span class="text-lg md:text-xl font-medium text-text-main">Design</span>
-                </div>
-                 <div class="flex items-center gap-3">
-                    <span class="w-2 h-2 rounded-full bg-text-main"></span>
-                     <span class="text-lg md:text-xl font-medium text-text-main">Experience</span>
-                </div>
-            </div>
-
-            <div class="mt-6 flex items-center gap-2 text-xs text-text-muted">
-                <MapPin class="w-3 h-3" />
-                <span>Tokyo</span>
-            </div>
 
     </div>
 </section>
