@@ -20,29 +20,29 @@ const description = "ウェブ開発とデザインに関する考察、チュ�
 
   <main class="min-h-screen pt-40 pb-32 px-4 relative overflow-hidden">
     <!-- Sophisticated Background Elements -->
-    <div class="absolute top-0 left-1/4 -z-10 w-125 h-125 bg-neon-violet/10 rounded-full blur-[120px] animate-pulse"></div>
-    <div class="absolute bottom-0 right-1/4 -z-10 w-150 h-150 bg-neon-cyan/5 rounded-full blur-[150px]"></div>
+    <div class="absolute top-0 left-1/4 -z-10 w-125 h-125 bg-accent-indigo/10 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-0 right-1/4 -z-10 w-150 h-150 bg-accent-teal/5 rounded-full blur-[150px]"></div>
 
     <div class="max-w-7xl mx-auto">
 
       <!-- Page Header -->
       <section class="mb-24 animate-fade-in">
         <div class="flex flex-col items-center text-center space-y-6">
-          <div class="glass inline-flex items-center gap-2 px-4 py-2 rounded-full border-white/10">
+          <div class="glass-card inline-flex items-center gap-2 px-4 py-2 rounded-full border-white/20 bg-white/50 backdrop-blur-sm">
               <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-violet opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-neon-violet"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-indigo opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-indigo"></span>
               </span>
-              <span class="text-xs font-mono font-medium text-text-muted tracking-[0.2em] uppercase">Journal & Insights</span>
+              <span class="text-xs font-mono font-medium text-ink-muted tracking-[0.2em] uppercase">Journal & Insights</span>
           </div>
 
-          <h1 class="text-6xl md:text-8xl lg:text-9xl font-display font-bold tracking-tight text-text-main">
-              Bl<span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet via-neon-cyan to-white/20">og</span>
+          <h1 class="text-6xl md:text-8xl lg:text-9xl font-display font-medium tracking-tight text-ink">
+              Bl<span class="text-transparent bg-clip-text bg-linear-to-r from-accent-indigo via-accent-teal to-accent-indigo/50">og</span>
           </h1>
 
-          <p class="text-text-muted max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-light">
+          <p class="text-ink-muted max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-light text-balance">
             Design, Development, and the Future of Web.<br class="hidden md:block"/>
-            <span class="text-text-main/60">技術とデザインが交差する、デジタルの探求記録。</span>
+            <span class="text-ink/60">技術とデザインが交差する、デジタルの探求記録。</span>
           </p>
         </div>
       </section>
@@ -73,8 +73,8 @@ const description = "ウェブ開発とデザインに関する考察、チュ�
       </div>
 
       {posts.length === 0 && (
-          <div class="text-center py-40 glass rounded-4xl border-dashed border-2 border-white/5">
-              <p class="text-text-muted font-display text-xl">No stories found yet.</p>
+          <div class="text-center py-40 glass-card rounded-4xl border-dashed border-2 border-zinc-200">
+              <p class="text-ink-muted font-display text-xl">No stories found yet.</p>
           </div>
       )}
 

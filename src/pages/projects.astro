@@ -14,15 +14,15 @@ const projects = projectsEntry?.data ?? [];
 
   <main class="min-h-screen relative overflow-hidden">
     <!-- Background accents -->
-    <div class="absolute top-0 right-0 -z-10 w-2/3 h-screen bg-[radial-gradient(circle_at_top_right,var(--color-neon-violet),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 -z-10 w-2/3 h-[50vh] bg-[radial-gradient(circle_at_bottom_left,var(--color-neon-cyan),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-0 right-0 -z-10 w-2/3 h-screen bg-[radial-gradient(circle_at_top_right,var(--color-accent-indigo),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 -z-10 w-2/3 h-[50vh] bg-[radial-gradient(circle_at_bottom_left,var(--color-accent-teal),transparent)] opacity-5 blur-[120px] pointer-events-none"></div>
 
     <div class="max-w-5xl mx-auto px-4 pt-32 pb-20">
       <!-- Page header -->
       <header class="mb-10">
-        <span class="text-xs font-mono font-medium text-neon-cyan tracking-widest uppercase">Projects</span>
-        <h1 class="text-4xl md:text-5xl font-display font-bold leading-tight mt-3">
-          My Work — <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">Selected Projects</span>
+        <span class="text-xs font-mono font-medium text-accent-teal tracking-widest uppercase">Projects</span>
+        <h1 class="text-4xl md:text-5xl font-display font-bold leading-tight mt-3 text-ink">
+          My Work — <span class="text-transparent bg-clip-text bg-linear-to-r from-accent-indigo to-accent-teal">Selected Projects</span>
         </h1>
       </header>
 
@@ -30,22 +30,22 @@ const projects = projectsEntry?.data ?? [];
         {projects.map(project => {
           const thumbSrc = (project.thumb as any)?.src ?? project.thumb;
           return (
-            <article class="glass p-6 rounded-2xl flex gap-6 items-start hover:shadow-2xl transition-all duration-300">
-              <a class="w-28 h-28 shrink-0 rounded-lg overflow-hidden bg-zinc-100 flex items-center justify-center" href={project.url} target="_blank" rel="noopener noreferrer">
+            <article class="glass-card p-6 rounded-2xl flex gap-6 items-start hover:shadow-2xl transition-all duration-300">
+              <a class="w-28 h-28 shrink-0 rounded-lg overflow-hidden bg-zinc-100 flex items-center justify-center border border-zinc-200" href={project.url} target="_blank" rel="noopener noreferrer">
                 <img src={thumbSrc as string | undefined} alt={project.title} class="w-full h-full object-cover" />
               </a>
 
               <div class="flex-1">
                 <div class="flex items-start justify-between gap-4">
-                  <a class="text-lg md:text-xl font-bold hover:underline" href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a>
-                  <span class="text-xs text-text-muted">{(project as any).year ?? ''}</span>
+                  <a class="text-lg md:text-xl font-bold hover:underline text-ink" href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a>
+                  <span class="text-xs text-ink-muted">{(project as any).year ?? ''}</span>
                 </div>
 
-                <p class="text-sm text-zinc-600 mt-2">{project.description}</p>
+                <p class="text-sm text-ink-muted mt-2 leading-relaxed">{project.description}</p>
 
                 <div class="flex flex-wrap gap-2 mt-4">
                   {project.tech.map(t => (
-                    <span class="px-3 py-1 rounded-full bg-zinc-100 text-xs font-medium text-zinc-700">{t}</span>
+                    <span class="px-2.5 py-1 rounded-full bg-zinc-50 border border-zinc-200 text-xs font-medium text-zinc-600">{t}</span>
                   ))}
                 </div>
               </div>

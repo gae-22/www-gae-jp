@@ -34,27 +34,28 @@
 }
 
 @theme {
-    /* Light Modern Palette */
-    --color-deep: #fafafa; /* Zinc 50 */
-    --color-surface: rgba(255, 255, 255, 0.7);
-    --color-surface-hover: rgba(244, 244, 245, 0.8); /* Zinc 100 */
+    /* Digital Craftsmanship Grid Palette */
+    --color-deep: #09090b; /* Zinc 950 - replacing white for a deeper, premium dark/light hybrid feel or just stick to light but richer */
+    /* Actually keeping it Light as requested previously, but making it "richer" */
+    --color-paper: #fcfcfc; /* Almost white, but warm */
+    --color-ink: #18181b; /* Zinc 900 */
+    --color-ink-muted: #52525b; /* Zinc 600 */
 
-    --color-neon-violet: #7c3aed; /* Violet 600 */
-    --color-neon-cyan: #0891b2; /* Cyan 600 */
-    --color-text-main: #18181b; /* Zinc 900 */
-    --color-text-muted: #71717a; /* Zinc 500 */
+    /* Accents - "Editorial Studio" */
+    --color-accent-indigo: #4338ca; /* Indigo 700 - Deep, professional */
+    --color-accent-teal: #0f766e; /* Teal 700 - Trusted, calm */
+    --color-accent-highlight: #f59e0b; /* Amber 500 - Subtle warmth for tiny details */
 
     /* Typography */
     --font-display: 'Outfit', 'Zen Kaku Gothic New', sans-serif;
     --font-body: 'Zen Kaku Gothic New', 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --font-code: 'PleckJP', 'JetBrains Mono', monospace;
 
     /* Animation Config */
-    --animate-fade-in: fade-in 0.8s ease-out forwards;
-    --animate-slide-up: slide-up 0.8s ease-out forwards;
-    --animate-aurora: aurora 20s linear infinite;
-    --animate-float: float 6s ease-in-out infinite;
+    --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    --animate-slide-up: slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    --animate-float: float 8s ease-in-out infinite;
+    --animate-grain: grain 8s steps(10) infinite;
 
     @keyframes fade-in {
         from {
@@ -74,25 +75,46 @@
             transform: translateY(0);
         }
     }
-    @keyframes aurora {
-        0% {
-            background-position:
-                50% 50%,
-                50% 50%;
-        }
-        100% {
-            background-position:
-                350% 50%,
-                350% 50%;
-        }
-    }
     @keyframes float {
         0%,
         100% {
             transform: translateY(0);
         }
         50% {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
+        }
+    }
+    @keyframes grain {
+        0%,
+        100% {
+            transform: translate(0, 0);
+        }
+        10% {
+            transform: translate(-5%, -10%);
+        }
+        20% {
+            transform: translate(-15%, 5%);
+        }
+        30% {
+            transform: translate(7%, -25%);
+        }
+        40% {
+            transform: translate(-5%, 25%);
+        }
+        50% {
+            transform: translate(-15%, 10%);
+        }
+        60% {
+            transform: translate(15%, 0%);
+        }
+        70% {
+            transform: translate(0%, 15%);
+        }
+        80% {
+            transform: translate(3%, 35%);
+        }
+        90% {
+            transform: translate(-10%, 10%);
         }
     }
 }
@@ -101,36 +123,33 @@
 @layer base {
     html {
         @apply scroll-smooth;
-        background-color: var(--color-deep);
-        color: var(--color-text-main);
+        background-color: var(--color-paper);
+        color: var(--color-ink);
     }
 
     body {
-        @apply font-body antialiased selection:bg-neon-violet selection:text-white;
+        @apply font-body antialiased selection:bg-accent-indigo selection:text-white;
         overflow-x: hidden;
-        /* Aurora Background */
-        background-image:
-            radial-gradient(
-                at 0% 0%,
-                rgba(124, 58, 237, 0.15) 0px,
-                transparent 50%
-            ),
-            radial-gradient(
-                at 100% 0%,
-                rgba(8, 145, 178, 0.15) 0px,
-                transparent 50%
-            ),
-            radial-gradient(
-                at 100% 100%,
-                rgba(124, 58, 237, 0.15) 0px,
-                transparent 50%
-            ),
-            radial-gradient(
-                at 0% 100%,
-                rgba(8, 145, 178, 0.15) 0px,
-                transparent 50%
-            );
-        background-attachment: fixed;
+
+        /* Subtle Noise Overlay for Texture */
+        &::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            width: 200%;
+            height: 200vh;
+            background: transparent
+                url('http://assets.iceable.com/img/noise-transparent.png')
+                repeat 0 0;
+            background-repeat: repeat;
+            animation: grain 8s steps(10) infinite;
+            opacity: 0.03;
+            z-index: 9999;
+            pointer-events: none;
+        }
     }
 
     h1,
@@ -139,75 +158,145 @@
     h4,
     h5,
     h6 {
-        @apply font-display tracking-tight text-text-main;
+        @apply font-display tracking-tight text-ink;
+    }
+}
+
+@layer components {
+    /* Code Block Styling - Component Layer for Specificity */
+    figure[data-rehype-pretty-code-figure] {
+        @apply my-8 overflow-hidden rounded-xl border border-zinc-800 bg-black shadow-sm;
+
+        /* Ensure code inside pre has consistent styling */
+        pre {
+            @apply overflow-x-auto py-4 text-sm leading-6 thin-scrollbar;
+            background-color: transparent !important;
+        }
+
+        code {
+            @apply grid min-w-full break-normal;
+            font-family: var(--font-mono);
+            counter-reset: line;
+            box-decoration-break: clone;
+        }
+
+        /* Lines */
+        [data-line] {
+            @apply px-4 border-l-2 border-transparent block w-full;
+            line-height: 1.5rem; /* Explicitly match leading-6 (24px) */
+        }
+
+        /* Line Numbers */
+        code[data-line-numbers] {
+            counter-reset: line;
+        }
+
+        code[data-line-numbers] > [data-line]::before {
+            counter-increment: line;
+            content: counter(line);
+            @apply mr-6 w-4 text-right text-zinc-200 dark:text-zinc-200 inline-block text-xs;
+            line-height: 1.5rem; /* Match parent line-height to prevent drift */
+            height: 1.5rem;
+            vertical-align: top; /* Ensure top alignment */
+        }
+
+        /* Highlighted Lines */
+        [data-highlighted-line] {
+            @apply bg-zinc-50 border-l-accent-indigo/50 dark:bg-zinc-800/50;
+        }
+    }
+
+    /* New CodeBlock.astro shiki styles */
+    .prose figure.code-block {
+        @apply mt-6 mb-12 shadow-md rounded-md overflow-hidden border border-zinc-200/50 dark:border-zinc-800;
+    }
+    .prose .code-block pre {
+        @apply rounded-none mt-0 px-0 bg-transparent py-0;
+    }
+    .prose .code-block code {
+        @apply grid grid-flow-row font-mono bg-transparent! border-none! px-0! py-0! rounded-none!;
+        font-family: 'JetBrains Mono', monospace;
+    }
+    .code-block .line {
+        @apply px-4 border-l-2 border-transparent block w-full text-white;
+    }
+
+    /* Line Numbers */
+    .code-block code[data-line-numbers] {
+        counter-reset: line;
+    }
+    .code-block code[data-line-numbers] > .line::before {
+        counter-increment: line;
+        content: counter(line);
+        @apply mr-4 inline-block w-4 text-right text-zinc-400 text-xs select-none;
+    }
+
+    .code-block .add {
+        @apply bg-emerald-500/10 indent-0 border-l-0;
+    }
+    .code-block .remove {
+        @apply bg-rose-500/10 indent-0 border-l-0;
+    }
+    .code-block .add span,
+    .code-block .remove span {
+        @apply opacity-100;
+    }
+}
+
+/* Custom Scrollbar for Code Blocks */
+@utility thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink-muted) transparent;
+
+    &::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        @apply bg-zinc-300 rounded-full dark:bg-zinc-700;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        @apply bg-zinc-400 dark:bg-zinc-600;
     }
 }
 
 /* Utilities */
 @utility glass {
-    /* Refined Glass with Noise and Premium Border */
-    @apply backdrop-blur-xl bg-white/60 border border-white/60 shadow-sm relative overflow-hidden;
+    /* Sophisticated Glass - crisp edges, subtle depth */
+    @apply backdrop-blur-xl bg-white/70 border border-white/80 shadow-[0_4px_24px_-12px_rgba(0,0,0,0.08)];
 
-    /* Subtle Noise Overlay */
-    &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-        opacity: 0.4;
-        pointer-events: none;
+    /* Inner highlight for "thick glass" feel */
+    box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+        0 4px 24px -12px rgba(0, 0, 0, 0.08); /* Re-declaring to combine */
+}
+
+@utility glass-card {
+    /* Interactive Card Glass */
+    @apply glass transition-all duration-500 ease-out;
+
+    &:hover {
+        @apply border-accent-indigo/10 bg-white/80 shadow-[0_12px_32px_-12px_rgba(67,56,202,0.12)];
+        transform: translateY(-2px);
     }
-}
-
-@utility glass-deep {
-    @apply backdrop-blur-2xl bg-white/40 border border-white/50 shadow-md;
-}
-
-@utility glow-text {
-    /* Soft Glow Text */
-    text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
-}
-
-@utility glow-box {
-    /* Soft Diffuse Shadow */
-    box-shadow: 0 10px 40px -10px rgba(124, 58, 237, 0.15);
 }
 
 @utility text-balance {
     text-wrap: balance;
 }
 
-/* Animations */
-@layer utilities {
-    .animate-blob {
-        animation: blob 10s infinite;
-    }
-    .animation-delay-2000 {
-        animation-delay: 2s;
-    }
-    .animation-delay-4000 {
-        animation-delay: 4s;
-    }
-    .hover-lift {
-        @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg;
-    }
-    .hover-tilt {
-        @apply transition-all duration-300 ease-out hover:scale-[1.02] hover:rotate-1;
-    }
+@utility text-glow-subtle {
+    text-shadow: 0 0 20px rgba(67, 56, 202, 0.15);
 }
 
-@keyframes blob {
-    0% {
-        transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-        transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
-        transform: translate(0px, 0px) scale(1);
+@layer utilities {
+    .hover-lift {
+        @apply transition-transform duration-300 ease-out hover:-translate-y-1;
     }
 }

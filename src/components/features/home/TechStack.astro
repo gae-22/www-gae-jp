@@ -6,39 +6,39 @@ import { Cpu, Globe, Code, Layers } from 'lucide-astro';
 ---
 
 <div class="w-full h-full flex items-center relative overflow-hidden bg-zinc-50/50">
-  <div class="absolute inset-y-0 left-0 w-16 bg-linear-to-r from-deep/50 to-transparent z-10"></div>
-  <div class="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-deep/50 to-transparent z-10"></div>
+  <div class="absolute inset-y-0 left-0 w-16 bg-linear-to-r from-white to-transparent z-10"></div>
+  <div class="absolute inset-y-0 right-0 w-16 bg-linear-to-l from-white to-transparent z-10"></div>
 
   <div class="flex gap-8 animate-scroll whitespace-nowrap px-4">
     {/* Doubled for seamless loop */}
     {[1, 2].map(() => (
       <>
         <div class="flex flex-col items-center gap-2 group/icon">
-          <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-neon-violet transition-colors">
-            <Globe class="w-6 h-6 text-zinc-700" />
+          <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-accent-indigo transition-colors shadow-sm">
+            <Globe class="w-6 h-6 text-zinc-600 group-hover/icon:text-accent-indigo transition-colors" />
           </div>
-          <span class="text-[10px] text-text-muted uppercase">Astro</span>
+          <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">Astro</span>
         </div>
 
         <div class="flex flex-col items-center gap-2 group/icon">
-           <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-neon-cyan transition-colors">
-            <Layers class="w-6 h-6 text-zinc-700" />
+           <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-accent-teal transition-colors shadow-sm">
+            <Layers class="w-6 h-6 text-zinc-600 group-hover/icon:text-accent-teal transition-colors" />
           </div>
-          <span class="text-[10px] text-text-muted uppercase">Tailwind</span>
+          <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">Tailwind</span>
         </div>
 
         <div class="flex flex-col items-center gap-2 group/icon">
-           <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-blue-400 transition-colors">
-            <Code class="w-6 h-6 text-zinc-700" />
+           <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-blue-500 transition-colors shadow-sm">
+            <Code class="w-6 h-6 text-zinc-600 group-hover/icon:text-blue-500 transition-colors" />
           </div>
-          <span class="text-[10px] text-text-muted uppercase">React</span>
+          <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">React</span>
         </div>
 
         <div class="flex flex-col items-center gap-2 group/icon">
-           <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-green-400 transition-colors">
-            <Cpu class="w-6 h-6 text-zinc-700" />
+           <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-zinc-200 group-hover/icon:border-emerald-500 transition-colors shadow-sm">
+            <Cpu class="w-6 h-6 text-zinc-600 group-hover/icon:text-emerald-500 transition-colors" />
           </div>
-          <span class="text-[10px] text-text-muted uppercase">Node.js</span>
+          <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">Node.js</span>
         </div>
       </>
     ))}

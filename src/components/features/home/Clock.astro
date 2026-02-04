@@ -1,13 +1,13 @@
-<div class="glass p-6 rounded-3xl flex flex-col items-center justify-center h-full w-full relative overflow-hidden group">
-  <div class="absolute inset-0 bg-neon-violet/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="glass-card p-6 rounded-3xl flex flex-col items-center justify-center h-full w-full relative overflow-hidden group">
+  <div class="absolute inset-0 bg-accent-indigo/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-  <time class="clock-display text-4xl font-display font-bold tabular-nums tracking-wider text-text-main relative z-10">
+  <time class="clock-display text-4xl font-display font-medium tabular-nums tracking-wider text-ink relative z-10">
     --:--
   </time>
-  <span class="text-xs text-text-muted mt-2 uppercase tracking-widest font-mono">Tokyo, JP</span>
+  <span class="text-xs text-ink-muted mt-2 uppercase tracking-widest font-mono">Tokyo, JP</span>
 
   <!-- Seconds Indicator (Pulsing Ring) -->
-  <div class="absolute bottom-4 w-1 h-1 bg-neon-cyan rounded-full animate-ping"></div>
+  <div class="absolute bottom-4 w-1.5 h-1.5 bg-accent-teal rounded-full animate-ping"></div>
 
   <script>
     function updateClocks() {
