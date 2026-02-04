@@ -33,11 +33,15 @@ const { title, description = "洗練されたモダンなポートフォリオ�
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="min-h-screen relative overflow-x-hidden bg-deep text-text-main">
-        <!-- Background Ambient Noise or Abstract Mesh could go here as a fixed layer -->
-        <div class="fixed inset-0 z-[-1] bg-deep pointer-events-none">
-            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-neon-violet/10 blur-[100px]"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-neon-cyan/10 blur-[100px]"></div>
+    <body class="min-h-screen relative overflow-x-hidden bg-zinc-50 text-text-main selection:bg-neon-violet selection:text-white">
+        <!-- Global Noise Texture -->
+        <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-multiply bg-[url('/noise.png')]"></div>
+
+        <!-- Background Ambient Blobs -->
+        <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+            <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-violet-200/30 blur-[120px] mix-blend-multiply animate-blob"></div>
+            <div class="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-cyan-200/30 blur-[120px] mix-blend-multiply animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-32 left-20 w-[60%] h-[60%] rounded-full bg-fuchsia-200/30 blur-[120px] mix-blend-multiply animate-blob animation-delay-4000"></div>
         </div>
 
         <!-- Contents are here -->

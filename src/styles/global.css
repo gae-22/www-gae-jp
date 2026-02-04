@@ -39,8 +39,8 @@
     --color-surface: rgba(255, 255, 255, 0.7);
     --color-surface-hover: rgba(244, 244, 245, 0.8); /* Zinc 100 */
 
-    --color-neon-violet: #7c3aed; /* Violet 600 - Darker for visibility */
-    --color-neon-cyan: #0891b2; /* Cyan 600 - Darker for visibility */
+    --color-neon-violet: #7c3aed; /* Violet 600 */
+    --color-neon-cyan: #0891b2; /* Cyan 600 */
     --color-text-main: #18181b; /* Zinc 900 */
     --color-text-muted: #71717a; /* Zinc 500 */
 
@@ -51,8 +51,10 @@
     --font-code: 'PleckJP', 'JetBrains Mono', monospace;
 
     /* Animation Config */
-    --animate-fade-in: fade-in 0.5s ease-out forwards;
-    --animate-slide-up: slide-up 0.5s ease-out forwards;
+    --animate-fade-in: fade-in 0.8s ease-out forwards;
+    --animate-slide-up: slide-up 0.8s ease-out forwards;
+    --animate-aurora: aurora 20s linear infinite;
+    --animate-float: float 6s ease-in-out infinite;
 
     @keyframes fade-in {
         from {
@@ -65,11 +67,32 @@
     @keyframes slide-up {
         from {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(20px);
         }
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+    @keyframes aurora {
+        0% {
+            background-position:
+                50% 50%,
+                50% 50%;
+        }
+        100% {
+            background-position:
+                350% 50%,
+                350% 50%;
+        }
+    }
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
         }
     }
 }
@@ -85,6 +108,29 @@
     body {
         @apply font-body antialiased selection:bg-neon-violet selection:text-white;
         overflow-x: hidden;
+        /* Aurora Background */
+        background-image:
+            radial-gradient(
+                at 0% 0%,
+                rgba(124, 58, 237, 0.15) 0px,
+                transparent 50%
+            ),
+            radial-gradient(
+                at 100% 0%,
+                rgba(8, 145, 178, 0.15) 0px,
+                transparent 50%
+            ),
+            radial-gradient(
+                at 100% 100%,
+                rgba(124, 58, 237, 0.15) 0px,
+                transparent 50%
+            ),
+            radial-gradient(
+                at 0% 100%,
+                rgba(8, 145, 178, 0.15) 0px,
+                transparent 50%
+            );
+        background-attachment: fixed;
     }
 
     h1,
@@ -99,19 +145,69 @@
 
 /* Utilities */
 @utility glass {
-    @apply backdrop-blur-md bg-surface border border-zinc-200/50 shadow-sm;
+    /* Refined Glass with Noise and Premium Border */
+    @apply backdrop-blur-xl bg-white/60 border border-white/60 shadow-sm relative overflow-hidden;
+
+    /* Subtle Noise Overlay */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        opacity: 0.4;
+        pointer-events: none;
+    }
 }
 
 @utility glass-deep {
-    @apply backdrop-blur-xl bg-white/40 border border-zinc-200/50;
+    @apply backdrop-blur-2xl bg-white/40 border border-white/50 shadow-md;
 }
 
 @utility glow-text {
-    /* Subtler glow for light mode */
-    text-shadow: 0 0 15px rgba(124, 58, 237, 0.15);
+    /* Soft Glow Text */
+    text-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
 }
 
 @utility glow-box {
-    /* Soft diffuse shadow for depth */
-    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+    /* Soft Diffuse Shadow */
+    box-shadow: 0 10px 40px -10px rgba(124, 58, 237, 0.15);
+}
+
+@utility text-balance {
+    text-wrap: balance;
+}
+
+/* Animations */
+@layer utilities {
+    .animate-blob {
+        animation: blob 10s infinite;
+    }
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+    .hover-lift {
+        @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg;
+    }
+    .hover-tilt {
+        @apply transition-all duration-300 ease-out hover:scale-[1.02] hover:rotate-1;
+    }
+}
+
+@keyframes blob {
+    0% {
+        transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
 }

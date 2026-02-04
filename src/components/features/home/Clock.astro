@@ -1,7 +1,7 @@
 <div class="glass p-6 rounded-3xl flex flex-col items-center justify-center h-full w-full relative overflow-hidden group">
   <div class="absolute inset-0 bg-neon-violet/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-  <time id="clock-display" class="text-4xl font-display font-bold tabular-nums tracking-wider text-text-main relative z-10">
+  <time class="clock-display text-4xl font-display font-bold tabular-nums tracking-wider text-text-main relative z-10">
     --:--
   </time>
   <span class="text-xs text-text-muted mt-2 uppercase tracking-widest font-mono">Tokyo, JP</span>
@@ -10,9 +10,9 @@
   <div class="absolute bottom-4 w-1 h-1 bg-neon-cyan rounded-full animate-ping"></div>
 
   <script>
-    function updateClock() {
-        const display = document.getElementById('clock-display');
-        if (!display) return;
+    function updateClocks() {
+        const displays = document.querySelectorAll('.clock-display');
+        if (displays.length === 0) return;
 
         const now = new Date();
         const options: Intl.DateTimeFormatOptions = {
@@ -22,10 +22,14 @@
             hour12: false
         };
 
-        display.textContent = new Intl.DateTimeFormat('en-US', options).format(now);
+        const timeString = new Intl.DateTimeFormat('en-US', options).format(now);
+
+        displays.forEach(display => {
+            display.textContent = timeString;
+        });
     }
 
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(updateClocks, 1000);
+    updateClocks();
   </script>
 </div>

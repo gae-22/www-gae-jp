@@ -2,8 +2,16 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="w-full py-8 mt-20 text-center text-text-muted text-sm border-t border-zinc-200 bg-deep">
-  <div class="max-w-4xl mx-auto px-4">
-    <p>&copy; {year} gae. Built with Astro & Tailwind CSS.</p>
+<footer class="w-full py-10 mt-16 lg:mt-32 text-center border-t border-white/20 backdrop-blur-[2px] relative">
+  <!-- Subtle Gradient Fade for Footer -->
+  <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-zinc-300 to-transparent opacity-50"></div>
+
+  <div class="max-w-4xl mx-auto px-4 flex flex-col items-center gap-4">
+    <div class="text-2xl font-display font-bold text-transparent bg-clip-text bg-linear-to-r from-zinc-400 to-zinc-600 opacity-30 select-none pointer-events-none">
+        gae
+    </div>
+    <p class="text-text-muted text-xs font-mono tracking-wide">
+        &copy; {year} gae. All rights reserved.
+    </p>
   </div>
 </footer>

@@ -12,40 +12,51 @@ const posts = await getCollection('blog', ({ data }) => {
 const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())[0];
 ---
 
-<section class="max-w-6xl mx-auto px-4 pb-32">
-    <h2 class="text-3xl font-display font-thin mb-12 text-center">
-        制作 <span class="text-zinc-400">実績</span>
-    </h2>
+<section class="max-w-7xl mx-auto px-4 pb-16 lg:pb-32">
+    <div class="relative mb-12 lg:mb-20 text-center">
+        <h2 class="text-3xl sm:text-4xl font-display font-medium text-text-main inline-block relative z-10">
+            Selected <span class="text-transparent bg-clip-text bg-linear-to-r from-neon-violet to-neon-cyan">Works</span>
+        </h2>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-neon-cyan/10 blur-[50px] -z-10 rounded-full"></div>
+    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 grid-rows-auto lg:grid-rows-2 gap-3 h-auto min-h-160 lg:min-h-0 lg:h-128">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-auto lg:grid-rows-2 gap-6 h-auto lg:h-128 perspective-1000">
 
         <!-- Item 1: Featured Post (Large) -->
-        <BentoItem class="col-span-1 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2 group/post bg-linear-to-br from-violet-50/50 to-zinc-100" title="最新の記事">
+        <BentoItem class="col-span-2 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2 group/post glass rounded-4xl border-white/40 hover:border-neon-violet/30 hover-lift transition-all duration-500 min-h-80 lg:min-h-0 relative overflow-hidden" title="最新の記事">
             {latestPost ? (
-                <a href={`/blog/${latestPost.slug}`} class="block w-full h-full relative overflow-hidden">
-                    <!-- Default Book Background -->
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=1788&auto=format&fit=crop')] bg-cover bg-center opacity-20 group-hover/post:opacity-40 transition-opacity duration-500"></div>
+                <a href={`/blog/${latestPost.slug}`} class="block w-full h-full relative z-10">
+                    <!-- Default Texture Background -->
+                    <div class="absolute inset-0 bg-linear-to-br from-zinc-50 to-zinc-100 opacity-50"></div>
+                     <!-- Soft Gradient Overlay -->
+                    <div class="absolute inset-0 bg-linear-to-t from-zinc-900/10 via-transparent to-transparent opacity-60"></div>
 
                      {latestPost.data.cover && (
-                        <Image
-                            src={latestPost.data.cover}
-                            alt={latestPost.data.coverAlt || ""}
-                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/post:scale-110 opacity-20 group-hover/post:opacity-40"
-                        />
-                     )}
-                     <div class="absolute bottom-0 left-0 w-full p-6 bg-linear-to-t from-deep via-deep/80 to-transparent">
-                        <div class="text-neon-cyan text-xs font-mono mb-2">
-                             {latestPost.data.publishedAt.toLocaleDateString()}
+                        <div class="absolute inset-4 rounded-xl overflow-hidden shadow-inner">
+                            <Image
+                                src={latestPost.data.cover}
+                                alt={latestPost.data.coverAlt || ""}
+                                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/post:scale-110 opacity-90 group-hover/post:opacity-100"
+                            />
                         </div>
-                        <h3 class="text-2xl lg:text-3xl font-display font-bold leading-tight mb-2 group-hover/post:text-neon-violet transition-colors">
+                     )}
+
+                     <div class="absolute bottom-0 left-0 w-full p-8 bg-linear-to-t from-white/95 via-white/80 to-transparent backdrop-blur-[2px]">
+                        <div class="flex items-center gap-2 mb-3">
+                             <span class="px-2 py-0.5 rounded-full bg-neon-violet/10 text-[10px] font-mono font-bold text-neon-violet border border-neon-violet/20">NEW</span>
+                             <span class="text-zinc-500 text-xs font-mono">
+                                 {latestPost.data.publishedAt.toLocaleDateString()}
+                             </span>
+                        </div>
+                        <h3 class="text-2xl lg:text-3xl font-display font-bold leading-tight mb-2 text-text-main group-hover/post:text-neon-violet transition-colors">
                             {latestPost.data.title}
                         </h3>
-                        <p class="text-xs lg:text-sm text-text-muted line-clamp-2">
+                        <p class="text-sm text-text-muted line-clamp-2">
                             {latestPost.data.description}
                         </p>
                      </div>
-                     <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/5 flex items-center justify-center backdrop-blur-md opacity-0 group-hover/post:opacity-100 transition-opacity">
-                        <ArrowUpRight class="w-4 h-4 text-zinc-900" />
+                     <div class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/80 flex items-center justify-center backdrop-blur-md shadow-sm opacity-0 translate-y-2 group-hover/post:opacity-100 group-hover/post:translate-y-0 transition-all duration-300">
+                        <ArrowUpRight class="w-5 h-5 text-zinc-900" />
                      </div>
                 </a>
             ) : (
@@ -55,52 +66,56 @@ const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.pu
             )}
         </BentoItem>
 
-        <!-- Item 3a: GitHub (Small) -->
-        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 bg-linear-to-br from-purple-50/50 to-zinc-100 group/github">
-             <div class="h-full w-full relative overflow-hidden flex items-center px-6">
-                <!-- Background Image -->
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1788&auto=format&fit=crop')] bg-cover bg-center opacity-10 group-hover/github:opacity-30 transition-opacity duration-500"></div>
+        <!-- Item 2: GitHub (Medium) -->
+        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 group/github glass rounded-4xl border-white/40 hover:border-zinc-900/20 hover-lift transition-all duration-500 aspect-square md:aspect-auto md:h-40 lg:h-auto relative overflow-hidden">
+             <div class="absolute inset-0 bg-linear-to-br from-zinc-50 to-zinc-200 opacity-50"></div>
 
-                <a href="https://github.com/gae-22" target="_blank" class="relative z-10 w-full flex items-center justify-between group-hover/github:translate-x-1 transition-transform">
-                    <span class="text-xl font-bold font-display text-text-main">GitHub</span>
-                    <div class="p-3 rounded-full bg-white/60 backdrop-blur-md group-hover/github:bg-white/80 transition-colors text-zinc-900 border border-white/40 shadow-sm">
-                        <Github class="w-5 h-5" />
+             <a href="https://github.com/gae-22" target="_blank" class="relative z-10 w-full h-full p-6 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                     <div class="p-3 rounded-full bg-white shadow-sm text-zinc-900">
+                        <Github class="w-6 h-6" />
                     </div>
-                </a>
-            </div>
+                    <ArrowUpRight class="w-4 h-4 text-zinc-400 group-hover/github:text-zinc-900 group-hover/github:translate-x-0.5 group-hover/github:-translate-y-0.5 transition-all" />
+                </div>
+                <div>
+                    <span class="text-lg font-bold font-display text-text-main block mb-1">GitHub</span>
+                    <span class="text-xs text-text-muted">Check my repos</span>
+                </div>
+            </a>
         </BentoItem>
 
-        <!-- Item 3b: Discord (Small) -->
-        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 bg-linear-to-br from-indigo-50/50 to-zinc-100 group/discord">
-             <div class="h-full w-full relative overflow-hidden flex items-center px-6">
-                <!-- Background Image (Generated) -->
-                <div class="absolute inset-0 bg-[url('/discord-bg.png')] bg-cover bg-center opacity-20 group-hover/discord:opacity-40 transition-opacity duration-500"></div>
+        <!-- Item 3: Discord (Medium) -->
+        <BentoItem class="col-span-1 md:col-span-1 lg:col-span-1 row-span-1 group/discord glass rounded-4xl border-white/40 hover:border-indigo-500/30 hover-lift transition-all duration-500 aspect-square md:aspect-auto md:h-40 lg:h-auto relative overflow-hidden">
+             <div class="absolute inset-0 bg-linear-to-br from-indigo-50 to-indigo-100/50 opacity-50"></div>
 
-                <a href="https://discord.gg/nqsegJHjBb" target="_blank" class="relative z-10 w-full flex items-center justify-between group-hover/discord:translate-x-1 transition-transform">
-                    <span class="text-xl font-bold font-display text-text-main">Discord</span>
-                    <div class="p-3 rounded-full bg-white/60 backdrop-blur-md group-hover/discord:bg-white/80 transition-colors text-indigo-600 border border-white/40 shadow-sm">
-                        <Discord class="w-5 h-5" />
+             <a href="https://discord.gg/nqsegJHjBb" target="_blank" class="relative z-10 w-full h-full p-6 flex flex-col justify-between">
+                 <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-full bg-white shadow-sm text-indigo-600">
+                        <Discord class="w-6 h-6" />
                     </div>
-                </a>
-            </div>
+                    <ArrowUpRight class="w-4 h-4 text-indigo-300 group-hover/discord:text-indigo-600 group-hover/discord:translate-x-0.5 group-hover/discord:-translate-y-0.5 transition-all" />
+                </div>
+                <div>
+                     <span class="text-lg font-bold font-display text-text-main block mb-1">Discord</span>
+                     <span class="text-xs text-text-muted">Join community</span>
+                </div>
+            </a>
         </BentoItem>
 
-        <!-- Item 4: Location (Small) -->
-        <BentoItem class="col-span-1 md:col-span-3 lg:col-span-2 row-span-1 bg-linear-to-br from-blue-50/50 to-zinc-100 group/location">
-            <div class="h-full w-full relative overflow-hidden flex items-center px-8">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1988&auto=format&fit=crop')] bg-cover bg-center opacity-20 group-hover/location:opacity-40 transition-opacity duration-500"></div>
+        <!-- Item 4: Location (Wide) -->
+        <BentoItem class="col-span-2 md:col-span-3 lg:col-span-2 row-span-1 group/location glass rounded-4xl border-white/40 hover:border-cyan-500/30 hover-lift transition-all duration-500 aspect-square md:aspect-auto md:h-40 lg:h-auto relative overflow-hidden">
+             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1988&auto=format&fit=crop')] bg-cover bg-center opacity-10 group-hover/location:opacity-20 transition-opacity duration-500 grayscale"></div>
 
-                <div class="relative z-10 w-full flex items-center justify-between pointer-events-none">
-                     <div class="flex flex-col">
-                        <span class="text-xs font-mono text-text-muted uppercase tracking-widest mb-1">Based in</span>
-                        <div class="flex items-baseline gap-2">
-                             <span class="text-2xl font-bold font-display text-text-main">Tokyo</span>
-                             <span class="text-sm font-mono text-text-muted">JPN</span>
-                        </div>
+            <div class="relative z-10 w-full h-full p-6 flex items-center justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xs font-mono text-neon-cyan uppercase tracking-widest mb-2">Based in</span>
+                    <div class="flex items-baseline gap-3">
+                         <span class="text-3xl font-bold font-display text-text-main">Tokyo</span>
+                         <span class="text-sm font-mono text-zinc-400">JPN</span>
                     </div>
-                    <div class="p-4 bg-white/60 backdrop-blur-md rounded-full border border-white/40 shadow-sm">
-                        <MapPin class="w-6 h-6 text-neon-cyan" />
-                    </div>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/50 backdrop-blur-md flex items-center justify-center border border-white/60 shadow-inner">
+                    <MapPin class="w-6 h-6 text-neon-cyan" />
                 </div>
             </div>
         </BentoItem>
