@@ -23,7 +23,7 @@
 
 - title: '過去問データベース'
   description: '大学入試の過去問を検索・閲覧できるWebアプリ（要パスワード）'
-  url: 'https://kakomondb.gae-jp.net'
+  url: 'https://exam.gae-jp.net'
   tech:
       - 'Next.js'
       - 'React'
