@@ -1,29 +1,55 @@
 name: 'gae'
+
 roles:
     - 'Frontend'
     - 'Backend'
     - 'System'
     - 'Internal Tools'
+
 stats:
-    experience: '4+'
+    experience: '4'
     projects: '30+'
+
 timeline:
     # - year: '2026.06'
     #   title: '国際学会発表'
     #   company: 'IEEE VTC2026 Spring'
     #   description: 'V2V通信の安定性と高速化に関する研究発表．'
-    - year: '2026.04'
-      title: 'システムエンジニア'
-      company: '株式会社テプコシステムズ'
-      description: '入社後、電力関連システムの開発に従事予定．'
-    - year: '2026.03'
+    # - year: '2026.04'
+    #   title: 'システムエンジニア'
+    #   company: '株式会社テプコシステムズ'
+    #   description: '入社後、電力関連システムの開発に従事予定．'
+
+    - year: '2026.03 (予定)'
       title: '国内学会発表'
       company: '電子情報通信学会総合大会'
       description: 'V2V通信の安定性と高速化に関する研究発表．'
-    - year: '2022.04'
+
+    - year: '2024.09-2026.02'
+      title: 'Web系企業アルバイト'
+      company: 'Web系SaaS企業'
+      description: 'Web系SaaS企業のバックエンド開発に従事．'
+
+    - year: '2023.02-2025.01'
+      title: 'サークル部長'
+      company: '大学公認サークルMMA'
+      description: '部内ツール開発，サークル運営，イベント企画・運営，サーバ管理など．'
+
+    - year: '2022.05-2026.03'
+      title: '塾講師アルバイト'
+      company: '個別指導塾'
+      description: '中高生を中心に理系科目を指導．2025年度にはリーダーを務め，教室運営と新人育成に努めている．'
+
+    - year: '2022.04-2026.03'
       title: '大学生'
       company: '電気通信大学 AWCC 藤井研究室'
       description: '大学で無線通信を先行しつつ，プログラミングを独学．サークル・アルバイト内向けWebアプリを開発．'
+
+    - year: '2019.04-2022.03'
+      title: '高校生'
+      company: '福岡県立嘉穂高等学校'
+      description: '中学校卒業後地元の高校に進学．'
+
 gear:
     - 'VSCode'
     - 'Antigravity'

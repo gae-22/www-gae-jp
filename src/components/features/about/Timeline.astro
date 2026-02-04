@@ -14,20 +14,33 @@ const { events } = Astro.props;
 <div class="relative border-l border-zinc-200 ml-4 space-y-12 py-4">
   {events.map((event) => (
     <div class="relative pl-8 group">
-      <!-- Dot -->
+      {/* Dot */}
       <div class="absolute -left-1.25 top-2 w-2.5 h-2.5 rounded-full bg-white border border-zinc-300 group-hover:bg-accent-indigo group-hover:border-accent-indigo group-hover:shadow-[0_0_10px_rgba(67,56,202,0.3)] transition-all duration-300"></div>
 
-      <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 mb-2">
-        <span class="text-accent-teal font-mono text-sm font-medium">{event.year}</span>
-        <h3 class="text-xl font-display font-bold text-ink">{event.title}</h3>
-        <span class="text-ink-muted text-sm">@ {event.company}</span>
-      </div>
+      {/* Grid Layout: Year mapped to fixed width, Content takes rest */}
+      <div class="grid grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-2 sm:gap-6">
 
-      {event.description && (
-        <p class="text-ink-muted text-sm leading-relaxed max-w-xl">
-            {event.description}
-        </p>
-      )}
+        {/* Year Column */}
+        <div class="flex-none pt-1">
+          <span class="text-accent-teal font-mono text-sm font-medium whitespace-nowrap block">
+            {event.year.includes('-') ? event.year.replace('-', ' — ') : event.year}
+          </span>
+        </div>
+
+        {/* Content Column */}
+        <div class="flex flex-col gap-1">
+           <div class="flex flex-col sm:flex-row sm:items-baseline gap-2">
+               <h3 class="text-xl font-display font-bold text-ink leading-tight">{event.title}</h3>
+               <span class="text-ink-muted text-sm pb-0.5">@ {event.company}</span>
+           </div>
+
+           {event.description && (
+            <p class="text-ink-muted text-sm leading-relaxed max-w-xl mt-1">
+                {event.description}
+            </p>
+           )}
+        </div>
+      </div>
     </div>
   ))}
 </div>
