@@ -58,6 +58,14 @@ export default defineConfig({
     adapter: node({
         mode: 'standalone',
     }),
+    security: {
+        // 開発環境ではチェックを無効化、本番環境では有効化
+        checkOrigin: process.env.NODE_ENV === 'production',
+        // 本番環境では許可するオリジンを指定
+        ...(process.env.NODE_ENV === 'production' && {
+            allowedOrigins: ['https://www.gae-jp.net'],
+        }),
+    },
     vite: {
         plugins: [tailwindcss()],
     },
