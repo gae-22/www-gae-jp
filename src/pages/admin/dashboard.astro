@@ -1,0 +1,586 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { db } from '../../lib/db';
+import { profiles, timeline, gear, skills } from '../../lib/db/schema';
+import { LogOut, Edit, Plus, Trash2 } from 'lucide-astro';
+import { desc } from 'drizzle-orm';
+
+// Authentication check
+if (!Astro.locals.session) {
+  return Astro.redirect('/admin/login');
+}
+
+const user = Astro.locals.user!;
+
+// Fetch all data
+const profile = await db.select().from(profiles).get();
+const timelineData = await db.select().from(timeline).orderBy(desc(timeline.startDate)).all();
+const gearData = await db.select().from(gear).orderBy(gear.order).all();
+const skillsData = await db.select().from(skills).orderBy(skills.order).all();
+
+// Group skills by category
+const languageSkills = skillsData.filter(s => s.category === 'languages');
+const frameworkSkills = skillsData.filter(s => s.category === 'frameworks');
+const otherSkills = skillsData.filter(s => s.category === 'others');
+---
+
+<Layout title="Admin Dashboard | gae">
+  <div class="min-h-screen bg-linear-to-br from-zinc-50 to-zinc-100">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-card border-b border-zinc-200/50">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-display font-bold text-ink">管理画面</h1>
+          <p class="text-sm text-ink-muted">ようこそ、{user.username}さん</p>
+        </div>
+        <form method="POST" action="/api/auth/logout">
+          <button type="submit" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition-colors">
+            <LogOut class="w-4 h-4" />
+            <span>ログアウト</span>
+          </button>
+        </form>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <!-- Profile Section -->
+      <section class="glass-card p-6 rounded-3xl">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-display font-bold text-ink">プロフィール</h2>
+          <button
+            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-indigo text-white hover:bg-indigo-600 transition-colors"
+            onclick="document.getElementById('profile-modal').showModal()"
+          >
+            <Edit class="w-4 h-4" />
+            <span>編集</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-zinc-50">
+            <div class="text-xs text-zinc-500 mb-1">名前</div>
+            <div class="font-medium">{profile?.name}</div>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-50">
+            <div class="text-xs text-zinc-500 mb-1">ロール</div>
+            <div class="flex flex-wrap gap-2">
+              {profile?.roles.map(role => (
+                <span class="px-2 py-1 bg-white rounded-lg text-sm">{role}</span>
+              ))}
+            </div>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-50">
+            <div class="text-xs text-zinc-500 mb-1">経験年数</div>
+            <div class="font-medium">{profile?.experienceYears} Years</div>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-50">
+            <div class="text-xs text-zinc-500 mb-1">プロジェクト数</div>
+            <div class="font-medium">{profile?.projectCount}+</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Timeline Section -->
+      <section class="glass-card p-6 rounded-3xl">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-display font-bold text-ink">タイムライン</h2>
+          <button
+            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-teal text-white hover:bg-teal-600 transition-colors"
+            onclick="openTimelineModal('new')"
+          >
+            <Plus class="w-4 h-4" />
+            <span>追加</span>
+          </button>
+        </div>
+
+        <div class="space-y-3">
+          {timelineData.map(item => (
+            <div class="p-4 rounded-xl bg-zinc-50 hover:bg-zinc-100 transition-colors">
+              <div class="flex items-start justify-between">
+                <div class="flex-1">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="text-xs font-mono text-zinc-500">{item.startDate}</span>
+                    <span class="font-medium text-ink">{item.title}</span>
+                  </div>
+                  {item.organization && (
+                    <div class="text-sm text-zinc-600 mb-2">{item.organization}</div>
+                  )}
+                  <div class="text-sm text-zinc-600">{item.description}</div>
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    class="p-2 rounded-lg bg-white hover:bg-zinc-200 text-zinc-600 transition-colors"
+                    onclick={`openTimelineModal('edit', ${item.id})`}
+                  >
+                    <Edit class="w-4 h-4" />
+                  </button>
+                  <button
+                    class="p-2 rounded-lg bg-white hover:bg-red-100 text-red-600 transition-colors"
+                    onclick={`deleteTimeline(${item.id})`}
+                  >
+                    <Trash2 class="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Tech & Gear Section -->
+      <section class="glass-card p-6 rounded-3xl">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-display font-bold text-ink">Tech & Gear</h2>
+          <button
+            class="flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-teal text-white hover:bg-teal-600 transition-colors"
+            onclick="openGearModal('new')"
+          >
+            <Plus class="w-4 h-4" />
+            <span>追加</span>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          {gearData.map(item => (
+            <div class="group px-4 py-2 rounded-xl bg-zinc-50 hover:bg-zinc-100 flex items-center gap-2 transition-colors">
+              <span class="text-sm">{item.name}</span>
+              <button
+                class="opacity-0 group-hover:opacity-100 p-1 rounded bg-red-100 text-red-600 transition-opacity"
+                onclick={`deleteGear(${item.id})`}
+              >
+                <Trash2 class="w-3 h-3" />
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="glass-card p-6 rounded-3xl">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-display font-bold text-ink">Skills</h2>
+        </div>
+
+        <div class="space-y-6">
+          <!-- Languages -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-medium text-zinc-600">Languages</h3>
+              <button
+                class="text-xs px-3 py-1 rounded-lg bg-accent-indigo text-white hover:bg-indigo-600"
+                onclick="openSkillModal('new', 'languages')"
+              >
+                追加
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {languageSkills.map(skill => (
+                <div class="group px-4 py-2 rounded-xl bg-zinc-50 hover:bg-zinc-100 flex items-center gap-2">
+                  <span class="text-sm">{skill.name}</span>
+                  <button
+                    class="opacity-0 group-hover:opacity-100 p-1 rounded bg-red-100 text-red-600"
+                    onclick={`deleteSkill(${skill.id})`}
+                  >
+                    <Trash2 class="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Frameworks -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-medium text-zinc-600">Frameworks</h3>
+              <button
+                class="text-xs px-3 py-1 rounded-lg bg-accent-indigo text-white hover:bg-indigo-600"
+                onclick="openSkillModal('new', 'frameworks')"
+              >
+                追加
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {frameworkSkills.map(skill => (
+                <div class="group px-4 py-2 rounded-xl bg-zinc-50 hover:bg-zinc-100 flex items-center gap-2">
+                  <span class="text-sm">{skill.name}</span>
+                  <button
+                    class="opacity-0 group-hover:opacity-100 p-1 rounded bg-red-100 text-red-600"
+                    onclick={`deleteSkill(${skill.id})`}
+                  >
+                    <Trash2 class="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Others -->
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-medium text-zinc-600">Others</h3>
+              <button
+                class="text-xs px-3 py-1 rounded-lg bg-accent-indigo text-white hover:bg-indigo-600"
+                onclick="openSkillModal('new', 'others')"
+              >
+                追加
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {otherSkills.map(skill => (
+                <div class="group px-4 py-2 rounded-xl bg-zinc-50 hover:bg-zinc-100 flex items-center gap-2">
+                  <span class="text-sm">{skill.name}</span>
+                  <button
+                    class="opacity-0 group-hover:opacity-100 p-1 rounded bg-red-100 text-red-600"
+                    onclick={`deleteSkill(${skill.id})`}
+                  >
+                    <Trash2 class="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Profile Modal -->
+  <dialog id="profile-modal" class="rounded-3xl p-0 backdrop:bg-black/50 max-w-2xl w-full m-auto">
+    <div class="glass-card p-6 rounded-3xl">
+      <h2 class="text-xl font-display font-bold mb-6">プロフィール編集</h2>
+      <form id="profile-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">名前</label>
+          <input
+            type="text"
+            name="name"
+            required
+            value={profile?.name}
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-indigo/30"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">ロール（カンマ区切り）</label>
+          <input
+            type="text"
+            name="roles"
+            required
+            value={profile?.roles.join(', ')}
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-indigo/30"
+            placeholder="Frontend, Backend, System"
+          />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-zinc-700 mb-2">経験年数</label>
+            <input
+              type="number"
+              name="experienceYears"
+              required
+              value={profile?.experienceYears}
+              class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-indigo/30"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-zinc-700 mb-2">プロジェクト数</label>
+            <input
+              type="number"
+              name="projectCount"
+              required
+              value={profile?.projectCount}
+              class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-indigo/30"
+            />
+          </div>
+        </div>
+        <div class="flex gap-3 justify-end mt-6">
+          <button type="button" onclick="document.getElementById('profile-modal').close()" class="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700">
+            キャンセル
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-accent-indigo text-white hover:bg-indigo-600">
+            保存
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Timeline Modal -->
+  <dialog id="timeline-modal" class="rounded-3xl p-0 backdrop:bg-black/50 max-w-2xl w-full m-auto">
+    <div class="glass-card p-6 rounded-3xl">
+      <h2 class="text-xl font-display font-bold mb-6" id="timeline-modal-title">タイムライン追加</h2>
+      <form id="timeline-form" class="space-y-4">
+        <input type="hidden" name="id" id="timeline-id" />
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">日付</label>
+          <input
+            type="text"
+            name="startDate"
+            required
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-teal/30"
+            placeholder="2024.01"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">タイトル</label>
+          <input
+            type="text"
+            name="title"
+            required
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-teal/30"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">組織/会社</label>
+          <input
+            type="text"
+            name="organization"
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-teal/30"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">説明</label>
+          <textarea
+            name="description"
+            required
+            rows="3"
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-teal/30"
+          ></textarea>
+        </div>
+        <div class="flex gap-3 justify-end mt-6">
+          <button type="button" onclick="document.getElementById('timeline-modal').close()" class="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700">
+            キャンセル
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-accent-teal text-white hover:bg-teal-600">
+            保存
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Gear Modal -->
+  <dialog id="gear-modal" class="rounded-3xl p-0 backdrop:bg-black/50 max-w-md w-full m-auto">
+    <div class="glass-card p-6 rounded-3xl">
+      <h2 class="text-xl font-display font-bold mb-6">Tech & Gear 追加</h2>
+      <form id="gear-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">名前</label>
+          <input
+            type="text"
+            name="name"
+            required
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-teal/30"
+            placeholder="VSCode"
+          />
+        </div>
+        <div class="flex gap-3 justify-end mt-6">
+          <button type="button" onclick="document.getElementById('gear-modal').close()" class="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700">
+            キャンセル
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-accent-teal text-white hover:bg-teal-600">
+            追加
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Skill Modal -->
+  <dialog id="skill-modal" class="rounded-3xl p-0 backdrop:bg-black/50 max-w-md w-full m-auto">
+    <div class="glass-card p-6 rounded-3xl">
+      <h2 class="text-xl font-display font-bold mb-6">スキル追加</h2>
+      <form id="skill-form" class="space-y-4">
+        <input type="hidden" name="category" id="skill-category" />
+        <div>
+          <label class="block text-sm font-medium text-zinc-700 mb-2">名前</label>
+          <input
+            type="text"
+            name="name"
+            required
+            class="w-full px-4 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-accent-indigo/30"
+            placeholder="TypeScript"
+          />
+        </div>
+        <div class="flex gap-3 justify-end mt-6">
+          <button type="button" onclick="document.getElementById('skill-modal').close()" class="px-4 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700">
+            キャンセル
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-accent-indigo text-white hover:bg-indigo-600">
+            追加
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script define:vars={{ timelineData: timelineData.map(item => ({
+    id: item.id,
+    startDate: item.startDate,
+    title: item.title,
+    organization: item.organization,
+    description: item.description
+  })) }}>
+    // Client-side functions for modals and CRUD operations
+    // Profile form
+    document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      const data = {
+        name: formData.get('name'),
+        roles: formData.get('roles').split(',').map(r => r.trim()),
+        experienceYears: formData.get('experienceYears'),
+        projectCount: formData.get('projectCount'),
+      };
+
+      const response = await fetch('/api/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        location.reload();
+      }
+    });
+
+    // Timeline data from server
+    const timelineDataMap = {};
+    timelineData.forEach((item) => {
+      timelineDataMap[item.id] = item;
+    });
+
+    window.openTimelineModal = function(mode, id) {
+      const modal = document.getElementById('timeline-modal');
+      const form = document.getElementById('timeline-form');
+      const title = document.getElementById('timeline-modal-title');
+
+      form.reset();
+
+      if (mode === 'edit' && id) {
+        title.textContent = 'タイムライン編集';
+        const data = timelineDataMap[id];
+        form.elements.namedItem('id').value = id.toString();
+        form.elements.namedItem('startDate').value = data.startDate;
+        form.elements.namedItem('title').value = data.title;
+        form.elements.namedItem('organization').value = data.organization || '';
+        form.elements.namedItem('description').value = data.description;
+      } else {
+        title.textContent = 'タイムライン追加';
+      }
+
+      modal.showModal();
+    };
+
+    document.getElementById('timeline-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const id = formData.get('id');
+
+      const data = {
+        startDate: formData.get('startDate'),
+        title: formData.get('title'),
+        organization: formData.get('organization') || null,
+        description: formData.get('description'),
+      };
+
+      const url = id ? `/api/timeline/${id}` : '/api/timeline';
+      const method = id ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        location.reload();
+      }
+    });
+
+    window.openGearModal = function(mode) {
+      const modal = document.getElementById('gear-modal');
+      const form = document.getElementById('gear-form');
+      form.reset();
+      modal.showModal();
+    };
+
+    document.getElementById('gear-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      const response = await fetch('/api/gear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: formData.get('name') })
+      });
+
+      if (response.ok) {
+        location.reload();
+      }
+    });
+
+    window.openSkillModal = function(mode, category) {
+      const modal = document.getElementById('skill-modal');
+      const form = document.getElementById('skill-form');
+      form.reset();
+      document.getElementById('skill-category').value = category;
+      modal.showModal();
+    };
+
+    document.getElementById('skill-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      const data = {
+        name: formData.get('name'),
+        category: formData.get('category'),
+      };
+
+      const response = await fetch('/api/skills', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        location.reload();
+      }
+    });
+
+    window.deleteTimeline = async function(id) {
+      if (!confirm('このタイムライン項目を削除しますか？')) return;
+
+      const response = await fetch(`/api/timeline/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        location.reload();
+      }
+    };
+
+    window.deleteGear = async function(id) {
+      if (!confirm('このアイテムを削除しますか？')) return;
+
+      const response = await fetch(`/api/gear/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        location.reload();
+      }
+    };
+
+    window.deleteSkill = async function(id) {
+      if (!confirm('このスキルを削除しますか？')) return;
+
+      const response = await fetch(`/api/skills/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        location.reload();
+      }
+    };
+  </script>
+</Layout>

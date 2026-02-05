@@ -3,12 +3,39 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Timeline from '../components/features/about/Timeline.astro';
-import { getEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import { Briefcase, Layers, Cpu } from 'lucide-astro';
+import { db } from '../lib/db';
+import { profiles as profilesTable, timeline as timelineTable, gear as gearTable, skills as skillsTable } from '../lib/db/schema';
+import { desc } from 'drizzle-orm';
 
-const profileEntry = await getEntry('about', 'profile');
-const profile = profileEntry!.data;
+// Fetch data from database
+const profileData = await db.select().from(profilesTable).get();
+const timelineData = await db.select().from(timelineTable).orderBy(desc(timelineTable.startDate)).all();
+const gearData = await db.select().from(gearTable).orderBy(gearTable.order).all();
+const skillsData = await db.select().from(skillsTable).orderBy(skillsTable.order).all();
+
+// Transform to match existing structure
+const profile = {
+  name: profileData!.name,
+  roles: profileData!.roles,
+  stats: {
+    experience: profileData!.experienceYears.toString(),
+    projects: `${profileData!.projectCount}+`
+  },
+  timeline: timelineData.map(item => ({
+    year: item.startDate,
+    title: item.title,
+    company: item.organization || '',
+    description: item.description
+  })),
+  gear: gearData.map(item => item.name),
+  skills: {
+    languages: skillsData.filter(s => s.category === 'languages').map(s => s.name),
+    frameworks: skillsData.filter(s => s.category === 'frameworks').map(s => s.name),
+    others: skillsData.filter(s => s.category === 'others').map(s => s.name)
+  }
+};
 ---
 
 <Layout title="About | gae">

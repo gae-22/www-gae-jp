@@ -6,26 +6,39 @@
         "dev": "astro dev --host",
         "build": "astro build",
         "preview": "astro preview --host",
-        "astro": "astro"
+        "astro": "astro",
+        "db:generate": "drizzle-kit generate",
+        "db:push": "drizzle-kit push"
     },
     "dependencies": {
         "@astrojs/mdx": "^4.3.13",
+        "@astrojs/node": "^9.0.0",
         "@astrojs/sitemap": "^3.7.0",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/jetbrains-mono": "^5.2.8",
         "@fontsource/outfit": "^5.2.8",
         "@fontsource/zen-kaku-gothic-new": "^5.2.7",
+        "@lucia-auth/adapter-sqlite": "^3.0.2",
         "@tailwindcss/typography": "^0.5.19",
         "@tailwindcss/vite": "^4.1.18",
         "astro": "^5.17.1",
         "astro-robots-txt": "^1.0.0",
+        "better-sqlite3": "^11.0.0",
+        "drizzle-orm": "^0.36.0",
+        "lucia": "^3.2.0",
         "lucide-astro": "^0.556.0",
+        "oslo": "^1.2.0",
         "rehype-pretty-code": "^0.14.1",
         "shiki": "^3.22.0",
         "tailwindcss": "^4.1.18",
         "unist-util-visit": "^5.1.0"
     },
     "devDependencies": {
-        "@shikijs/transformers": "^3.22.0"
+        "@node-rs/argon2": "^2.0.2",
+        "@shikijs/transformers": "^3.22.0",
+        "@types/better-sqlite3": "^7.6.12",
+        "drizzle-kit": "^0.28.0",
+        "tsx": "^4.21.0",
+        "yaml": "^2.8.2"
     }
 }
