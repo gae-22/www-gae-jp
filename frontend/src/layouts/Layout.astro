@@ -54,6 +54,10 @@ const socialImageURL = new URL(image, Astro.url);
         <meta property="twitter:image" content={socialImageURL} />
 
 		<title>{title}</title>
+
+        <script is:inline define:vars={{ publicApiUrl: process.env.PUBLIC_API_URL || import.meta.env.PUBLIC_API_URL || 'http://localhost:4000' }}>
+            window._PUBLIC_API_URL = publicApiUrl;
+        </script>
 	</head>
     <body class="min-h-screen relative overflow-x-hidden bg-paper text-ink selection:bg-accent-indigo selection:text-white">
         <!-- Global Noise Texture -->

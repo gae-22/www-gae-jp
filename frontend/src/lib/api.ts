@@ -1,5 +1,14 @@
-const API_BASE_URL =
-    (import.meta.env.PUBLIC_API_URL || 'http://localhost:4000') + '/api';
+const getApiBaseUrl = () => {
+    if (typeof process !== 'undefined' && process.env?.PUBLIC_API_URL) {
+        return process.env.PUBLIC_API_URL;
+    }
+    if (typeof window !== 'undefined' && (window as any)._PUBLIC_API_URL) {
+        return (window as any)._PUBLIC_API_URL;
+    }
+    return import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
+};
+
+const API_BASE_URL = getApiBaseUrl() + '/api';
 
 interface ApiOptions {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
