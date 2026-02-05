@@ -1,0 +1,135 @@
+---
+import BentoItem from './BentoItem.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { ArrowUpRight, Github, MapPin } from 'lucide-astro';
+import Discord from '~/components/icons/Discord.astro';
+
+// Fetch latest featured post
+const posts = await getCollection('blog', ({ data }) => {
+	return import.meta.env.PROD ? !data.draft && data.featured : true;
+});
+const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())[0];
+---
+
+<section class="max-w-7xl mx-auto px-4 pb-16 lg:pb-32">
+    <div class="relative mb-12 lg:mb-20">
+        <h2 class="text-3xl sm:text-4xl font-display font-medium text-ink inline-block relative z-10 leading-tight">
+            Selected<br />
+            <span class="text-ink-muted italic font-light">Works & Thoughts</span>
+        </h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-auto lg:grid-rows-2 gap-6 h-auto lg:h-136">
+
+        <!-- Item 1: Featured Post (Large) -->
+        <BentoItem class="col-span-2 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2 min-h-80 lg:min-h-0 relative group/post" title="Latest Writing">
+            {latestPost ? (
+                <a href={`/blog/${latestPost.slug}`} class="block w-full h-full relative z-10">
+                    <!-- Base - removed opaque white to let glass shine -->
+
+                     {latestPost.data.cover && (
+                        <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover/post:scale-105">
+                            <Image
+                                src={latestPost.data.cover}
+                                alt={latestPost.data.coverAlt || ""}
+                                class="w-full h-full object-cover opacity-90 group-hover/post:opacity-100 transition-opacity duration-300"
+                            />
+                            <div class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
+                        </div>
+                     )}
+
+                     <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col justify-end h-full">
+                        <div class="mt-auto transform transition-transform duration-500 ease-out group-hover/post:-translate-y-2">
+                            <div class="flex items-center gap-3 mb-3 opacity-90">
+                                 <span class="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-mono font-bold text-white border border-white/20">NEW</span>
+                                 <span class="text-zinc-200 text-xs font-mono">
+                                     {latestPost.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                 </span>
+                            </div>
+                            <h3 class="text-2xl lg:text-3xl font-display font-bold leading-tight mb-2 text-white group-hover/post:text-accent-highlight transition-colors">
+                                {latestPost.data.title}
+                            </h3>
+                            <p class="text-sm text-zinc-300 line-clamp-2 max-w-md">
+                                {latestPost.data.description}
+                            </p>
+                        </div>
+                     </div>
+
+                     <div class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 text-white opacity-0 translate-y-2 group-hover/post:opacity-100 group-hover/post:translate-y-0 transition-all duration-300">
+                        <ArrowUpRight class="w-5 h-5" />
+                     </div>
+                </a>
+            ) : (
+                <div class="w-full h-full flex items-center justify-center text-ink-muted">
+                    <p>No posts available yet</p>
+                </div>
+            )}
+        </BentoItem>
+
+        <!-- Item 2: GitHub -->
+        <BentoItem class="col-span-1 row-span-1 group/github border-zinc-100 relative overflow-hidden aspect-square md:aspect-auto">
+             <a href="https://github.com/gae-22/www-gae-jp" target="_blank" class="relative z-10 w-full h-full p-6 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                     <div class="p-2.5 rounded-full bg-zinc-50 border border-zinc-100 text-ink group-hover/github:scale-110 transition-transform duration-300">
+                        <Github class="w-6 h-6" />
+                    </div>
+                </div>
+                <div>
+                    <span class="text-lg font-bold font-display text-ink block mb-1 group-hover/github:translate-x-1 transition-transform duration-300">GitHub</span>
+                    <span class="text-xs text-ink-muted">Check repos</span>
+                </div>
+                 <div class="absolute top-6 right-6 opacity-0 -translate-x-2 group-hover/github:opacity-100 group-hover/github:translate-x-0 transition-all duration-300">
+                     <ArrowUpRight class="w-4 h-4 text-ink-muted" />
+                 </div>
+            </a>
+        </BentoItem>
+
+        <!-- Item 3: Discord -->
+        <BentoItem class="col-span-1 row-span-1 group/discord relative overflow-hidden aspect-square md:aspect-auto">
+             <a href="https://discord.gg/nqsegJHjBb" target="_blank" class="relative z-10 w-full h-full p-6 flex flex-col justify-between">
+                 <div class="flex justify-between items-start">
+                    <div class="p-2.5 rounded-full bg-[#5865F2]/10 text-[#5865F2] group-hover/discord:bg-[#5865F2] group-hover/discord:text-white transition-colors duration-300">
+                        <Discord class="w-6 h-6" />
+                    </div>
+                </div>
+                <div>
+                     <span class="text-lg font-bold font-display text-ink block mb-1 group-hover/discord:translate-x-1 transition-transform duration-300">Discord</span>
+                     <span class="text-xs text-ink-muted">Join community</span>
+                </div>
+                 <div class="absolute top-6 right-6 opacity-0 -translate-x-2 group-hover/discord:opacity-100 group-hover/discord:translate-x-0 transition-all duration-300">
+                     <ArrowUpRight class="w-4 h-4 text-[#5865F2]" />
+                 </div>
+            </a>
+        </BentoItem>
+
+        <!-- Item 4: Location (Expanded map concept) -->
+        <BentoItem class="col-span-2 md:col-span-3 lg:col-span-2 row-span-1 group/location bg-zinc-50 border-zinc-100 overflow-hidden relative">
+             <!-- Pattern Background -->
+             <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+             <!-- Abstract Map Circle -->
+             <div class="absolute right-[-20%] bottom-[-20%] w-[80%] h-[150%] rounded-full border border-zinc-200/50 flex items-center justify-center opacity-50 group-hover/location:scale-105 transition-transform duration-700">
+                 <div class="w-[70%] h-[70%] rounded-full border border-zinc-200/50"></div>
+             </div>
+
+            <div class="relative z-10 w-full h-full p-8 flex items-center justify-between">
+                <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-mono text-accent-teal uppercase tracking-widest border border-accent-teal/20 self-start px-2 py-0.5 rounded-full bg-teal-50">Base</span>
+                    <div class="flex items-baseline gap-2 mt-2">
+                         <span class="text-4xl font-bold font-display text-ink tracking-tight">Tokyo</span>
+                    </div>
+                     <span class="text-sm font-mono text-zinc-400">35.6762° N, 139.6503° E</span>
+                </div>
+
+                <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-accent-teal/10 rounded-full animate-ping"></div>
+                    <div class="relative w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-accent-teal">
+                        <MapPin class="w-6 h-6" />
+                    </div>
+                </div>
+            </div>
+        </BentoItem>
+
+    </div>
+</section>

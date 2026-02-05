@@ -1,0 +1,56 @@
+---
+import { Home, PenTool, User, Github, Folder } from 'lucide-astro';
+import Discord from '~/components/icons/Discord.astro';
+
+const navItems = [
+  { label: 'Home', href: '/', icon: Home },
+  { label: 'Blog', href: '/blog', icon: PenTool },
+  { label: 'Projects', href: '/projects', icon: Folder },
+  { label: 'About', href: '/about', icon: User },
+];
+
+const socialItems = [
+  { label: 'GitHub', href: 'https://github.com/gae-22/www-gae-jp', icon: Github },
+  { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: Discord },
+];
+---
+
+<header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4">
+  <nav class="glass rounded-full px-5 py-2.5 flex items-center justify-between transition-all duration-300 hover:shadow-lg shadow-sm whitespace-nowrap bg-white/80">
+
+    <!-- Internal Links -->
+    <ul class="flex items-center gap-1 md:gap-4">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-zinc-100/80 transition-all group relative"
+          >
+            <item.icon class="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" />
+            <span class="text-xs font-medium text-ink-muted group-hover:text-ink transition-colors hidden md:block">{item.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="w-px h-4 bg-zinc-200 mx-2 hidden md:block"></div>
+
+    <!-- Social Links -->
+    <ul class="flex items-center gap-2">
+      {socialItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={item.label}
+            class="p-2 rounded-full hover:bg-zinc-100 text-ink-muted hover:text-ink transition-all duration-200 block"
+          >
+            <item.icon class="w-4 h-4" />
+          </a>
+        </li>
+      ))}
+    </ul>
+
+  </nav>
+</header>

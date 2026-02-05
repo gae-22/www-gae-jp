@@ -1,0 +1,96 @@
+---
+import { Code } from 'astro:components'
+import { type BuiltinLanguage, type SpecialLanguage } from 'shiki'
+import CopyIcon from '~/components/icons/CopyIcon.astro'
+import CheckIcon from '~/components/icons/CheckIcon.astro'
+import {
+  transformerNotationDiff,
+  transformerMetaHighlight,
+  transformerNotationFocus,
+} from '@shikijs/transformers'
+
+interface Props {
+  lang?: string
+  title?: string
+  code: string
+}
+
+const { lang, title, code = '' } = Astro.props
+
+const decodedCode = code ? decodeURIComponent(code) : ''
+
+const transformerLineNumbers = () => {
+  return {
+    name: 'transformer-line-numbers',
+    code(node: any) {
+      node.properties['data-line-numbers'] = ''
+
+      const lines = node.children.filter((child: any) => child.type === 'element')
+      lines.forEach((line: any) => {
+        if (!line.properties.class) line.properties.class = []
+        if (!line.properties.class.includes('line')) line.properties.class.push('line')
+      })
+    }
+  }
+}
+---
+
+<figure class='code-block not-prose my-6 rounded-2xl overflow-hidden shadow-lg border border-zinc-200/50'>
+  <div class='bg-[#21252b] px-4 py-3 flex items-center justify-between border-b border-white/5'>
+    <figcaption
+      class='not-prose font-mono text-xs text-white/90'
+    >
+      {title ? title : 'code'}
+    </figcaption>
+  </div>
+  <div class='relative bg-[#282c34] dark:shadow-2xl'>
+    <button
+      aria-label='copy-button'
+      class='copy-button absolute right-2 top-2 z-20 rounded-md bg-white/10 p-1.5 text-white/70 transition-all ease-in hover:bg-white/20 hover:text-white'
+    >
+      <CopyIcon />
+    </button>
+    <span
+      class='check-span absolute right-2 top-2 z-10 rounded-md bg-white/10 p-1.5 text-emerald-400 opacity-0 transition-all ease-in'
+    >
+      <CheckIcon />
+    </span>
+    <div class="code-content py-4 overflow-x-auto text-[13px] leading-6 font-mono">
+      <Code
+        lang={lang as BuiltinLanguage | SpecialLanguage | undefined}
+        code={decodedCode}
+        wrap={false}
+        theme={'tokyo-night'}
+        transformers={[
+          transformerNotationDiff(),
+          transformerMetaHighlight(),
+          transformerNotationFocus(),
+          transformerLineNumbers(),
+        ]}
+      />
+    </div>
+  </div>
+</figure>
+
+<script>
+  const copyBlock = () => {
+    const codeBlock = document.querySelectorAll('.code-block')
+    codeBlock.forEach((code) => {
+      const button = code.querySelector('.copy-button')
+      const check = code.querySelector('.check-span')
+      const content = code.querySelector('code')
+
+      button!.addEventListener('click', () => {
+        navigator.clipboard.writeText(content?.textContent?.trim() || '')
+        check?.classList.remove('opacity-0')
+        button?.classList.add('opacity-0')
+        setTimeout(() => {
+          check?.classList.add('opacity-0')
+          button?.classList.remove('opacity-0')
+        }, 2000)
+      })
+    })
+  }
+  copyBlock() // initial load
+  document.addEventListener('astro:after-swap', copyBlock) // re-run after each page change
+</script>
