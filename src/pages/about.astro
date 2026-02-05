@@ -94,6 +94,7 @@ const profile = profileEntry!.data;
 
             <!-- Sidebar: Gear / Stack -->
             <div class="lg:col-span-5 space-y-12">
+                <!-- Tech & Gear Section -->
                 <section class="sticky top-32">
                     <div class="flex items-center gap-3 mb-8">
                         <div class="p-2 rounded-lg bg-teal-50 text-accent-teal">
@@ -110,8 +111,60 @@ const profile = profileEntry!.data;
                             </div>
                         ))}
                     </div>
+                </section>
 
-                    <!-- Additional decorative box -->
+                <!-- Skills Section -->
+                <section>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="p-2 rounded-lg bg-indigo-50 text-accent-indigo">
+                            <Layers class="w-5 h-5" />
+                        </div>
+                        <h2 class="text-2xl font-display font-bold text-ink">Skills</h2>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Languages -->
+                        <div>
+                            <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Languages</h3>
+                            <div class="flex flex-wrap gap-2">
+                                {profile.skills.languages.map(lang => (
+                                    <div class="group px-4 py-2.5 glass-card rounded-xl flex items-center gap-2 hover:border-accent-indigo/30 hover:bg-white transition-all duration-300">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-zinc-300 group-hover:bg-accent-indigo transition-colors"></span>
+                                        <span class="text-sm font-medium text-zinc-600 group-hover:text-ink">{lang}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <!-- Frameworks -->
+                        <div>
+                            <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Frameworks</h3>
+                            <div class="flex flex-wrap gap-2">
+                                {profile.skills.frameworks.map(tech => (
+                                    <div class="group px-4 py-2.5 glass-card rounded-xl flex items-center gap-2 hover:border-accent-indigo/30 hover:bg-white transition-all duration-300">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-zinc-300 group-hover:bg-accent-indigo transition-colors"></span>
+                                        <span class="text-sm font-medium text-zinc-600 group-hover:text-ink">{tech}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <!-- Others -->
+                        <div>
+                            <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Others</h3>
+                            <div class="flex flex-wrap gap-2">
+                                {profile.skills.others.map(tech => (
+                                    <div class="group px-4 py-2.5 glass-card rounded-xl flex items-center gap-2 hover:border-accent-indigo/30 hover:bg-white transition-all duration-300">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-zinc-300 group-hover:bg-accent-indigo transition-colors"></span>
+                                        <span class="text-sm font-medium text-zinc-600 group-hover:text-ink">{tech}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Policy Section -->
                     <div class="mt-8 p-6 rounded-3xl bg-linear-to-br from-indigo-50/50 to-zinc-50 border border-indigo-100 text-ink relative overflow-hidden group hover:shadow-lg transition-shadow duration-500">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-accent-indigo/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-accent-indigo/10 transition-colors"></div>
 

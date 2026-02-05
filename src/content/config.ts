@@ -46,6 +46,11 @@ const about = defineCollection({
             }),
         ),
         gear: z.array(z.string()),
+        skills: z.object({
+            languages: z.array(z.string()),
+            frameworks: z.array(z.string()),
+            others: z.array(z.string()),
+        }),
     }),
 });
 

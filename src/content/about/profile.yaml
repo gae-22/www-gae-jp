@@ -57,3 +57,26 @@ gear:
     - 'Mac'
     - 'HHKB'
     - 'MX ERGO S'
+
+skills:
+    languages:
+        - 'C/C++'
+        - 'Python'
+        - 'Rust'
+        - 'Java'
+        - 'TypeScript'
+        - 'JavaScript'
+
+    frameworks:
+        - 'React'
+        - 'Next.js'
+        - 'Astro'
+        - 'TailwindCSS'
+        - 'FastAPI'
+        - 'Flask'
+        - 'Django'
+
+    others:
+        - 'Git'
+        - 'Docker'
+        - 'Linux'
