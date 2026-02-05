@@ -1,0 +1,18 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/layout/Header.astro';
+import Footer from '~/components/layout/Footer.astro';
+import Hero from '~/components/features/home/Hero.astro';
+import BentoGrid from '~/components/features/home/BentoGrid.astro';
+---
+
+<Layout title="gae | ポートフォリオ">
+  <Header />
+
+  <main class="relative min-h-screen">
+    <Hero />
+    <BentoGrid />
+  </main>
+
+  <Footer />
+</Layout>

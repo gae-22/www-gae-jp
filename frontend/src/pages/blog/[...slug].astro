@@ -1,0 +1,26 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import PostLayout from '~/layouts/PostLayout.astro';
+import CodeBlock from '~/components/features/blog/CodeBlock.astro';
+
+// SSRモードではgetStaticPathsは無視されるため、動的に取得
+const { slug } = Astro.params;
+
+// slugが存在しない場合は404
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+const post = await getEntry('blog', slug);
+
+// 投稿が見つからない場合は404
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const { Content, headings } = await post.render();
+---
+
+<PostLayout post={post} headings={headings}>
+  <Content components={{ CodeBlock }} />
+</PostLayout>

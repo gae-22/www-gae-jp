@@ -1,56 +1,137 @@
-# www-gae-jp
+# www-gae-jp - Astro + Hono モノレポ
 
-![Astro](https://img.shields.io/badge/Astro-5.0-BC52EE?style=for-the-badge&logo=astro&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+フロントエンド（Astro）とバックエンド（Hono）を分離したモノレポ構成のポートフォリオサイト。
 
-This repository hosts the personal portfolio and blog of **gae**, an engineer and designer dedicated to exploring the boundary between digital and reality.
+## プロジェクト構造
 
-The project serves as both a portfolio of works and an experimental ground for cutting-edge web technologies, designed with a focus on "aesthetic excellence" and "high performance."
+```
+www-gae-jp/
+├── frontend/          # Astro フロントエンド
+├── backend/           # Hono バックエンド API
+├── shared/            # 共有型定義
+├── docs/              # 設計書・仕様書
+└── drizzle/           # データベースマイグレーション
+```
 
-## About Content
+## セットアップ
 
-This platform publishes insights and records across three main pillars:
+### 前提条件
 
-### 1. Technology & Engineering
+- Node.js 20+
+- pnpm
 
-Technical deep dives into modern web development, focusing on performance optimization and architecture.
+### インストール
 
-- **Frontend**: Advanced usage of Astro, Next.js, and React.
-- **Backend/System**: Insights from SaaS development and system engineering.
-- **Research**: Notes on wireless communication (V2V) and academic studies.
+```bash
+pnpm install
+```
 
-### 2. Design & Aesthetics
+### 開発環境の起動
 
-Explorations of UI/UX design philosophies, emphasizing the fusion of beauty and function.
+#### 両方同時に起動（推奨）
 
-- **Visual Style**: Glassmorphism, motion graphics, and immersive interfaces.
-- **Philosophy**: Analyzing what makes a digital experience "comfortable" and "engaging."
+```bash
+pnpm dev
+```
 
-### 3. Personal Journey
+#### 個別に起動
 
-A record of my carrier and growth as a developer.
+```bash
+# Backend (ポート 4000)
+pnpm dev:backend
 
-- **Projects**: Archives of past development work (30+ projects).
-- **Timeline**: Milestones from university research (UEC), internships, and community leadership.
+# Frontend (ポート 3000)
+pnpm dev:frontend
+```
 
-## Technical Overview
+## 環境変数
 
-While the focus is on content, the platform itself is built to demonstrate modern high-performance web architecture.
+### Backend (`backend/.env`)
 
-- **Framework**: Astro v5 (Zero-JS by default)
-- **Styling**: Tailwind CSS v4
-- **Content System**: Type-safe MDX with Astro Content Collections
-- **Typography**: Self-hosted fonts via `@fontsource`
+```env
+NODE_ENV=development
+PORT=4000
+DATABASE_URL=../data.db
+FRONTEND_URL=http://localhost:3000
+```
 
-## Project Structure
+### Frontend (`frontend/.env`)
 
-The codebase is organized to separate content from presentation logic clearly.
+```env
+PUBLIC_API_URL=http://localhost:4000/api
+```
 
-- `src/content/`: The core of the repository. Contains all Blog posts, Project details, and Profile data (YAML/MDX).
-- `src/components/`: Reusable UI elements implementing the specific design system.
-- `src/pages/`: Routing logic using Astro's file-system routing.
+## ビルド
 
-## License
+```bash
+# 全体をビルド
+pnpm build
 
-This project is licensed under the [MIT License](LICENSE).
+# 個別にビルド
+pnpm build:backend
+pnpm build:frontend
+```
+
+## データベース
+
+### マイグレーション実行
+
+```bash
+cd backend
+pnpm db:push
+```
+
+### 初期データ投入
+
+```bash
+cd backend
+pnpm tsx src/scripts/seed.ts
+```
+
+## API エンドポイント
+
+| エンドポイント      | メソッド | 認証 | 説明             |
+| ------------------- | -------- | ---- | ---------------- |
+| `/api/auth/login`   | POST     | ❌   | ログイン         |
+| `/api/auth/logout`  | POST     | ✅   | ログアウト       |
+| `/api/profile`      | POST     | ✅   | プロフィール更新 |
+| `/api/skills`       | POST     | ✅   | スキル作成       |
+| `/api/skills/:id`   | DELETE   | ✅   | スキル削除       |
+| `/api/timeline`     | POST     | ✅   | タイムライン作成 |
+| `/api/timeline/:id` | PUT      | ✅   | タイムライン更新 |
+| `/api/timeline/:id` | DELETE   | ✅   | タイムライン削除 |
+| `/api/gear`         | POST     | ✅   | ギア作成         |
+| `/api/gear/:id`     | DELETE   | ✅   | ギア削除         |
+
+## 技術スタック
+
+### Frontend
+
+- Astro 5.x (SSG/SSR ハイブリッド)
+- TailwindCSS 4.x
+- MDX
+- Lucide Icons
+
+### Backend
+
+- Hono (超軽量 Web フレームワーク)
+- Lucia Auth v3 (認証)
+- Drizzle ORM (SQLite)
+- @node-rs/argon2 (パスワードハッシュ化)
+
+## ドキュメント
+
+詳細な設計書・仕様書は `docs/` ディレクトリを参照してください：
+
+- [アーキテクチャ全体設計書](docs/01_architecture_overview.md)
+- [データベース設計書](docs/02_database_design.md)
+- [API仕様書](docs/03_api_specification.md)
+- [バックエンド仕様書](docs/04_backend_specification.md)
+- [フロントエンド仕様書](docs/05_frontend_specification.md)
+- [認証・セキュリティ設計書](docs/06_auth_security_design.md)
+- [デプロイメント設計書](docs/07_deployment_design.md)
+- [実装計画書](docs/implementation_plan.md)
+
+## ライセンス
+
+プライベートプロジェクト

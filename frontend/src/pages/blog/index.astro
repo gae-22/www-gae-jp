@@ -1,0 +1,85 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/layout/Header.astro';
+import Footer from '~/components/layout/Footer.astro';
+import PostCard from '~/components/features/blog/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => {
+	return import.meta.env.PROD ? !data.draft : true;
+})).sort(
+	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+
+const title = "ブログ | gae";
+const description = "ウェブ開発とデザインに関する考察、チュートリアル、洞察。";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+
+  <main class="min-h-screen pt-40 pb-32 px-4 relative overflow-hidden">
+    <!-- Sophisticated Background Elements -->
+    <div class="absolute top-0 left-1/4 -z-10 w-125 h-125 bg-accent-indigo/10 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-0 right-1/4 -z-10 w-150 h-150 bg-accent-teal/5 rounded-full blur-[150px]"></div>
+
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Page Header -->
+      <section class="mb-24 animate-fade-in">
+        <div class="flex flex-col items-center text-center space-y-6">
+          <div class="glass-card inline-flex items-center gap-2 px-4 py-2 rounded-full border-white/20 bg-white/50 backdrop-blur-sm">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-indigo opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-indigo"></span>
+              </span>
+              <span class="text-xs font-mono font-medium text-ink-muted tracking-[0.2em] uppercase">Journal & Insights</span>
+          </div>
+
+          <h1 class="text-6xl md:text-8xl lg:text-9xl font-display font-medium tracking-tight text-ink">
+              Bl<span class="text-transparent bg-clip-text bg-linear-to-r from-accent-indigo via-accent-teal to-accent-indigo/50">og</span>
+          </h1>
+
+          <p class="text-ink-muted max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-light text-balance">
+            Design, Development, and the Future of Web.<br class="hidden md:block"/>
+            <span class="text-ink/60">技術とデザインが交差する、デジタルの探求記録。</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-fr">
+        {posts.map((post, index) => {
+          // Different layout based on index for Bento effect
+          const isMainFeatured = index === 0;
+          const isSecondaryFeatured = index === 1 || index === 2;
+
+          let colSpan = "col-span-1 md:col-span-3 lg:col-span-4";
+          let variant: 'featured' | 'basic' = 'basic';
+
+          if (isMainFeatured) {
+            colSpan = "col-span-1 md:col-span-6 lg:col-span-12";
+            variant = 'featured';
+          } else if (isSecondaryFeatured) {
+            colSpan = "col-span-1 md:col-span-3 lg:col-span-6";
+          }
+
+          return (
+            <div class:list={[colSpan, "animate-slide-up"]} style={`animation-delay: ${index * 0.1}s;`}>
+              <PostCard post={post} variant={variant} />
+            </div>
+          );
+        })}
+      </div>
+
+      {posts.length === 0 && (
+          <div class="text-center py-40 glass-card rounded-4xl border-dashed border-2 border-zinc-200">
+              <p class="text-ink-muted font-display text-xl">No stories found yet.</p>
+          </div>
+      )}
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
