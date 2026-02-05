@@ -11,8 +11,8 @@ const posts = (await getCollection('blog', ({ data }) => {
 	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
 );
 
-const title = "ブログ | gae";
-const description = "ウェブ開発とデザインに関する考察、チュートリアル、洞察。";
+const title = "Blog | gae";
+const description = "Web development, design, and insights.";
 ---
 
 <Layout title={title} description={description}>

@@ -14,7 +14,7 @@ const { post, headings } = Astro.props;
 const { title, description, publishedAt, cover, coverAlt } = post.data;
 ---
 
-<Layout title={`${title} | gae`} description={description}>
+<Layout title={`${title} | gae`} description={description} image={cover?.src}>
     <div class="progress-bar fixed top-0 left-0 w-full h-0.5 bg-zinc-200/50 z-60">
         <div class="h-full bg-accent-indigo origin-left scale-x-0 transition-transform duration-100 ease-out" id="reading-progress"></div>
     </div>
