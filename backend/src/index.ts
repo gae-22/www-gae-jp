@@ -16,7 +16,7 @@ app.use(
     cors({
         origin: (origin, c) => {
             if (process.env.NODE_ENV === 'production') {
-                return 'https://www.gae-jp.net';
+                return process.env.FRONTEND_URL || 'https://www.gae-jp.net';
             }
             const requestOrigin = c.req.header('origin');
             if (requestOrigin?.includes('localhost')) {
