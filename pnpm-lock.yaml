@@ -37,16 +37,16 @@ importers:
         version: 1.19.9(hono@4.11.7)
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
-        version: 3.0.2(better-sqlite3@11.10.0)(lucia@3.2.2)
+        version: 3.0.2(better-sqlite3@12.6.2)(lucia@3.2.2)
       '@node-rs/argon2':
         specifier: ^2.0.2
         version: 2.0.2
       better-sqlite3:
-        specifier: ^11.0.0
-        version: 11.10.0
+        specifier: ^12.6.2
+        version: 12.6.2
       drizzle-orm:
         specifier: ^0.36.0
-        version: 0.36.4(@types/better-sqlite3@7.6.13)(better-sqlite3@11.10.0)
+        version: 0.36.4(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.2)
       hono:
         specifier: ^4.11.7
         version: 4.11.7
@@ -132,7 +132,7 @@ importers:
     devDependencies:
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
-        version: 3.0.2(better-sqlite3@11.10.0)(lucia@3.2.2)
+        version: 3.0.2(better-sqlite3@12.6.2)(lucia@3.2.2)
       '@node-rs/argon2':
         specifier: ^2.0.2
         version: 2.0.2
@@ -146,11 +146,11 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       better-sqlite3:
-        specifier: ^11.10.0
-        version: 11.10.0
+        specifier: ^12.6.2
+        version: 12.6.2
       drizzle-orm:
         specifier: ^0.36.4
-        version: 0.36.4(@types/better-sqlite3@7.6.13)(better-sqlite3@11.10.0)
+        version: 0.36.4(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.2)
       lucia:
         specifier: ^3.2.2
         version: 3.2.2
@@ -1601,8 +1601,9 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  better-sqlite3@11.10.0:
-    resolution: {integrity: sha512-EwhOpyXiOEL/lKzHz9AW1msWFNzGc/z+LzeB3/jnFJpxu+th2yqvzsSWas1v9jgs9+xiXJcD5A8CJxAG2TaghQ==}
+  better-sqlite3@12.6.2:
+    resolution: {integrity: sha512-8VYKM3MjCa9WcaSAI3hzwhmyHVlH8tiGFwf0RlTsZPWJ1I5MkzjiudCo4KC4DxOaL/53A5B1sI/IbldNFDbsKA==}
+    engines: {node: 20.x || 22.x || 23.x || 24.x || 25.x}
 
   bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
@@ -3921,11 +3922,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@11.10.0)(lucia@3.2.2)':
+  '@lucia-auth/adapter-sqlite@3.0.2(better-sqlite3@12.6.2)(lucia@3.2.2)':
     dependencies:
       lucia: 3.2.2
     optionalDependencies:
-      better-sqlite3: 11.10.0
+      better-sqlite3: 12.6.2
 
   '@mdx-js/mdx@3.1.1':
     dependencies:
@@ -4505,7 +4506,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  better-sqlite3@11.10.0:
+  better-sqlite3@12.6.2:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.3
@@ -4703,10 +4704,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.36.4(@types/better-sqlite3@7.6.13)(better-sqlite3@11.10.0):
+  drizzle-orm@0.36.4(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.2):
     optionalDependencies:
       '@types/better-sqlite3': 7.6.13
-      better-sqlite3: 11.10.0
+      better-sqlite3: 12.6.2
 
   dset@3.1.4: {}
 
