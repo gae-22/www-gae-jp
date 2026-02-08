@@ -2,7 +2,8 @@ import { Lucia } from 'lucia';
 import { BetterSqlite3Adapter } from '@lucia-auth/adapter-sqlite';
 import Database from 'better-sqlite3';
 
-const sqlite = new Database('../data.db');
+const dbPath = process.env.DB_PATH || 'data.db';
+const sqlite = new Database(dbPath);
 
 const adapter = new BetterSqlite3Adapter(sqlite, {
     user: 'users',

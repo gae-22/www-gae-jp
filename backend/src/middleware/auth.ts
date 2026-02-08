@@ -1,10 +1,9 @@
 import { createMiddleware } from 'hono/factory';
+import { getCookie } from 'hono/cookie';
 import { lucia } from '../lib/auth.js';
 
 export const requireAuth = createMiddleware(async (c, next) => {
-    const sessionId = c.req
-        .header('cookie')
-        ?.match(/auth_session=([^;]+)/)?.[1];
+    const sessionId = getCookie(c, 'auth_session');
 
     if (!sessionId) {
         return c.json({ error: 'Unauthorized' }, 401);

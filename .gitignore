@@ -2,6 +2,7 @@
 dist/
 .output/
 .vercel/
+tsconfig.tsbuildinfo
 
 # Generated types
 .astro/

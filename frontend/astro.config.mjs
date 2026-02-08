@@ -42,6 +42,7 @@ function remarkCodeBlockComponent() {
 
             // Replace the code node with the component node
             if (parent && index !== null && index !== undefined) {
+                // @ts-ignore: MDX node types are not fully compatible with mdast
                 parent.children.splice(index, 1, componentNode);
             }
         });
@@ -62,10 +63,7 @@ export default defineConfig({
         port: Number(process.env.PORT || 4321),
         host: true,
     },
-    preview: {
-        port: Number(process.env.PORT || 4321),
-        host: true,
-    },
+
     security: {
         // 開発環境ではチェックを無効化、本番環境では有効化
         checkOrigin: process.env.NODE_ENV === 'production',
@@ -96,9 +94,4 @@ export default defineConfig({
         sitemap(),
         robotsTxt(),
     ],
-    image: {
-        service: {
-            entrypoint: 'astro/assets/services/noop',
-        },
-    },
 });

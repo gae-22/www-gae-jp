@@ -8,6 +8,7 @@
         "preview": "node --env-file=.env ./node_modules/astro/astro.js preview --host"
     },
     "dependencies": {
+        "@astrojs/check": "^0.9.6",
         "@astrojs/mdx": "^4.3.13",
         "@astrojs/node": "^9.0.0",
         "@astrojs/sitemap": "^3.7.0",
@@ -19,13 +20,22 @@
         "@tailwindcss/vite": "^4.1.18",
         "astro": "^5.17.1",
         "astro-robots-txt": "^1.0.0",
+        "hono": "^4.11.7",
         "lucide-astro": "^0.556.0",
         "rehype-pretty-code": "^0.14.1",
         "shiki": "^3.22.0",
         "tailwindcss": "^4.1.18",
+        "typescript": "^5.9.3",
         "unist-util-visit": "^5.1.0"
     },
     "devDependencies": {
-        "@shikijs/transformers": "^3.22.0"
+        "@lucia-auth/adapter-sqlite": "^3.0.2",
+        "@node-rs/argon2": "^2.0.2",
+        "@shikijs/transformers": "^3.22.0",
+        "@types/better-sqlite3": "^7.6.13",
+        "@types/mdast": "^4.0.4",
+        "better-sqlite3": "^11.10.0",
+        "drizzle-orm": "^0.36.4",
+        "lucia": "^3.2.2"
     }
 }

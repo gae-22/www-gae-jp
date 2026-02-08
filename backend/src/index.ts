@@ -27,7 +27,10 @@ app.use(
                 return 'https://www.gae-jp.net';
             }
             const requestOrigin = c.req.header('origin');
-            if (requestOrigin?.includes('localhost')) {
+            if (
+                requestOrigin === 'http://localhost:4321' ||
+                requestOrigin === 'http://localhost:3000'
+            ) {
                 return requestOrigin;
             }
             return 'http://localhost:4321';
@@ -39,11 +42,12 @@ app.use(
 );
 
 // ルート登録
-app.route('/api/auth', authRoutes);
-app.route('/api', profileRoutes);
-app.route('/api/skills', skillsRoutes);
-app.route('/api/timeline', timelineRoutes);
-app.route('/api/gear', gearRoutes);
+const routes = app
+    .route('/api/auth', authRoutes)
+    .route('/api', profileRoutes)
+    .route('/api/skills', skillsRoutes)
+    .route('/api/timeline', timelineRoutes)
+    .route('/api/gear', gearRoutes);
 
 // ヘルスチェック
 app.get('/health', (c) => c.json({ status: 'ok' }));
@@ -64,6 +68,7 @@ app.onError((err, c) => {
 });
 
 export default app;
+export type AppType = typeof routes;
 
 // サーバー起動（Node.js環境）
 if (

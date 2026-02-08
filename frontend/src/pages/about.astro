@@ -78,7 +78,7 @@ const profile = {
                 </div>
 
                 <div class="flex flex-wrap gap-2">
-                     {profile.roles.map((role) => (
+                     {profile.roles.map((role: string) => (
                          <div class="px-3.5 py-1.5 rounded-full bg-zinc-50 border border-zinc-200 text-xs font-medium text-zinc-600 hover:bg-white hover:border-accent-indigo/30 hover:scale-105 hover:shadow-md transition-all duration-300 cursor-default">
                             {role}
                          </div>

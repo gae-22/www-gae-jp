@@ -1,3 +1,6 @@
+import { hc } from 'hono/client';
+import type { AppType } from '@backend/index';
+
 const getApiBaseUrl = () => {
     if (typeof process !== 'undefined' && process.env?.PUBLIC_API_URL) {
         return process.env.PUBLIC_API_URL;
@@ -8,41 +11,7 @@ const getApiBaseUrl = () => {
     return import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
 };
 
-const API_BASE_URL = getApiBaseUrl() + '/api';
-
-interface ApiOptions {
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
-    body?: any;
-    credentials?: RequestCredentials;
-}
-
-async function apiRequest<T = any>(
-    endpoint: string,
-    options: ApiOptions = {},
-): Promise<T> {
-    const { method = 'GET', body, credentials = 'include' } = options;
-
-    const config: RequestInit = {
-        method,
-        credentials,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-
-    if (body) {
-        config.body = JSON.stringify(body);
-    }
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'API request failed');
-    }
-
-    return response.json();
-}
+const client = hc<AppType>(getApiBaseUrl());
 
 // 型定義
 interface ProfileData {
@@ -67,39 +36,118 @@ interface TimelineData {
 
 interface GearData {
     name: string;
+    // order is handled by backend
 }
 
 // エクスポート関数
 export const api = {
     auth: {
-        login: (username: string, password: string) =>
-            apiRequest('/auth/login', {
-                method: 'POST',
-                body: { username, password },
-            }),
-        logout: () => apiRequest('/auth/logout', { method: 'POST' }),
+        login: async (username: string, password: string) => {
+            const res = await client.api.auth.login.$post({
+                json: { username, password },
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Login failed');
+            }
+            return res.json();
+        },
+        logout: async () => {
+            const res = await client.api.auth.logout.$post();
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Logout failed');
+            }
+            return res.json();
+        },
     },
     profile: {
-        update: (data: ProfileData) =>
-            apiRequest('/profile', { method: 'POST', body: data }),
+        update: async (data: ProfileData) => {
+            const res = await client.api.profile.$post({
+                json: data,
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Update failed');
+            }
+            return res.json();
+        },
     },
     skills: {
-        create: (data: SkillData) =>
-            apiRequest('/skills', { method: 'POST', body: data }),
-        delete: (id: number) =>
-            apiRequest(`/skills/${id}`, { method: 'DELETE' }),
+        create: async (data: SkillData) => {
+            const res = await client.api.skills.$post({
+                json: data,
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Create failed');
+            }
+            return res.json();
+        },
+        delete: async (id: number) => {
+            const res = await client.api.skills[':id'].$delete({
+                param: { id: id.toString() },
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Delete failed');
+            }
+            return res.json();
+        },
     },
     timeline: {
-        create: (data: TimelineData) =>
-            apiRequest('/timeline', { method: 'POST', body: data }),
-        update: (id: number, data: TimelineData) =>
-            apiRequest(`/timeline/${id}`, { method: 'PUT', body: data }),
-        delete: (id: number) =>
-            apiRequest(`/timeline/${id}`, { method: 'DELETE' }),
+        create: async (data: TimelineData) => {
+            const res = await client.api.timeline.$post({
+                json: data,
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Create failed');
+            }
+            return res.json();
+        },
+        update: async (id: number, data: TimelineData) => {
+            const res = await client.api.timeline[':id'].$put({
+                param: { id: id.toString() },
+                json: data,
+            } as any);
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Update failed');
+            }
+            return res.json();
+        },
+        delete: async (id: number) => {
+            const res = await client.api.timeline[':id'].$delete({
+                param: { id: id.toString() },
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Delete failed');
+            }
+            return res.json();
+        },
     },
     gear: {
-        create: (data: GearData) =>
-            apiRequest('/gear', { method: 'POST', body: data }),
-        delete: (id: number) => apiRequest(`/gear/${id}`, { method: 'DELETE' }),
+        create: async (data: GearData) => {
+            const res = await client.api.gear.$post({
+                json: data,
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Create failed');
+            }
+            return res.json();
+        },
+        delete: async (id: number) => {
+            const res = await client.api.gear[':id'].$delete({
+                param: { id: id.toString() },
+            });
+            if (!res.ok) {
+                const errorData = (await res.json()) as { error?: string };
+                throw new Error(errorData.error || 'Delete failed');
+            }
+            return res.json();
+        },
     },
 };
