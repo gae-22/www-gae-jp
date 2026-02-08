@@ -16,15 +16,15 @@ interface Props {
 	title: string;
 	description?: string;
     image?: string;
+    jsonLd?: Record<string, any>;
 }
 
-const { title, description = "gae's Website", image = '/gae.svg' } = Astro.props;
+const { title, description = "gae's Website", image = '/gae.svg', jsonLd } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.url);
 ---
 
-<!doctype html>
 <!doctype html>
 <html lang="ja">
 	<head>
@@ -54,6 +54,8 @@ const socialImageURL = new URL(image, Astro.url);
         <meta property="twitter:image" content={socialImageURL} />
 
 		<title>{title}</title>
+
+        {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 
         <script is:inline define:vars={{ publicApiUrl: process.env.PUBLIC_API_URL || import.meta.env.PUBLIC_API_URL || 'http://localhost:4000' }}>
             window._PUBLIC_API_URL = publicApiUrl;

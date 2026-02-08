@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
+import { secureHeaders } from 'hono/secure-headers';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 import skillsRoutes from './routes/skills.js';
@@ -11,6 +12,7 @@ const app = new Hono();
 
 // グローバルミドルウェア
 app.use('*', logger());
+app.use('*', secureHeaders());
 app.use(
     '/api/*',
     cors({

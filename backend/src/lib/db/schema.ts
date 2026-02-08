@@ -1,4 +1,5 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
 // Profile table
 export const profiles = sqliteTable('profiles', {
@@ -52,3 +53,19 @@ export const sessions = sqliteTable('sessions', {
         .references(() => users.id),
     expiresAt: integer('expires_at').notNull(),
 });
+
+// Zod Schemas
+export const insertProfileSchema = createInsertSchema(profiles);
+export const selectProfileSchema = createSelectSchema(profiles);
+
+export const insertTimelineSchema = createInsertSchema(timeline);
+export const selectTimelineSchema = createSelectSchema(timeline);
+
+export const insertGearSchema = createInsertSchema(gear);
+export const selectGearSchema = createSelectSchema(gear);
+
+export const insertSkillSchema = createInsertSchema(skills);
+export const selectSkillSchema = createSelectSchema(skills);
+
+export const insertUserSchema = createInsertSchema(users);
+export const selectUserSchema = createSelectSchema(users);

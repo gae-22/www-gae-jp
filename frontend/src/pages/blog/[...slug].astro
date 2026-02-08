@@ -4,14 +4,22 @@ import PostLayout from '~/layouts/PostLayout.astro';
 import CodeBlock from '~/components/features/blog/CodeBlock.astro';
 
 // SSRモードではgetStaticPathsは無視されるため、動的に取得
+// Staticモード用にgetStaticPathsを追加
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
 const { slug } = Astro.params;
+const post = Astro.props.post || await getEntry('blog', slug);
 
 // slugが存在しない場合は404
 if (!slug) {
   return Astro.redirect('/404');
 }
-
-const post = await getEntry('blog', slug);
 
 // 投稿が見つからない場合は404
 if (!post) {
