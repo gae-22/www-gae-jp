@@ -46,11 +46,6 @@ timeline:
       company: '電気通信大学 AWCC 藤井研究室'
       description: '大学で無線通信を先行しつつ，プログラミングを独学．サークル・アルバイト内向けWebアプリを開発．'
 
-    - year: '2019.04-2022.03'
-      title: '高校生'
-      company: '福岡県立嘉穂高等学校'
-      description: '中学校卒業後地元の高校に進学．'
-
 gear:
     - 'VSCode'
     - 'Antigravity'
@@ -80,3 +75,4 @@ skills:
         - 'Git'
         - 'Docker'
         - 'Linux'
+        - 'Cloudflare'
