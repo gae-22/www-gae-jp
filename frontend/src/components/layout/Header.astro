@@ -1,17 +1,16 @@
 ---
-import { Home, PenTool, User, Github, Folder } from 'lucide-astro';
-import Discord from '~/components/icons/Discord.astro';
+import { Icon } from 'astro-icon/components';
 
 const navItems = [
-  { label: 'Home', href: '/', icon: Home },
-  { label: 'Blog', href: '/blog', icon: PenTool },
-  { label: 'Projects', href: '/projects', icon: Folder },
-  { label: 'About', href: '/about', icon: User },
+  { label: 'Home', href: '/', icon: 'lucide:home' },
+  { label: 'Blog', href: '/blog', icon: 'lucide:pen-tool' },
+  { label: 'Projects', href: '/projects', icon: 'lucide:folder' },
+  { label: 'About', href: '/about', icon: 'lucide:user' },
 ];
 
 const socialItems = [
-  { label: 'GitHub', href: 'https://github.com/gae-22/www-gae-jp', icon: Github },
-  { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: Discord },
+  { label: 'GitHub', href: 'https://github.com/gae-22/www-gae-jp', icon: 'lucide:github' },
+  { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: 'simple-icons:discord' },
 ];
 ---
 
@@ -26,7 +25,7 @@ const socialItems = [
             href={item.href}
             class="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-zinc-100/80 transition-all group relative"
           >
-            <item.icon class="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" />
+            <Icon name={item.icon} class="w-4 h-4 text-ink-muted group-hover:text-ink transition-colors" />
             <span class="text-xs font-medium text-ink-muted group-hover:text-ink transition-colors hidden md:block">{item.label}</span>
           </a>
         </li>
@@ -46,7 +45,7 @@ const socialItems = [
             aria-label={item.label}
             class="p-2 rounded-full hover:bg-zinc-100 text-ink-muted hover:text-ink transition-all duration-200 block"
           >
-            <item.icon class="w-4 h-4" />
+            <Icon name={item.icon} class="w-4 h-4" />
           </a>
         </li>
       ))}

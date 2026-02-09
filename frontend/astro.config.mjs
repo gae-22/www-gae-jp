@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
+import icon from 'astro-icon';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -94,5 +95,6 @@ export default defineConfig({
         }),
         sitemap(),
         robotsTxt(),
+        icon(),
     ],
 });

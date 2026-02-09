@@ -19,9 +19,9 @@
         "@tailwindcss/typography": "^0.5.19",
         "@tailwindcss/vite": "^4.1.18",
         "astro": "^5.17.1",
+        "astro-icon": "^1.1.5",
         "astro-robots-txt": "^1.0.0",
         "hono": "^4.11.7",
-        "lucide-astro": "^0.556.0",
         "rehype-pretty-code": "^0.14.1",
         "sharp": "^0.34.5",
         "shiki": "^3.22.0",
@@ -30,6 +30,8 @@
         "unist-util-visit": "^5.1.0"
     },
     "devDependencies": {
+        "@iconify-json/lucide": "^1.2.89",
+        "@iconify-json/simple-icons": "^1.2.70",
         "@lucia-auth/adapter-sqlite": "^3.0.2",
         "@node-rs/argon2": "^2.0.2",
         "@shikijs/transformers": "^3.22.0",

@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/Layout.astro';
-import { Rocket, Home } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="404 | Not Found">
@@ -19,7 +19,7 @@ import { Rocket, Home } from 'lucide-astro';
                 404
             </h1>
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform hover:rotate-12 transition-transform duration-500">
-                <Rocket class="w-24 h-24 md:w-32 md:h-32 text-neon-cyan drop-shadow-xl" />
+                <Icon name="lucide:rocket" class="w-24 h-24 md:w-32 md:h-32 text-neon-cyan drop-shadow-xl" />
             </div>
         </div>
 
@@ -32,7 +32,7 @@ import { Rocket, Home } from 'lucide-astro';
 
         <div class="pt-4">
             <a href="/" class="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-ink text-zinc-50 hover:bg-zinc-800 transition-all duration-300 hover:scale-105 shadow-xl shadow-zinc-200/50">
-                <Home class="w-5 h-5 text-neon-cyan group-hover:rotate-12 transition-transform" />
+                <Icon name="lucide:home" class="w-5 h-5 text-neon-cyan group-hover:rotate-12 transition-transform" />
                 <span>トップページへ戻る</span>
             </a>
         </div>

@@ -1,5 +1,5 @@
 ---
-import { Cpu, Globe, Code, Layers } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 // In a real app, I would import specific brand SVG icons.
 // Using Lucide icons as placeholders for generic "Tech" concepts or specific SVGs if available.
 // For "No Emojis" rule, strictly SVGs.
@@ -15,28 +15,28 @@ import { Cpu, Globe, Code, Layers } from 'lucide-astro';
       <>
         <div class="flex flex-col items-center gap-2 group/icon">
           <div class="w-12 h-12 rounded-xl glass flex items-center justify-center group-hover/icon:border-accent-indigo transition-colors">
-            <Globe class="w-6 h-6 text-zinc-600 group-hover/icon:text-accent-indigo transition-colors" />
+            <Icon name="lucide:globe" class="w-6 h-6 text-zinc-600 group-hover/icon:text-accent-indigo transition-colors" />
           </div>
           <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">Astro</span>
         </div>
 
         <div class="flex flex-col items-center gap-2 group/icon">
            <div class="w-12 h-12 rounded-xl glass flex items-center justify-center group-hover/icon:border-accent-teal transition-colors">
-            <Layers class="w-6 h-6 text-zinc-600 group-hover/icon:text-accent-teal transition-colors" />
+            <Icon name="lucide:layers" class="w-6 h-6 text-zinc-600 group-hover/icon:text-accent-teal transition-colors" />
           </div>
           <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">Tailwind</span>
         </div>
 
         <div class="flex flex-col items-center gap-2 group/icon">
            <div class="w-12 h-12 rounded-xl glass flex items-center justify-center group-hover/icon:border-blue-500 transition-colors">
-            <Code class="w-6 h-6 text-zinc-600 group-hover/icon:text-blue-500 transition-colors" />
+            <Icon name="lucide:code" class="w-6 h-6 text-zinc-600 group-hover/icon:text-blue-500 transition-colors" />
           </div>
           <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">React</span>
         </div>
 
         <div class="flex flex-col items-center gap-2 group/icon">
            <div class="w-12 h-12 rounded-xl glass flex items-center justify-center group-hover/icon:border-emerald-500 transition-colors">
-            <Cpu class="w-6 h-6 text-zinc-600 group-hover/icon:text-emerald-500 transition-colors" />
+            <Icon name="lucide:cpu" class="w-6 h-6 text-zinc-600 group-hover/icon:text-emerald-500 transition-colors" />
           </div>
           <span class="text-[10px] text-ink-muted uppercase font-medium tracking-wide">Node.js</span>
         </div>

@@ -5,7 +5,7 @@ import Header from '~/components/layout/Header.astro';
 import Footer from '~/components/layout/Footer.astro';
 import Timeline from '~/components/features/about/Timeline.astro';
 import { Image } from 'astro:assets';
-import { Briefcase, Layers, Cpu } from 'lucide-astro';
+import { Icon } from 'astro-icon/components';
 
 // バックエンドAPIのURL
 const API_URL = process.env.PUBLIC_API_URL || import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
@@ -127,7 +127,7 @@ const profile = {
                  <section>
                     <div class="flex items-center gap-3 mb-8">
                         <div class="p-2 rounded-lg bg-indigo-50 text-accent-indigo">
-                            <Briefcase class="w-5 h-5" />
+                            <Icon name="lucide:briefcase" class="w-5 h-5" />
                         </div>
                         <h2 class="text-2xl font-display font-bold text-ink">Career History</h2>
                     </div>
@@ -149,7 +149,7 @@ const profile = {
                     <div class="relative z-10">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="p-2.5 rounded-xl bg-linear-to-br from-teal-50 to-cyan-50 text-accent-teal shadow-lg shadow-teal-500/20 group-hover:shadow-xl group-hover:shadow-teal-500/30 group-hover:scale-110 transition-all duration-300">
-                                <Cpu class="w-5 h-5" />
+                                <Icon name="lucide:cpu" class="w-5 h-5" />
                             </div>
                             <h2 class="text-2xl font-display font-bold text-ink group-hover:text-accent-teal transition-colors duration-300">Tech & Gear</h2>
                             <div class="ml-auto flex gap-1">
@@ -184,7 +184,7 @@ const profile = {
                     <div class="relative z-10">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="p-2.5 rounded-xl bg-linear-to-br from-indigo-50 to-purple-50 text-accent-indigo shadow-lg shadow-indigo-500/20 group-hover:shadow-xl group-hover:shadow-indigo-500/30 group-hover:scale-110 transition-all duration-300">
-                                <Layers class="w-5 h-5" />
+                                <Icon name="lucide:layers" class="w-5 h-5" />
                             </div>
                             <h2 class="text-2xl font-display font-bold text-ink group-hover:text-accent-indigo transition-colors duration-300">Skills</h2>
                             <div class="ml-auto flex gap-1">
@@ -249,7 +249,7 @@ const profile = {
                 <section class="p-6 rounded-3xl bg-linear-to-br from-indigo-50/50 to-zinc-50 border border-indigo-100 text-ink relative overflow-hidden group hover:shadow-lg transition-shadow duration-500">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-accent-indigo/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-accent-indigo/10 transition-colors"></div>
 
-                    <Layers class="w-8 h-8 text-accent-indigo mb-4" />
+                    <Icon name="lucide:layers" class="w-8 h-8 text-accent-indigo mb-4" />
                     <h3 class="text-lg font-bold font-display mb-2">Policy</h3>
                     <p class="text-sm text-ink-muted leading-relaxed text-balance">
                         技術は課題解決の手段．<br>
