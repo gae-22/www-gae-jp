@@ -30,6 +30,7 @@
         "unist-util-visit": "^5.1.0"
     },
     "devDependencies": {
+        "@iconify-json/logos": "^1.2.10",
         "@iconify-json/lucide": "^1.2.89",
         "@iconify-json/simple-icons": "^1.2.70",
         "@lucia-auth/adapter-sqlite": "^3.0.2",
