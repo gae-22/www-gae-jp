@@ -46,11 +46,11 @@ const profile = {
     company: item.organization || '',
     description: item.description
   })),
-  gear: gearData.map((item: any) => item.name),
+  gear: gearData.map((item: any) => ({ name: item.name, icon: item.icon })),
   skills: {
-    languages: skillsData.filter((s: any) => s.category === 'languages').map((s: any) => s.name),
-    frameworks: skillsData.filter((s: any) => s.category === 'frameworks').map((s: any) => s.name),
-    others: skillsData.filter((s: any) => s.category === 'others').map((s: any) => s.name)
+    languages: skillsData.filter((s: any) => s.category === 'languages').map((s: any) => ({ name: s.name, icon: s.icon })),
+    frameworks: skillsData.filter((s: any) => s.category === 'frameworks').map((s: any) => ({ name: s.name, icon: s.icon })),
+    others: skillsData.filter((s: any) => s.category === 'others').map((s: any) => ({ name: s.name, icon: s.icon }))
   }
 };
 ---
@@ -160,13 +160,17 @@ const profile = {
                         </div>
 
                         <div class="flex flex-wrap gap-2">
-                            {profile.gear.map((tool, index) => (
+                            {profile.gear.map((item, index) => (
                                 <div
                                     class="group/item px-4 py-2.5 rounded-xl flex items-center gap-2 bg-white/80 border border-teal-100/50 hover:border-teal-300/70 hover:bg-linear-to-r hover:from-white hover:via-teal-50/40 hover:to-cyan-50/30 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-teal-500/20 transition-all duration-300 cursor-default backdrop-blur-sm"
                                     style={`animation-delay: ${index * 50}ms`}
                                 >
-                                    <span class="w-1.5 h-1.5 rounded-full bg-teal-200 group-hover/item:bg-accent-teal group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-teal-500/50 transition-all duration-300"></span>
-                                    <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-teal transition-colors duration-200">{tool}</span>
+                                    {item.icon ? (
+                                        <Icon name={item.icon} class="w-4 h-4 text-accent-teal" />
+                                    ) : (
+                                        <span class="w-1.5 h-1.5 rounded-full bg-teal-200 group-hover/item:bg-accent-teal group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-teal-500/50 transition-all duration-300"></span>
+                                    )}
+                                    <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-teal transition-colors duration-200">{item.name}</span>
                                 </div>
                             ))}
                         </div>
@@ -199,8 +203,9 @@ const profile = {
                         <div>
                             <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Languages</h3>
                             <div class="flex flex-wrap gap-2">
-                                {profile.skills.languages.map((lang, index) => {
-                                    const getIcon = (name: string) => {
+                                {profile.skills.languages.map((item, index) => {
+                                    // Use icon from database or fallback to default
+                                    const getDefaultIcon = (name: string) => {
                                         const n = name.toLowerCase();
                                         if (n.includes('typescript')) return 'logos:typescript-icon';
                                         if (n.includes('javascript')) return 'logos:javascript';
@@ -210,16 +215,19 @@ const profile = {
                                         if (n.includes('java')) return 'logos:java';
                                         return null;
                                     };
-                                    const icon = getIcon(lang);
+                                    const icon = item.icon || getDefaultIcon(item.name);
 
                                     return (
                                     <div
                                         class="group/item px-4 py-2.5 rounded-xl flex items-center gap-2 bg-white/80 border border-indigo-100/50 hover:border-indigo-300/70 hover:bg-linear-to-r hover:from-white hover:via-indigo-50/40 hover:to-purple-50/30 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/20 transition-all duration-300 cursor-default backdrop-blur-sm"
                                         style={`animation-delay: ${index * 50}ms`}
                                     >
-                                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
-                                        {icon && <Icon name={icon} class="w-4 h-4 mr-1" />}
-                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{lang}</span>
+                                        {icon ? (
+                                            <Icon name={icon} class="w-4 h-4" />
+                                        ) : (
+                                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
+                                        )}
+                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item.name}</span>
                                     </div>
                                 )})}
                             </div>
@@ -229,8 +237,9 @@ const profile = {
                         <div>
                             <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Frameworks</h3>
                             <div class="flex flex-wrap gap-2">
-                                {profile.skills.frameworks.map((tech, index) => {
-                                     const getIcon = (name: string) => {
+                                {profile.skills.frameworks.map((item, index) => {
+                                     // Use icon from database or fallback to default
+                                     const getDefaultIcon = (name: string) => {
                                         const n = name.toLowerCase();
                                         if (n.includes('react')) return 'logos:react';
                                         if (n.includes('next')) return 'logos:nextjs-icon';
@@ -243,16 +252,19 @@ const profile = {
                                         if (n.includes('svelte')) return 'logos:svelte-icon';
                                         return null;
                                     };
-                                    const icon = getIcon(tech);
+                                    const icon = item.icon || getDefaultIcon(item.name);
 
                                     return (
                                     <div
                                         class="group/item px-4 py-2.5 rounded-xl flex items-center gap-2 bg-white/80 border border-indigo-100/50 hover:border-indigo-300/70 hover:bg-linear-to-r hover:from-white hover:via-indigo-50/40 hover:to-purple-50/30 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/20 transition-all duration-300 cursor-default backdrop-blur-sm"
                                         style={`animation-delay: ${index * 50}ms`}
                                     >
-                                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
-                                        {icon && <Icon name={icon} class="w-4 h-4 mr-1" />}
-                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{tech}</span>
+                                        {icon ? (
+                                            <Icon name={icon} class="w-4 h-4" />
+                                        ) : (
+                                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
+                                        )}
+                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item.name}</span>
                                     </div>
                                 )})}
                             </div>
@@ -262,8 +274,9 @@ const profile = {
                         <div>
                             <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Others</h3>
                             <div class="flex flex-wrap gap-2">
-                                {profile.skills.others.map((tech, index) => {
-                                     const getIcon = (name: string) => {
+                                {profile.skills.others.map((item, index) => {
+                                     // Use icon from database or fallback to default
+                                     const getDefaultIcon = (name: string) => {
                                         const n = name.toLowerCase();
                                         if (n.includes('docker')) return 'logos:docker-icon';
                                         if (n.includes('aws')) return 'logos:aws';
@@ -274,16 +287,19 @@ const profile = {
                                         if (n.includes('git')) return 'logos:git-icon';
                                         return null;
                                     };
-                                    const icon = getIcon(tech);
+                                    const icon = item.icon || getDefaultIcon(item.name);
 
                                     return (
                                     <div
                                         class="group/item px-4 py-2.5 rounded-xl flex items-center gap-2 bg-white/80 border border-indigo-100/50 hover:border-indigo-300/70 hover:bg-linear-to-r hover:from-white hover:via-indigo-50/40 hover:to-purple-50/30 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/20 transition-all duration-300 cursor-default backdrop-blur-sm"
                                         style={`animation-delay: ${index * 50}ms`}
                                     >
-                                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
-                                        {icon && <Icon name={icon} class="w-4 h-4 mr-1" />}
-                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{tech}</span>
+                                        {icon ? (
+                                            <Icon name={icon} class="w-4 h-4" />
+                                        ) : (
+                                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
+                                        )}
+                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item.name}</span>
                                     </div>
                                 )})}
                             </div>

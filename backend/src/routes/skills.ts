@@ -21,6 +21,7 @@ const skillsRouter = new Hono()
         const data = await c.req.json<{
             name: string;
             category: 'languages' | 'frameworks' | 'others';
+            icon?: string;
         }>();
 
         try {
@@ -33,6 +34,7 @@ const skillsRouter = new Hono()
             await db.insert(skills).values({
                 name: data.name,
                 category: data.category,
+                icon: data.icon,
                 order: maxOrder + 1,
             });
 

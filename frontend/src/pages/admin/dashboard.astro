@@ -126,6 +126,7 @@ const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
 
           <form id="skill-form" class="mb-6 flex gap-4">
             <input type="text" name="name" placeholder="スキル名" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500"/>
+            <input type="text" name="icon" placeholder="アイコン名 (例: logos:react)" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500"/>
             <select name="category" class="px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500">
               <option value="languages">言語</option>
               <option value="frameworks">フレームワーク</option>
@@ -143,6 +144,7 @@ const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
 
           <form id="gear-form" class="mb-6 flex gap-4">
             <input type="text" name="name" placeholder="ギア名" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500"/>
+            <input type="text" name="icon" placeholder="アイコン名 (例: logos:apple)" class="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500"/>
             <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">追加</button>
           </form>
 
@@ -210,7 +212,10 @@ const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
         if (list) {
           list.innerHTML = skills.map((item: any) => `
             <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-              <span>${item.name} <span class="text-sm text-slate-500">(${item.category})</span></span>
+              <div class="flex items-center gap-2">
+                ${item.icon ? `<span class="text-xs text-slate-400">${item.icon}</span>` : ''}
+                <span>${item.name} <span class="text-sm text-slate-500">(${item.category})</span></span>
+              </div>
               <button onclick="deleteSkill(${item.id})" class="px-3 py-1 bg-red-500 text-white rounded text-sm">削除</button>
             </div>
           `).join('');
@@ -225,7 +230,10 @@ const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
         if (list) {
           list.innerHTML = gear.map((item: any) => `
             <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-              <span>${item.name}</span>
+              <div class="flex items-center gap-2">
+                ${item.icon ? `<span class="text-xs text-slate-400">${item.icon}</span>` : ''}
+                <span>${item.name}</span>
+              </div>
               <button onclick="deleteGear(${item.id})" class="px-3 py-1 bg-red-500 text-white rounded text-sm">削除</button>
             </div>
           `).join('');

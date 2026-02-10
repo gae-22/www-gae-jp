@@ -15,7 +15,7 @@ const gearRouter = new Hono()
         }
     })
     .post('/', requireAuth, async (c) => {
-        const data = await c.req.json<{ name: string }>();
+        const data = await c.req.json<{ name: string; icon?: string }>();
 
         try {
             const allGear = await db.select().from(gear);
@@ -26,6 +26,7 @@ const gearRouter = new Hono()
 
             await db.insert(gear).values({
                 name: data.name,
+                icon: data.icon,
                 order: maxOrder + 1,
             });
 

@@ -25,6 +25,7 @@ export const timeline = sqliteTable('timeline', {
 export const gear = sqliteTable('gear', {
     id: integer('id').primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
+    icon: text('icon'),
     order: integer('order').notNull(),
 });
 
@@ -35,6 +36,7 @@ export const skills = sqliteTable('skills', {
         enum: ['languages', 'frameworks', 'others'],
     }).notNull(),
     name: text('name').notNull(),
+    icon: text('icon'),
     order: integer('order').notNull(),
 });
 
