@@ -66,6 +66,13 @@ const getDefaultIcon = (name: string | undefined | null) => {
   if (n.includes('linux')) return 'logos:linux-tux';
   if (n.includes('git')) return 'logos:git-icon';
 
+  // Gear
+  if (n.includes('vscode') || n.includes('vs code') || n.includes('visual studio code')) return 'logos:visual-studio-code';
+  if (n.includes('mac') || n.includes('apple') || n.includes('macos')) return 'logos:apple';
+  if (n.includes('hhkb') || n.includes('keyboard')) return 'lucide:keyboard';
+  if (n.includes('ergo') || n.includes('mouse') || n.includes('trackball')) return 'lucide:mouse';
+  if (n.includes('antigravity')) return 'lucide:code';
+
   return null;
 };
 ---
@@ -175,15 +182,21 @@ const getDefaultIcon = (name: string | undefined | null) => {
                         </div>
 
                         <div class="flex flex-wrap gap-2">
-                            {profile.gear.map((item: string, index: number) => (
+                            {profile.gear.map((item: string, index: number) => {
+                                const icon = getDefaultIcon(item);
+                                return (
                                 <div
                                     class="group/item px-4 py-2.5 rounded-xl flex items-center gap-2 bg-white/80 border border-teal-100/50 hover:border-teal-300/70 hover:bg-linear-to-r hover:from-white hover:via-teal-50/40 hover:to-cyan-50/30 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-teal-500/20 transition-all duration-300 cursor-default backdrop-blur-sm"
                                     style={`animation-delay: ${index * 50}ms`}
                                 >
-                                    <span class="w-1.5 h-1.5 rounded-full bg-teal-200 group-hover/item:bg-accent-teal group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-teal-500/50 transition-all duration-300"></span>
+                                    {icon ? (
+                                        <Icon name={icon} class="w-4 h-4" />
+                                    ) : (
+                                        <span class="w-1.5 h-1.5 rounded-full bg-teal-200 group-hover/item:bg-accent-teal group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-teal-500/50 transition-all duration-300"></span>
+                                    )}
                                     <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-teal transition-colors duration-200">{item}</span>
                                 </div>
-                            ))}
+                            )})}
                         </div>
                     </div>
                 </section>
