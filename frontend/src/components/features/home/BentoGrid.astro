@@ -3,127 +3,140 @@ import BentoItem from './BentoItem.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
+import Clock from './Clock.astro';
 
 // Fetch latest featured post
 const posts = await getCollection('blog', ({ data }) => {
 	return import.meta.env.PROD ? !data.draft && data.featured : true;
 });
 const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())[0];
+
+const techStack = [
+  { name: 'TypeScript', icon: 'logos:typescript-icon' },
+  { name: 'React', icon: 'logos:react' },
+  { name: 'Next.js', icon: 'logos:nextjs-icon' },
+  { name: 'Astro', icon: 'logos:astro-icon' },
+  { name: 'Python', icon: 'logos:python' },
+  { name: 'Go', icon: 'logos:go' },
+  { name: 'Docker', icon: 'logos:docker-icon' },
+  { name: 'Tailwind', icon: 'logos:tailwindcss-icon' },
+];
 ---
 
-<section id="projects" class="max-w-7xl mx-auto px-4 pb-20 lg:pb-36">
-    <div class="relative mb-14 lg:mb-20 reveal">
-        <h2 class="text-3xl sm:text-4xl font-display font-bold text-ink inline-block relative z-10 leading-tight tracking-tight">
-            Selected<br />
-            <span class="text-ink-muted italic font-light">Works & Thoughts</span>
+<section id="work" class="max-w-7xl mx-auto px-6 py-24 lg:py-36">
+
+    <!-- Section Header -->
+    <div class="relative mb-16 lg:mb-24 reveal">
+        <span class="text-[11px] font-mono uppercase tracking-[0.3em] mb-3 block" style={`color: var(--color-accent);`}>Selected</span>
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight" style={`color: var(--color-text);`}>
+            Works & <span class="italic font-light opacity-50">Thoughts</span>
         </h2>
-        <div class="absolute -bottom-2 left-0 w-16 h-1 bg-linear-to-r from-accent-indigo to-accent-teal rounded-full"></div>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-rows-auto lg:grid-rows-2 gap-5 h-auto lg:h-136">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 auto-rows-[200px] lg:auto-rows-[220px]">
 
         <!-- Item 1: Featured Post (Large) -->
-        <BentoItem class="col-span-2 md:col-span-2 lg:col-span-2 row-span-1 lg:row-span-2 min-h-80 lg:min-h-0 relative group/post reveal" title="Latest Writing">
-            {latestPost ? (
-                <a href={`/blog/${latestPost.slug}`} class="block w-full h-full relative z-10">
-
-                     {latestPost.data.cover && (
-                        <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover/post:scale-105">
-                            <Image
-                                src={latestPost.data.cover}
-                                alt={latestPost.data.coverAlt || ""}
-                                class="w-full h-full object-cover opacity-90 group-hover/post:opacity-100 transition-opacity duration-500"
-                            />
-                            <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent"></div>
-                        </div>
-                     )}
-
-                     <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col justify-end h-full">
-                        <div class="mt-auto transform transition-transform duration-500 ease-out group-hover/post:-translate-y-2">
-                            <div class="flex items-center gap-3 mb-3 opacity-90">
-                                 <span class="px-2.5 py-0.5 rounded-lg bg-white/15 backdrop-blur-md text-[10px] font-mono font-bold text-white border border-white/15">NEW</span>
-                                 <span class="text-zinc-300 text-xs font-mono">
-                                     {latestPost.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                                 </span>
+        <BentoItem
+            class="col-span-2 md:col-span-4 lg:col-span-4 row-span-2 reveal"
+            title="Latest Writing"
+            href={latestPost ? `/blog/${latestPost.slug}` : undefined}
+        >
+            <div class="w-full h-full relative z-10 overflow-hidden rounded-2xl">
+                {latestPost ? (
+                    <>
+                        {latestPost.data.cover && (
+                            <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
+                                <Image
+                                    src={latestPost.data.cover}
+                                    alt={latestPost.data.coverAlt || ""}
+                                    class="w-full h-full object-cover"
+                                />
+                                <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
                             </div>
-                            <h3 class="text-2xl lg:text-3xl font-display font-bold leading-tight mb-2 text-white group-hover/post:text-accent-highlight transition-colors duration-300">
-                                {latestPost.data.title}
-                            </h3>
-                            <p class="text-sm text-zinc-300/90 line-clamp-2 max-w-md leading-relaxed">
-                                {latestPost.data.description}
-                            </p>
+                        )}
+                        <div class="absolute bottom-0 left-0 w-full p-8 lg:p-10 flex flex-col justify-end h-full">
+                            <div class="mt-auto transform transition-transform duration-500 ease-out group-hover:-translate-y-2">
+                                <div class="flex items-center gap-3 mb-3 opacity-80">
+                                    <span class="px-2.5 py-0.5 rounded-lg text-[10px] font-mono font-bold text-white border border-white/20 bg-white/10 backdrop-blur-sm">NEW</span>
+                                    <span class="text-zinc-300 text-xs font-mono">
+                                        {latestPost.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    </span>
+                                </div>
+                                <h3 class="text-2xl lg:text-4xl font-display font-bold leading-tight mb-3 text-white">
+                                    {latestPost.data.title}
+                                </h3>
+                                <p class="text-sm text-zinc-300/80 line-clamp-2 max-w-md leading-relaxed">
+                                    {latestPost.data.description}
+                                </p>
+                            </div>
                         </div>
-                     </div>
-
-                     <div class="absolute top-6 right-6 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/15 text-white opacity-0 translate-y-2 group-hover/post:opacity-100 group-hover/post:translate-y-0 transition-all duration-300">
-                        <Icon name="lucide:arrow-up-right" class="w-5 h-5" />
-                     </div>
-                </a>
-            ) : (
-                <div class="w-full h-full flex items-center justify-center text-ink-muted">
-                    <p>No posts available yet</p>
-                </div>
-            )}
+                        <div class="absolute top-6 right-6 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/15 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                            <Icon name="lucide:arrow-up-right" class="w-5 h-5" />
+                        </div>
+                    </>
+                ) : (
+                    <div class="w-full h-full flex items-center justify-center" style={`color: var(--color-text-muted);`}>
+                        <p class="font-mono text-sm opacity-50">No posts yet</p>
+                    </div>
+                )}
+            </div>
         </BentoItem>
 
-        <!-- Item 2: GitHub -->
-        <BentoItem class="col-span-1 row-span-1 group/github relative overflow-hidden aspect-square md:aspect-auto reveal reveal-delay-1">
-             <a href="https://github.com/gae-22/www-gae-jp" target="_blank" class="relative z-10 w-full h-full p-6 flex flex-col justify-between">
-                <div class="flex justify-between items-start">
-                     <div class="p-3 rounded-xl bg-stone-50 border border-stone-100 text-ink group-hover/github:scale-110 group-hover/github:shadow-md transition-all duration-300">
-                        <Icon name="lucide:github" class="w-6 h-6" />
-                    </div>
+        <!-- Item 2: Clock -->
+        <BentoItem class="col-span-1 row-span-1 reveal reveal-delay-1">
+            <Clock />
+        </BentoItem>
+
+        <!-- Item 3: GitHub -->
+        <BentoItem class="col-span-1 row-span-1 group/gh reveal reveal-delay-2" href="https://github.com/gae-22" title="GitHub">
+            <div class="p-6 flex flex-col justify-between h-full">
+                <div class="p-3 rounded-xl w-fit transition-all duration-300 group-hover/gh:scale-110 group-hover/gh:glow"
+                     style={`background: color-mix(in srgb, var(--color-text) 5%, transparent); color: var(--color-text);`}>
+                    <Icon name="lucide:github" class="w-6 h-6" />
                 </div>
                 <div>
-                    <span class="text-lg font-bold font-display text-ink block mb-1 group-hover/github:translate-x-1 transition-transform duration-300">GitHub</span>
-                    <span class="text-xs text-ink-muted">Check repos</span>
+                    <span class="text-base font-bold font-display block mb-0.5 group-hover/gh:translate-x-1 transition-transform duration-300" style={`color: var(--color-text);`}>GitHub</span>
+                    <span class="text-[11px] font-mono" style={`color: var(--color-text-muted);`}>View repos →</span>
                 </div>
-                 <div class="absolute top-6 right-6 opacity-0 -translate-x-2 group-hover/github:opacity-100 group-hover/github:translate-x-0 transition-all duration-300">
-                     <Icon name="lucide:arrow-up-right" class="w-4 h-4 text-ink-muted" />
-                 </div>
-            </a>
+            </div>
         </BentoItem>
 
-        <!-- Item 3: Discord -->
-        <BentoItem class="col-span-1 row-span-1 group/discord relative overflow-hidden aspect-square md:aspect-auto reveal reveal-delay-2">
-             <a href="https://discord.gg/nqsegJHjBb" target="_blank" class="relative z-10 w-full h-full p-6 flex flex-col justify-between">
-                 <div class="flex justify-between items-start">
-                    <div class="p-3 rounded-xl bg-[#5865F2]/8 text-[#5865F2] group-hover/discord:bg-[#5865F2] group-hover/discord:text-white transition-all duration-300">
-                        <Icon name="simple-icons:discord" class="w-6 h-6" />
+        <!-- Item 4: Tech Stack Marquee -->
+        <BentoItem class="col-span-2 row-span-1 overflow-hidden reveal reveal-delay-3">
+            <div class="p-5 h-full flex flex-col justify-between">
+                <span class="text-[10px] font-mono uppercase tracking-[0.2em]" style={`color: var(--color-text-muted); opacity: 0.5;`}>Stack</span>
+                <div class="overflow-hidden">
+                    <div class="flex gap-4 marquee-track">
+                        {[...techStack, ...techStack].map(tech => (
+                            <div class="flex items-center gap-2 shrink-0 px-3 py-2 rounded-xl transition-colors duration-300"
+                                 style={`border: 1px solid var(--color-border-subtle); background: color-mix(in srgb, var(--color-surface-2) 60%, transparent);`}>
+                                <Icon name={tech.icon} class="w-4 h-4" />
+                                <span class="text-xs font-mono font-medium whitespace-nowrap" style={`color: var(--color-text);`}>{tech.name}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div>
-                     <span class="text-lg font-bold font-display text-ink block mb-1 group-hover/discord:translate-x-1 transition-transform duration-300">Discord</span>
-                     <span class="text-xs text-ink-muted">Join community</span>
-                </div>
-                 <div class="absolute top-6 right-6 opacity-0 -translate-x-2 group-hover/discord:opacity-100 group-hover/discord:translate-x-0 transition-all duration-300">
-                     <Icon name="lucide:arrow-up-right" class="w-4 h-4 text-[#5865F2]" />
-                 </div>
-            </a>
+            </div>
         </BentoItem>
 
-        <!-- Item 4: Location -->
-        <BentoItem class="col-span-2 md:col-span-3 lg:col-span-2 row-span-1 group/location bg-stone-50/50 overflow-hidden relative reveal reveal-delay-3">
-             <!-- Pattern Background -->
-             <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <!-- Item 5: Location -->
+        <BentoItem class="col-span-2 md:col-span-2 row-span-1 overflow-hidden reveal reveal-delay-4">
+            <div class="p-6 flex items-center justify-between h-full relative">
+                <!-- Dot pattern bg -->
+                <div class="absolute inset-0 opacity-[0.04] pointer-events-none" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-             <!-- Abstract Map Circles -->
-             <div class="absolute right-[-20%] bottom-[-20%] w-[70%] h-[140%] rounded-full border border-stone-200/40 flex items-center justify-center opacity-40 group-hover/location:scale-105 transition-transform duration-700">
-                 <div class="w-[70%] h-[70%] rounded-full border border-stone-200/40"></div>
-             </div>
-
-            <div class="relative z-10 w-full h-full p-8 flex items-center justify-between">
-                <div class="flex flex-col gap-1.5">
-                    <span class="text-[10px] font-mono text-accent-teal uppercase tracking-widest border border-accent-teal/15 self-start px-2.5 py-1 rounded-lg bg-teal-50/80">Base</span>
-                    <div class="flex items-baseline gap-2 mt-2">
-                         <span class="text-4xl font-bold font-display text-ink tracking-tight">Tokyo</span>
+                <div class="relative z-10 flex flex-col gap-1">
+                    <span class="text-[10px] font-mono uppercase tracking-[0.2em] px-2.5 py-1 rounded-lg w-fit"
+                          style={`color: var(--color-accent-2); border: 1px solid color-mix(in srgb, var(--color-accent-2) 20%, transparent); background: color-mix(in srgb, var(--color-accent-2) 5%, transparent);`}>Base</span>
+                    <div class="mt-2">
+                        <span class="text-3xl font-bold font-display tracking-tight" style={`color: var(--color-text);`}>Tokyo</span>
                     </div>
-                     <span class="text-sm font-mono text-stone-400">35.6762° N, 139.6503° E</span>
+                    <span class="text-xs font-mono" style={`color: var(--color-text-muted); opacity: 0.5;`}>35.6762° N, 139.6503° E</span>
                 </div>
 
-                <div class="relative w-14 h-14 flex items-center justify-center">
-                    <div class="absolute inset-0 bg-accent-teal/8 rounded-full animate-ping"></div>
-                    <div class="relative w-11 h-11 rounded-full bg-white shadow-sm flex items-center justify-center text-accent-teal border border-stone-100">
+                <div class="relative w-12 h-12 flex items-center justify-center">
+                    <div class="absolute inset-0 rounded-full animate-ping opacity-20" style={`background: var(--color-accent-2);`}></div>
+                    <div class="relative w-10 h-10 rounded-full flex items-center justify-center" style={`background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-accent-2);`}>
                         <Icon name="lucide:map-pin" class="w-5 h-5" />
                     </div>
                 </div>

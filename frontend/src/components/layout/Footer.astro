@@ -4,39 +4,59 @@ import { Icon } from 'astro-icon/components';
 const year = new Date().getFullYear();
 
 const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/gae-22/www-gae-jp', icon: 'lucide:github' },
+  { label: 'GitHub', href: 'https://github.com/gae-22', icon: 'lucide:github' },
   { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: 'simple-icons:discord' },
 ];
+
+const marqueeText = 'AVAILABLE FOR WORK · LET\'S COLLABORATE · TOKYO, JAPAN · ';
 ---
 
-<footer class="w-full py-14 mt-24 lg:mt-40 relative">
-  <!-- Gradient top border -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 max-w-md h-px bg-linear-to-r from-transparent via-stone-300/60 to-transparent"></div>
+<footer class="relative mt-32 overflow-hidden">
 
-  <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+  <!-- Marquee Banner -->
+  <div class="relative py-5 overflow-hidden select-none" style={`border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);`}>
+    <div class="marquee-track whitespace-nowrap">
+      {Array(8).fill(marqueeText).map((text) => (
+        <span class="inline-flex items-center gap-3 mx-4 text-xs font-mono font-bold uppercase tracking-[0.3em] opacity-40" style={`color: var(--color-text);`}>
+          {text}
+          <span class="inline-block w-1.5 h-1.5 rounded-full" style={`background: var(--color-accent);`}></span>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Footer Content -->
+  <div class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-8">
+
     <!-- Left: Brand -->
-    <div class="flex flex-col items-center md:items-start gap-2">
-      <span class="text-lg font-display font-semibold text-stone-300 select-none pointer-events-none tracking-tight">
-        gae
-      </span>
-      <p class="text-ink-muted text-[10px] font-mono tracking-widest uppercase opacity-60">
-        &copy; {year} gae. All rights reserved.
-      </p>
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center"
+           style={`border: 1px solid var(--color-border); background: var(--color-surface);`}>
+        <img src="/gae.svg" alt="gae" class="w-4 h-4" />
+      </div>
+      <div class="flex flex-col">
+        <span class="text-sm font-display font-bold" style={`color: var(--color-text);`}>gae</span>
+        <span class="text-[10px] font-mono tracking-widest uppercase opacity-40" style={`color: var(--color-text-muted);`}>
+          &copy; {year}
+        </span>
+      </div>
     </div>
 
     <!-- Right: Social -->
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1">
       {socialLinks.map((link) => (
         <a
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={link.label}
-          class="p-2.5 rounded-xl text-stone-400 hover:text-ink hover:bg-stone-100/60 transition-all duration-300"
+          class="p-3 rounded-xl transition-all duration-300 hover:scale-110 hover-target"
+          style={`color: var(--color-text-muted);`}
         >
           <Icon name={link.icon} class="w-4 h-4" />
         </a>
       ))}
     </div>
+
   </div>
 </footer>

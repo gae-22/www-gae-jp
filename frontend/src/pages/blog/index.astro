@@ -10,44 +10,38 @@ const posts = (await getCollection('blog', ({ data }) => {
 })).sort(
 	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
 );
-
-const title = "Blog | gae";
-const description = "Web development, design, and insights.";
 ---
 
-<Layout title={title} description={description}>
+<Layout title="Blog | gae" description="Design, Development, and the Future of Web.">
   <Header />
 
-  <main class="min-h-screen pt-40 pb-32 px-4 relative overflow-hidden">
-    <!-- Background Elements -->
-    <div class="absolute top-0 left-1/4 -z-10 w-125 h-125 bg-accent-indigo/6 rounded-full blur-[140px]"></div>
-    <div class="absolute bottom-0 right-1/4 -z-10 w-150 h-150 bg-accent-teal/4 rounded-full blur-[150px]"></div>
-
+  <main class="min-h-screen pt-40 pb-32 px-6">
     <div class="max-w-7xl mx-auto">
 
       <!-- Page Header -->
       <section class="mb-24 reveal">
-        <div class="flex flex-col items-center text-center space-y-6">
-          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl border border-stone-200/60 bg-white/60 backdrop-blur-sm">
+        <div class="flex flex-col items-center text-center space-y-8">
+          <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl text-xs font-mono font-medium tracking-[0.15em] uppercase"
+               style={`border: 1px solid var(--color-border); background: color-mix(in srgb, var(--color-surface) 70%, transparent); backdrop-filter: blur(12px); color: var(--color-text-muted);`}>
               <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-indigo opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-indigo"></span>
+                <span class="absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping" style="background: var(--color-accent);"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2" style="background: var(--color-accent);"></span>
               </span>
-              <span class="text-xs font-mono font-medium text-ink-muted tracking-[0.15em] uppercase">Journal & Insights</span>
+              Journal
           </div>
 
-          <h1 class="text-6xl md:text-8xl lg:text-9xl font-display font-bold tracking-tight text-ink">
-              Bl<span class="text-transparent bg-clip-text bg-linear-to-r from-accent-indigo via-accent-teal to-accent-indigo/50">og</span>
+          <h1 class="font-display font-extrabold tracking-tight" style={`font-size: clamp(4rem, 12vw, 10rem); color: var(--color-text);`}>
+              Bl<span class="text-gradient">og</span>
           </h1>
 
-          <p class="text-ink-muted max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-light text-balance">
+          <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-light text-balance" style={`color: var(--color-text-muted);`}>
             Design, Development, and the Future of Web.<br class="hidden md:block"/>
-            <span class="text-stone-400">技術とデザインが交差する、デジタルの探求記録。</span>
+            <span class="opacity-50">技術とデザインが交差する、デジタルの探求記録。</span>
           </p>
         </div>
       </section>
 
-      <!-- Bento Grid -->
+      <!-- Grid -->
       <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5 auto-rows-fr">
         {posts.map((post, index) => {
           const isMainFeatured = index === 0;
@@ -64,7 +58,7 @@ const description = "Web development, design, and insights.";
           }
 
           return (
-            <div class:list={[colSpan, "reveal"]} style={`transition-delay: ${index * 0.08}s;`}>
+            <div class:list={[colSpan, "reveal"]} style={`transition-delay: ${index * 0.06}s;`}>
               <PostCard post={post} variant={variant} />
             </div>
           );
@@ -72,11 +66,11 @@ const description = "Web development, design, and insights.";
       </div>
 
       {posts.length === 0 && (
-          <div class="text-center py-40 glass-card rounded-3xl border-dashed border-2 border-stone-200 reveal">
-              <p class="text-ink-muted font-display text-xl">No stories found yet.</p>
+          <div class="text-center py-40 rounded-2xl border-2 border-dashed reveal"
+               style={`border-color: var(--color-border); color: var(--color-text-muted);`}>
+              <p class="font-display text-xl">No stories yet.</p>
           </div>
       )}
-
     </div>
   </main>
 

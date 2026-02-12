@@ -2,103 +2,122 @@
 import { Icon } from 'astro-icon/components';
 
 const navItems = [
-  { label: 'Home', href: '/', icon: 'lucide:home' },
-  { label: 'Blog', href: '/blog', icon: 'lucide:pen-tool' },
-  { label: 'Projects', href: '/projects', icon: 'lucide:folder' },
-  { label: 'About', href: '/about', icon: 'lucide:user' },
-];
-
-const socialItems = [
-  { label: 'GitHub', href: 'https://github.com/gae-22/www-gae-jp', icon: 'lucide:github' },
-  { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: 'simple-icons:discord' },
+  { label: 'Work', href: '/', },
+  { label: 'Blog', href: '/blog', },
+  { label: 'Projects', href: '/projects', },
+  { label: 'About', href: '/about', },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 pt-5 px-4" id="site-header">
-  <nav class="max-w-xl mx-auto rounded-2xl px-2 py-2 flex items-center justify-between transition-all duration-500 whitespace-nowrap border border-transparent" id="site-nav">
+<header class="fixed top-0 left-0 right-0 z-40 pointer-events-none" id="site-header">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
 
-    <!-- Internal Links -->
-    <ul class="flex items-center gap-0.5 md:gap-1">
+    <!-- Logo -->
+    <a href="/" class="pointer-events-auto group flex items-center gap-3 hover-target" transition:persist>
+      <div class="w-9 h-9 rounded-xl overflow-hidden flex items-center justify-center border transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+           style={`border-color: var(--color-border); background: var(--color-surface);`}>
+        <img src="/gae.svg" alt="gae" class="w-5 h-5" />
+      </div>
+      <span class="text-sm font-display font-semibold tracking-tight hidden sm:block transition-colors duration-300"
+            style={`color: var(--color-text);`}>
+        gae
+      </span>
+    </a>
+
+    <!-- Center Nav Pill -->
+    <nav class="pointer-events-auto px-1.5 py-1.5 rounded-2xl transition-all duration-500 flex items-center gap-0.5" id="site-nav"
+         style={`background: color-mix(in srgb, var(--color-surface) 60%, transparent); backdrop-filter: blur(24px) saturate(1.8); border: 1px solid var(--color-border-subtle);`}>
       {navItems.map((item) => {
         const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
         return (
-        <li>
           <a
             href={item.href}
             class:list={[
-              "flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-300 group relative",
-              isActive
-                ? "bg-accent-indigo/8 text-accent-indigo"
-                : "hover:bg-stone-100/80 text-ink-muted hover:text-ink"
+              "relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 magnetic-link hover-target",
+              isActive ? "active-nav" : ""
             ]}
+            style={isActive
+              ? `color: white; background: var(--color-accent);`
+              : `color: var(--color-text-muted);`
+            }
+            data-magnetic
           >
-            <Icon name={item.icon} class:list={[
-              "w-4 h-4 transition-colors duration-300",
-              isActive ? "text-accent-indigo" : "group-hover:text-ink"
-            ]} />
-            <span class:list={[
-              "text-xs font-medium transition-colors duration-300 hidden md:block",
-              isActive ? "text-accent-indigo font-semibold" : "group-hover:text-ink"
-            ]}>{item.label}</span>
-            {isActive && (
-              <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-accent-indigo"></span>
-            )}
+            {item.label}
           </a>
-        </li>
-      )})}
-    </ul>
+        );
+      })}
+    </nav>
 
-    <div class="w-px h-5 bg-stone-200/60 mx-1 hidden md:block"></div>
+    <!-- Right: Actions -->
+    <div class="pointer-events-auto flex items-center gap-2">
 
-    <!-- Social Links -->
-    <ul class="flex items-center gap-1">
-      {socialItems.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={item.label}
-            class="p-2.5 rounded-xl hover:bg-stone-100/80 text-ink-muted hover:text-ink transition-all duration-300 block"
-          >
-            <Icon name={item.icon} class="w-4 h-4" />
-          </a>
-        </li>
-      ))}
-    </ul>
+      <!-- Theme Toggle -->
+      <button id="theme-toggle" class="p-2.5 rounded-xl transition-all duration-300 hover:scale-110 hover-target"
+              style={`color: var(--color-text-muted); background: transparent;`}
+              aria-label="Toggle theme">
+        <!-- Sun icon (visible in dark mode) -->
+        <svg class="w-4 h-4 dark-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- Moon icon (visible in light mode) -->
+        <svg class="w-4 h-4 light-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
 
-  </nav>
+      <!-- GitHub -->
+      <a href="https://github.com/gae-22/www-gae-jp" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+         class="p-2.5 rounded-xl transition-all duration-300 hover:scale-110 hover-target"
+         style={`color: var(--color-text-muted);`}>
+        <Icon name="lucide:github" class="w-4 h-4" />
+      </a>
+    </div>
+
+  </div>
 </header>
 
-<script>
-  const header = document.getElementById('site-header');
-  const nav = document.getElementById('site-nav');
-  let lastScroll = 0;
-  let ticking = false;
+<style>
+  /* Theme icon visibility */
+  html.dark .dark-icon { display: block; }
+  html.dark .light-icon { display: none; }
+  html:not(.dark) .dark-icon { display: none; }
+  html:not(.dark) .light-icon { display: block; }
 
-  function updateHeader() {
-    const scrollY = window.scrollY;
-    if (nav) {
-      if (scrollY > 40) {
-        nav.classList.add('bg-white/85', 'backdrop-blur-2xl', 'shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)]', 'border-stone-200/50');
-        nav.classList.remove('border-transparent');
-      } else {
-        nav.classList.remove('bg-white/85', 'backdrop-blur-2xl', 'shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06)]', 'border-stone-200/50');
-        nav.classList.add('border-transparent');
-      }
-    }
-    lastScroll = scrollY;
-    ticking = false;
+  /* Active nav glow */
+  .active-nav {
+    box-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 30%, transparent);
   }
 
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
-  }, { passive: true });
+  /* Magnetic link subtle shift on hover */
+  .magnetic-link {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s, background 0.2s;
+  }
+  .magnetic-link:not(.active-nav):hover {
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-text) 5%, transparent);
+  }
+</style>
 
-  updateHeader();
+<script>
+  // Magnetic hover effect
+  document.querySelectorAll('[data-magnetic]').forEach(el => {
+    const htmlEl = el as HTMLElement;
+    htmlEl.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = htmlEl.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      htmlEl.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+    htmlEl.addEventListener('mouseleave', () => {
+      htmlEl.style.transform = 'translate(0, 0)';
+    });
+  });
 </script>

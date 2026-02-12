@@ -1,118 +1,73 @@
 ---
-import Clock from './Clock.astro';
 import { Icon } from 'astro-icon/components';
 ---
 
-<section class="max-w-7xl mx-auto px-4 pt-36 pb-20 lg:pt-44 lg:pb-36 relative overflow-hidden">
+<section class="relative min-h-svh flex flex-col items-center justify-center px-6 overflow-hidden">
 
-    <!-- Subtle Background Gradient -->
-    <div class="absolute top-0 right-0 -z-10 w-full h-full pointer-events-none overflow-hidden">
-        <div class="absolute top-[-10%] right-[-5%] w-[50%] h-[50%] bg-[radial-gradient(circle_at_center,var(--color-accent-indigo),transparent_70%)] opacity-[0.06] blur-[100px] animate-float"></div>
-        <div class="absolute bottom-[10%] left-[-10%] w-[40%] h-[40%] bg-[radial-gradient(circle_at_center,var(--color-accent-teal),transparent_70%)] opacity-[0.04] blur-[90px] animate-float" style="animation-duration: 10s; animation-delay: 2s;"></div>
-    </div>
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-5xl mx-auto text-center space-y-10">
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center">
-
-        <!-- Left: Introduction Typography -->
-        <div class="lg:col-span-7 flex flex-col items-start space-y-10 z-10">
-
-            <!-- Minimal Status -->
-            <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-stone-50/80 border border-stone-200/60 backdrop-blur-sm reveal">
+        <!-- Status Badge -->
+        <div class="reveal flex justify-center">
+            <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl text-xs font-mono font-medium tracking-[0.15em] uppercase transition-all duration-300"
+                 style={`border: 1px solid var(--color-border); background: color-mix(in srgb, var(--color-surface) 70%, transparent); backdrop-filter: blur(12px); color: var(--color-text-muted);`}>
                 <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+                    <span class="absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping" style="background: var(--color-accent-2);"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2" style="background: var(--color-accent-2);"></span>
                 </span>
-                <span class="text-[11px] font-mono font-medium text-ink-muted uppercase tracking-wider">Available for work</span>
-            </div>
-
-            <div class="space-y-7 relative reveal reveal-delay-1">
-                <h1 class="text-5xl sm:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] font-display font-bold leading-[0.92] text-ink tracking-[-0.04em] text-balance">
-                    Digital<br />
-                    <span class="italic font-extralight text-ink-muted">Reality</span><br/>
-                    <span class="text-transparent bg-clip-text bg-linear-to-r from-accent-indigo via-indigo-500 to-accent-teal">Crafter.</span>
-                </h1>
-
-                <p class="text-base lg:text-lg text-ink-muted max-w-lg leading-relaxed text-balance">
-                    東京を拠点とするWebアプリエンジニア <strong class="text-ink font-semibold">gae</strong>。<br>
-                    <span class="inline-block mt-3 text-stone-500">
-                        論理的なコードと感性的なデザインを融合し、<br>
-                        無意識に心地よいデジタル体験を実装します。
-                    </span>
-                </p>
-            </div>
-
-            <!-- CTA / Links -->
-            <div class="flex items-center gap-6 pt-2 reveal reveal-delay-2">
-                 <a href="#projects" class="group relative px-7 py-3.5 bg-ink text-white rounded-xl font-medium overflow-hidden transition-all duration-400 hover:shadow-[0_12px_32px_-8px_rgba(28,25,23,0.3)]">
-                    <span class="relative z-10 flex items-center gap-2 text-sm">
-                        View Projects
-                        <Icon name="lucide:arrow-down-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform duration-300" />
-                    </span>
-                    <div class="absolute inset-0 bg-linear-to-r from-accent-indigo to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-                 </a>
-                 <a href="/about" class="group text-sm font-medium text-ink-muted hover:text-ink transition-colors duration-300 flex items-center gap-1.5">
-                    More about me
-                    <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" />
-                 </a>
+                Open to Work
             </div>
         </div>
 
-        <!-- Right: Composition -->
-        <div class="lg:col-span-5 relative w-full h-125 hidden lg:block perspective-[2000px]">
-
-            <!-- Card 1: Main Profile (Center) -->
-            <div class="absolute top-[8%] left-[8%] w-72 glass-card rounded-3xl p-8 flex flex-col gap-6 animate-float z-20 hover:z-30">
-                <div class="flex justify-between items-start">
-                    <div class="w-18 h-18 rounded-2xl bg-linear-to-br from-stone-50 to-white p-1.5 shadow-sm overflow-hidden border border-stone-100">
-                         <img src="/gae.svg" alt="gae branding" class="w-full h-full object-contain" />
-                    </div>
-                    <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-100">
-                        <Icon name="lucide:code-2" class="w-5 h-5 text-accent-teal" />
-                    </div>
-                </div>
-                <div>
-                    <h2 class="font-display font-bold text-2xl text-ink leading-none mb-1.5">gae</h2>
-                    <p class="text-sm text-ink-muted font-medium">Engineering & Design</p>
-                </div>
-            </div>
-
-            <!-- Card 2: Interactive Widget (Bottom Right) -->
-            <div class="absolute bottom-[3%] right-0 w-64 glass-card rounded-3xl p-6 flex flex-col gap-4 animate-float z-10" style="animation-delay: 1.5s;">
-                 <div class="flex items-center gap-3 mb-2">
-                    <div class="p-2 rounded-xl bg-indigo-50 text-accent-indigo">
-                        <Icon name="lucide:layers" class="w-5 h-5" />
-                    </div>
-                    <span class="text-xs font-mono text-stone-400 uppercase tracking-widest">Stack</span>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-2.5 py-1 rounded-lg bg-stone-50 text-[11px] font-mono font-bold text-stone-600 border border-stone-200/50 flex items-center gap-1.5"><Icon name="logos:typescript-icon" class="w-3 h-3" /> TypeScript</span>
-                    <span class="px-2.5 py-1 rounded-lg bg-stone-50 text-[11px] font-mono font-bold text-stone-600 border border-stone-200/50 flex items-center gap-1.5"><Icon name="logos:react" class="w-3 h-3" /> React</span>
-                    <span class="px-2.5 py-1 rounded-lg bg-stone-50 text-[11px] font-mono font-bold text-stone-600 border border-stone-200/50 flex items-center gap-1.5"><Icon name="logos:nextjs-icon" class="w-3 h-3" /> Next.js</span>
-                    <span class="px-2.5 py-1 rounded-lg bg-stone-50 text-[11px] font-mono font-bold text-stone-600 border border-stone-200/50 flex items-center gap-1.5"><Icon name="logos:astro-icon" class="w-3 h-3" /> Astro</span>
-                </div>
-            </div>
-
-            <!-- Card 3: Clock (Top Right - Small) -->
-            <div class="absolute top-0 right-6 w-40 glass-card rounded-2xl animate-float overflow-hidden z-0 opacity-80 hover:opacity-100 transition-all duration-500" style="animation-delay: 3s;">
-                <div class="scale-75 origin-top-right">
-                    <Clock />
-                </div>
-            </div>
-
+        <!-- Main Title — Fluid Typography -->
+        <div class="reveal reveal-delay-1 perspective-[1000px]">
+            <h1 class="font-display font-extrabold leading-[0.9] tracking-[-0.04em]"
+                style="font-size: clamp(3.5rem, 10vw, 9rem); color: var(--color-text);">
+                <span class="text-split block" data-text="Digital">Digital</span>
+                <span class="block italic font-extralight opacity-50" style="font-size: 0.85em;">Reality</span>
+                <span class="text-gradient block">Crafter.</span>
+            </h1>
         </div>
 
-        <!-- Mobile Fallback -->
-        <div class="lg:hidden w-full space-y-4 reveal reveal-delay-3">
-             <div class="glass-card rounded-3xl p-6 flex items-center gap-5">
-                 <div class="w-16 h-16 rounded-2xl bg-linear-to-br from-stone-50 to-white p-1 shadow-sm overflow-hidden shrink-0 border border-stone-100">
-                     <img src="/gae.svg" alt="gae branding" class="w-full h-full object-contain" />
-                 </div>
-                 <div>
-                    <h2 class="font-display font-bold text-2xl text-ink mb-1">gae</h2>
-                    <p class="text-sm text-ink-muted">Software Engineer / Web Developer</p>
-                </div>
-             </div>
+        <!-- Description -->
+        <div class="reveal reveal-delay-2 max-w-2xl mx-auto">
+            <p class="text-base md:text-lg leading-relaxed text-balance" style={`color: var(--color-text-muted);`}>
+                東京を拠点とするソフトウェアエンジニア。<br>
+                <span class="opacity-60">
+                    論理的なコードと感性的なデザインを融合し、<br class="hidden md:block">
+                    心地よいデジタル体験を実装する。
+                </span>
+            </p>
         </div>
 
+        <!-- CTAs -->
+        <div class="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-5">
+            <a href="#work" class="group relative px-8 py-4 rounded-2xl font-medium text-sm text-white overflow-hidden transition-all duration-400 hover:shadow-[0_0_40px_rgba(99,102,241,0.3)] hover-target"
+               style={`background: var(--color-accent);`}>
+                <span class="relative z-10 flex items-center gap-2.5">
+                    View Work
+                    <Icon name="lucide:arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" />
+                </span>
+                <div class="absolute inset-0 bg-linear-to-r from-accent to-accent-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </a>
+
+            <a href="/about" class="group text-sm font-medium flex items-center gap-2 transition-all duration-300 hover-target"
+               style={`color: var(--color-text-muted);`}>
+                <span class="relative">
+                    Learn More
+                    <span class="absolute -bottom-0.5 left-0 w-full h-px transition-transform duration-400 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent);`}></span>
+                </span>
+                <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" />
+            </a>
+        </div>
     </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 reveal reveal-delay-4">
+        <span class="text-[10px] font-mono uppercase tracking-[0.3em] opacity-30" style={`color: var(--color-text);`}>Scroll</span>
+        <div class="w-px h-10 overflow-hidden">
+            <div class="w-full h-full animate-bounce" style={`background: linear-gradient(to bottom, var(--color-accent), transparent);`}></div>
+        </div>
+    </div>
+
 </section>

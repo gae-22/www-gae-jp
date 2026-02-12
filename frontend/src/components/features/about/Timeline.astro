@@ -11,34 +11,36 @@ export interface Props {
 const { events } = Astro.props;
 ---
 
-<div class="relative ml-4 space-y-10 py-4">
-  <!-- Vertical line -->
-  <div class="absolute left-0 top-0 bottom-0 w-px bg-linear-to-b from-accent-indigo/20 via-stone-200 to-transparent"></div>
+<div class="relative ml-4 space-y-0 py-4">
+  <!-- Vertical Line -->
+  <div class="absolute left-0 top-0 bottom-0 w-px overflow-hidden">
+    <div class="w-full h-full origin-top" style={`background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-2), transparent); animation: line-grow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;`}></div>
+  </div>
 
   {events.map((event, index) => (
-    <div class={`relative pl-10 group reveal reveal-delay-${Math.min(index, 4)}`}>
+    <div class="relative pl-10 py-5 group reveal" style={`transition-delay: ${index * 0.06}s;`}>
       {/* Dot */}
-      <div class="absolute -left-1.25 top-2.5 w-2.5 h-2.5 rounded-full bg-white border-2 border-stone-300 group-hover:border-accent-indigo group-hover:bg-accent-indigo group-hover:shadow-[0_0_12px_rgba(67,56,202,0.25)] transition-all duration-400"></div>
+      <div class="absolute -left-1.25 top-7 w-2.5 h-2.5 rounded-full transition-all duration-500" style={`background: var(--color-surface); border: 2px solid var(--color-border);`}>
+        <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500" style={`background: var(--color-accent); box-shadow: 0 0 12px var(--color-accent-glow);`}></div>
+      </div>
 
-      {/* Grid Layout */}
-      <div class="grid grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-2 sm:gap-6">
+      {/* Content */}
+      <div class="grid grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-2 sm:gap-6 p-4 -ml-2 rounded-2xl transition-all duration-400"
+           style="background: transparent;">
 
-        {/* Year Column */}
-        <div class="flex-none pt-1">
-          <span class="text-accent-teal font-mono text-sm font-medium whitespace-nowrap block">
+        <div class="flex-none pt-0.5">
+          <span class="text-sm font-mono font-medium whitespace-nowrap block" style={`color: var(--color-accent-2);`}>
             {event.year.includes('-') ? event.year.replace('-', ' — ') : event.year}
           </span>
         </div>
 
-        {/* Content Column */}
-        <div class="flex flex-col gap-1.5 p-5 -mt-2 rounded-2xl bg-transparent group-hover:bg-stone-50/60 transition-all duration-400">
-           <div class="flex flex-col sm:flex-row sm:items-baseline gap-2">
-               <h3 class="text-lg font-display font-bold text-ink leading-tight">{event.title}</h3>
-               <span class="text-ink-muted text-sm">@ {event.company}</span>
+        <div class="flex flex-col gap-1.5">
+           <div class="flex flex-col sm:flex-row sm:items-baseline gap-1.5">
+               <h3 class="text-lg font-display font-bold leading-tight" style={`color: var(--color-text);`}>{event.title}</h3>
+               <span class="text-sm" style={`color: var(--color-text-muted);`}>@ {event.company}</span>
            </div>
-
            {event.description && (
-            <p class="text-ink-muted text-sm leading-relaxed max-w-xl mt-0.5">
+            <p class="text-sm leading-relaxed max-w-xl mt-0.5" style={`color: var(--color-text-muted);`}>
                 {event.description}
             </p>
            )}
@@ -47,3 +49,9 @@ const { events } = Astro.props;
     </div>
   ))}
 </div>
+
+<style>
+  .group:hover > div:nth-child(2) {
+    background: color-mix(in srgb, var(--color-surface-2) 50%, transparent) !important;
+  }
+</style>
