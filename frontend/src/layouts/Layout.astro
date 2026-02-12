@@ -37,9 +37,8 @@ const socialImageURL = new URL(image, Astro.url);
 		<link rel="icon" type="image/svg+xml" href="/gae.svg" />
 		<link rel="icon" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-        <meta name="theme-color" content="#fafaf9" />
+        <meta name="theme-color" content="#ffffff" />
 
-        <link rel="preload" href="/noise.webp" as="image" />
         <link rel="canonical" href={canonicalURL} />
 
         <meta property="og:type" content="website" />
@@ -59,27 +58,16 @@ const socialImageURL = new URL(image, Astro.url);
 
         <ViewTransitions />
 
-
-
         <script is:inline define:vars={{ publicApiUrl: process.env.PUBLIC_API_URL || import.meta.env.PUBLIC_API_URL || 'http://localhost:4000' }}>
             window._PUBLIC_API_URL = publicApiUrl;
         </script>
 	</head>
-    <body class="min-h-screen relative overflow-x-hidden" style={`background-color: var(--color-bg); color: var(--color-text);`}>
+    <body class="min-h-screen relative overflow-x-hidden bg-white text-zinc-900" style={`background-color: var(--color-bg); color: var(--color-text);`}>
 
-        <!-- Noise Texture Overlay -->
-        <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.018] mix-blend-overlay bg-[url('/noise.webp')] bg-repeat"></div>
+        <!-- Subtle Pattern Background -->
+        <div class="fixed inset-0 z-[-1] pointer-events-none opacity-[0.4] bg-dot-pattern"></div>
 
-        <!-- Aurora Background -->
-        <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
-            <div class="absolute top-[-30%] left-[-20%] w-[80%] h-[80%] rounded-full opacity-[0.07] blur-[150px]"
-                 style="background: radial-gradient(circle, var(--color-accent), transparent 70%); animation: aurora-1 20s ease-in-out infinite;"></div>
-            <div class="absolute bottom-[-20%] right-[-15%] w-[70%] h-[70%] rounded-full opacity-[0.05] blur-[140px]"
-                 style="background: radial-gradient(circle, var(--color-accent-2), transparent 70%); animation: aurora-2 25s ease-in-out infinite;"></div>
-            <div class="absolute top-[40%] left-[50%] w-[50%] h-[50%] rounded-full opacity-[0.04] blur-[130px]"
-                 style="background: radial-gradient(circle, #a855f7, transparent 70%); animation: aurora-1 30s ease-in-out infinite reverse;"></div>
-        </div>
-
+        <!-- Content -->
 		<slot />
 
         <!-- Scripts -->
@@ -95,36 +83,14 @@ const socialImageURL = new URL(image, Astro.url);
                             }
                         });
                     },
-                    { threshold: 0.06, rootMargin: '0px 0px -60px 0px' }
+                    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
                 );
                 document.querySelectorAll('.reveal, .stagger-children').forEach((el) => observer.observe(el));
             }
 
-            // ─── Text Split Animation ───
-            function initTextSplit() {
-                document.querySelectorAll('.text-split').forEach(el => {
-                    if (el.getAttribute('data-split-done')) return;
-                    const text = el.textContent || '';
-                    el.innerHTML = '';
-                    text.split('').forEach((char, i) => {
-                        const span = document.createElement('span');
-                        span.className = 'char';
-                        span.textContent = char === ' ' ? '\u00A0' : char;
-                        span.style.transitionDelay = `${i * 0.03}s`;
-                        el.appendChild(span);
-                    });
-                    el.setAttribute('data-split-done', 'true');
-                });
-            }
-
-            // ─── Theme Toggle ───
-
-
             // Init all
             function initAll() {
                 initRevealObserver();
-                initTextSplit();
-
             }
 
             // Run on initial load

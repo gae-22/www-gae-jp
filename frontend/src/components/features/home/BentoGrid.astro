@@ -27,121 +27,128 @@ const techStack = [
 ];
 ---
 
-<section id="work" class="max-w-7xl mx-auto px-6 py-12 lg:py-20">
+<section id="work" class="max-w-7xl mx-auto px-6 py-12">
 
     <!-- Section Header -->
-    <div class="relative mb-8 lg:mb-12 reveal">
-        <span class="text-[11px] font-mono uppercase tracking-[0.3em] mb-3 block" style={`color: var(--color-accent);`}>Selected</span>
-        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight" style={`color: var(--color-text);`}>
-            Works & <span class="italic font-light opacity-50">Thoughts</span>
-        </h2>
+    <div class="flex items-end justify-between mb-8 reveal">
+        <div>
+            <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-500 mb-1 block">Selected Works</span>
+            <h2 class="text-3xl lg:text-4xl font-display font-bold text-zinc-900 tracking-tight">
+                Craft & <span class="text-zinc-400 font-normal italic">Thinking</span>
+            </h2>
+        </div>
+        <a href="/blog" class="hidden sm:flex items-center gap-2 text-xs font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+            View all posts <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
+        </a>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 auto-rows-[200px] lg:auto-rows-[220px]">
+    <!-- Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 auto-rows-[180px] lg:auto-rows-[200px]">
 
         <!-- Item 1: Featured Post (Large) -->
         <BentoItem
-            class="col-span-2 md:col-span-4 lg:col-span-4 row-span-2 reveal"
+            class="col-span-2 md:col-span-4 lg:col-span-4 row-span-2 reveal overflow-hidden group"
             title="Latest Writing"
             href={latestPost ? `/blog/${latestPost.slug}` : undefined}
         >
-            <div class="w-full h-full relative z-10 overflow-hidden rounded-2xl">
+            <div class="w-full h-full relative z-10 bg-zinc-100 group-hover:bg-zinc-50 transition-colors">
                 {latestPost ? (
                     <>
-                        {latestPost.data.cover && (
-                            <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
-                                <Image
-                                    src={latestPost.data.cover}
-                                    alt={latestPost.data.coverAlt || ""}
-                                    class="w-full h-full object-cover"
-                                />
-                                <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
-                            </div>
-                        )}
-                        <div class="absolute bottom-0 left-0 w-full p-8 lg:p-10 flex flex-col justify-end h-full">
-                            <div class="mt-auto transform transition-transform duration-500 ease-out group-hover:-translate-y-2">
-                                <div class="flex items-center gap-3 mb-3 opacity-80">
-                                    <span class="px-2.5 py-0.5 rounded-lg text-[10px] font-mono font-bold text-white border border-white/20 bg-white/10 backdrop-blur-sm">NEW</span>
-                                    <span class="text-zinc-300 text-xs font-mono">
+                        <div class="absolute inset-0 flex flex-col md:flex-row">
+                            {latestPost.data.cover && (
+                                <div class="w-full md:w-1/2 h-48 md:h-full relative overflow-hidden">
+                                     <Image
+                                        src={latestPost.data.cover}
+                                        alt={latestPost.data.coverAlt || ""}
+                                        class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 grayscale group-hover:grayscale-0"
+                                    />
+                                    <div class="absolute inset-0 ring-1 ring-inset ring-black/5 md:hidden"></div>
+                                </div>
+                            )}
+                            <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100 border border-emerald-200">NEW</span>
+                                    <span class="text-zinc-400 text-xs font-mono">
                                         {latestPost.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                                     </span>
                                 </div>
-                                <h3 class="text-2xl lg:text-4xl font-display font-bold leading-tight mb-3 text-white">
+                                <h3 class="text-xl md:text-2xl lg:text-3xl font-display font-bold leading-tight text-zinc-900 mb-3 group-hover:text-blue-600 transition-colors">
                                     {latestPost.data.title}
                                 </h3>
-                                <p class="text-sm text-zinc-300/80 line-clamp-2 max-w-md leading-relaxed">
+                                <p class="text-sm text-zinc-500 line-clamp-2 leading-relaxed">
                                     {latestPost.data.description}
                                 </p>
                             </div>
                         </div>
-                        <div class="absolute top-6 right-6 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/15 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                            <Icon name="lucide:arrow-up-right" class="w-5 h-5" />
+
+                        <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-400 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-sm">
+                            <Icon name="lucide:arrow-up-right" class="w-4 h-4" />
                         </div>
                     </>
                 ) : (
-                    <div class="w-full h-full flex items-center justify-center" style={`color: var(--color-text-muted);`}>
-                        <p class="font-mono text-sm opacity-50">No posts yet</p>
+                    <div class="w-full h-full flex items-center justify-center text-zinc-400">
+                        <p class="font-mono text-xs">No posts yet</p>
                     </div>
                 )}
             </div>
         </BentoItem>
 
         <!-- Item 2: Clock -->
-        <BentoItem class="col-span-1 row-span-1 reveal reveal-delay-1">
+        <BentoItem class="col-span-1 row-span-1 reveal reveal-delay-1 bg-white border border-zinc-200">
             <Clock />
         </BentoItem>
 
         <!-- Item 3: GitHub -->
-        <BentoItem class="col-span-1 row-span-1 group/gh reveal reveal-delay-2" href="https://github.com/gae-22" title="GitHub">
-            <div class="p-6 flex flex-col justify-between h-full">
-                <div class="p-3 rounded-xl w-fit transition-all duration-300 group-hover/gh:scale-110 group-hover/gh:glow"
-                     style={`background: color-mix(in srgb, var(--color-text) 5%, transparent); color: var(--color-text);`}>
-                    <Icon name="lucide:github" class="w-6 h-6" />
+        <BentoItem class="col-span-1 row-span-1 group/gh reveal reveal-delay-2 bg-zinc-900 text-white border border-zinc-900" href="https://github.com/gae-22" title="GitHub">
+            <div class="p-5 flex flex-col justify-between h-full relative overflow-hidden">
+                <Icon name="lucide:github" class="w-6 h-6 z-10" />
+                <div class="z-10">
+                    <span class="text-sm font-bold font-display block">GitHub</span>
+                    <span class="text-[10px] font-mono text-zinc-400">@gae-22</span>
                 </div>
-                <div>
-                    <span class="text-base font-bold font-display block mb-0.5 group-hover/gh:translate-x-1 transition-transform duration-300" style={`color: var(--color-text);`}>GitHub</span>
-                    <span class="text-[11px] font-mono" style={`color: var(--color-text-muted);`}>View repos →</span>
-                </div>
+                <!-- Decoration -->
+                <Icon name="lucide:github" class="absolute -bottom-4 -right-4 w-24 h-24 text-zinc-800 opacity-20 rotate-12" />
             </div>
         </BentoItem>
 
         <!-- Item 4: Tech Stack Marquee -->
-        <BentoItem class="col-span-2 row-span-1 overflow-hidden reveal reveal-delay-3">
-            <div class="p-5 h-full flex flex-col justify-between">
-                <span class="text-[10px] font-mono uppercase tracking-[0.2em]" style={`color: var(--color-text-muted); opacity: 0.5;`}>Stack</span>
-                <div class="overflow-hidden">
+        <BentoItem class="col-span-2 row-span-1 overflow-hidden reveal reveal-delay-3 bg-zinc-50 border border-zinc-200">
+            <div class="flex flex-col h-full justify-center gap-4 py-4">
+                 <div class="px-5">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400">Tech Stack</span>
+                 </div>
+                <div class="overflow-hidden relative">
                     <div class="flex gap-4 marquee-track">
                         {[...techStack, ...techStack].map(tech => (
-                            <div class="flex items-center gap-2 shrink-0 px-3 py-2 rounded-xl transition-colors duration-300"
-                                 style={`border: 1px solid var(--color-border-subtle); background: color-mix(in srgb, var(--color-surface-2) 60%, transparent);`}>
-                                <Icon name={tech.icon} class="w-4 h-4" />
-                                <span class="text-xs font-mono font-medium whitespace-nowrap" style={`color: var(--color-text);`}>{tech.name}</span>
+                            <div class="flex items-center gap-2 shrink-0 px-3 py-1.5 rounded-md border border-zinc-200 bg-white shadow-sm">
+                                <Icon name={tech.icon} class="w-3.5 h-3.5" />
+                                <span class="text-xs font-medium text-zinc-700">{tech.name}</span>
                             </div>
                         ))}
                     </div>
+                     <div class="absolute inset-y-0 left-0 w-8 bg-linear-to-r from-zinc-50 to-transparent"></div>
+                     <div class="absolute inset-y-0 right-0 w-8 bg-linear-to-l from-zinc-50 to-transparent"></div>
                 </div>
             </div>
         </BentoItem>
 
         <!-- Item 5: Location -->
-        <BentoItem class="col-span-2 md:col-span-2 row-span-1 overflow-hidden reveal reveal-delay-4">
-            <div class="p-6 flex items-center justify-between h-full relative">
-                <!-- Dot pattern bg -->
-                <div class="absolute inset-0 opacity-[0.04] pointer-events-none" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 20px 20px;"></div>
+        <BentoItem class="col-span-2 md:col-span-2 row-span-1 overflow-hidden reveal reveal-delay-4 bg-white border border-zinc-200 group">
+            <div class="p-5 flex items-center justify-between h-full relative">
+                 <div class="absolute inset-0 bg-dot-pattern opacity-[0.4]"></div>
 
-                <div class="relative z-10 flex flex-col gap-1">
-                    <span class="text-[10px] font-mono uppercase tracking-[0.2em] px-2.5 py-1 rounded-lg w-fit"
-                          style={`color: var(--color-accent-2); border: 1px solid color-mix(in srgb, var(--color-accent-2) 20%, transparent); background: color-mix(in srgb, var(--color-accent-2) 5%, transparent);`}>Base</span>
-                    <div class="mt-2">
-                        <span class="text-3xl font-bold font-display tracking-tight" style={`color: var(--color-text);`}>Tokyo</span>
+                <div class="relative z-10 flex flex-col justify-between h-full">
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full w-fit">Base</span>
+                    <div>
+                        <span class="text-2xl font-bold font-display text-zinc-900 leading-none">Tokyo</span>
+                        <span class="text-[10px] font-mono text-zinc-400 block mt-1">35.6762° N, 139.6503° E</span>
                     </div>
-                    <span class="text-xs font-mono" style={`color: var(--color-text-muted); opacity: 0.5;`}>35.6762° N, 139.6503° E</span>
                 </div>
 
-                <div class="relative w-12 h-12 flex items-center justify-center">
-                    <div class="absolute inset-0 rounded-full animate-ping opacity-20" style={`background: var(--color-accent-2);`}></div>
-                    <div class="relative w-10 h-10 rounded-full flex items-center justify-center" style={`background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-accent-2);`}>
-                        <Icon name="lucide:map-pin" class="w-5 h-5" />
+                <div class="relative w-10 h-10 flex items-center justify-center z-10 group-hover:scale-110 transition-transform duration-300">
+                     <span class="absolute inline-flex h-full w-full rounded-full opacity-20 animate-ping bg-blue-500"></span>
+                    <div class="relative w-full h-full rounded-full flex items-center justify-center bg-blue-50 text-blue-600 border border-blue-100">
+                        <Icon name="lucide:map-pin" class="w-4 h-4" />
                     </div>
                 </div>
             </div>

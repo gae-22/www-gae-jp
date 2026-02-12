@@ -1,5 +1,5 @@
 import { hc } from 'hono/client';
-import type { AppType } from '@backend/index';
+// import type { AppType } from '@backend/index';
 
 const getApiBaseUrl = () => {
     if (typeof process !== 'undefined' && process.env?.PUBLIC_API_URL) {
@@ -11,7 +11,7 @@ const getApiBaseUrl = () => {
     return import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
 };
 
-const client = hc<AppType>(getApiBaseUrl());
+const client = hc<any>(getApiBaseUrl()) as any;
 
 // 型定義
 interface ProfileData {
