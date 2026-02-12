@@ -12,49 +12,59 @@ const projects = projectsEntry?.data ?? [];
 <Layout title="Projects | gae" description="Projects and Works.">
   <Header />
 
-  <main class="min-h-screen pt-40 pb-32 px-6">
+  <main class="min-h-screen pt-32 pb-32 px-6">
     <div class="max-w-5xl mx-auto">
 
       <!-- Page header -->
-      <header class="mb-20 reveal">
-        <span class="text-[11px] font-mono font-medium uppercase tracking-[0.3em] block mb-3" style={`color: var(--color-accent);`}>Projects</span>
-        <h1 class="font-display font-extrabold leading-tight tracking-tight" style={`font-size: clamp(2.5rem, 6vw, 5rem); color: var(--color-text);`}>
-          My Work — <span class="text-gradient">Selected Projects</span>
+      <header class="mb-20 text-center md:text-left reveal-item">
+        <span class="text-accent-blue font-mono text-xs uppercase tracking-[0.25em] block mb-4">Projects</span>
+        <h1 class="font-display font-extrabold text-5xl md:text-7xl tracking-tighter text-text-primary">
+          Selected <span class="text-gradient">Works</span>
         </h1>
       </header>
 
-      <section class="space-y-4">
+      <section class="grid grid-cols-1 gap-8">
         {projects.map((project, index) => {
           const thumbSrc = (project.thumb as any)?.src ?? project.thumb;
           return (
             <a href={project.url} target="_blank" rel="noopener noreferrer"
-               class={`group flex flex-col md:flex-row items-start gap-6 p-6 md:p-8 rounded-2xl transition-all duration-500 ease-out hover:shadow-[0_0_40px_color-mix(in_srgb,var(--color-accent)_8%,transparent)] reveal hover-target`}
-               style={`background: var(--color-surface); border: 1px solid var(--color-border-subtle); transition-delay: ${index * 0.06}s;`}>
+               class="glass-card group flex flex-col md:flex-row gap-8 p-8 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 reveal-item">
 
               <!-- Thumbnail -->
-              <div class="w-full md:w-28 h-28 shrink-0 rounded-xl overflow-hidden flex items-center justify-center transition-transform duration-500 group-hover:scale-[1.05]"
-                   style={`background: linear-gradient(135deg, var(--color-surface-2), var(--color-surface)); border: 1px solid var(--color-border-subtle);`}>
-                <img src={thumbSrc as string | undefined} alt={project.title} class="w-full h-full object-cover" />
+              <div class="w-full md:w-48 h-48 shrink-0 rounded-2xl overflow-hidden relative bg-zinc-100 border border-zinc-200 group-hover:border-accent-blue/30 transition-colors">
+                 {thumbSrc ? (
+                    <img src={thumbSrc as string} alt={project.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                 ) : (
+                    <div class="w-full h-full flex items-center justify-center">
+                        <Icon name="lucide:image" class="w-10 h-10 text-zinc-300" />
+                    </div>
+                 )}
               </div>
 
               <!-- Content -->
-              <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-4">
-                  <h2 class="text-xl font-bold font-display transition-colors duration-300 group-hover:text-accent"
-                      style={`color: var(--color-text);`}>{project.title}</h2>
-                  <div class="p-2 rounded-lg opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shrink-0"
-                       style={`color: var(--color-accent);`}>
-                    <Icon name="lucide:arrow-up-right" class="w-4 h-4" />
+              <div class="flex-1 min-w-0 flex flex-col justify-center">
+                <div class="flex items-start justify-between gap-4 mb-3">
+                  <h2 class="text-2xl font-bold font-display text-text-primary group-hover:text-accent-blue transition-colors">
+                      {project.title}
+                  </h2>
+                  <div class="p-2 rounded-full bg-zinc-100 text-zinc-400 group-hover:bg-accent-blue group-hover:text-white transition-all duration-300">
+                    <Icon name="lucide:arrow-up-right" class="w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 </div>
-                <p class="text-sm mt-2 leading-relaxed line-clamp-2" style={`color: var(--color-text-muted);`}>{project.description}</p>
-                <div class="flex flex-wrap gap-2 mt-4">
+
+                <p class="text-text-secondary leading-relaxed mb-6 line-clamp-2">
+                    {project.description}
+                </p>
+
+                <div class="flex flex-wrap gap-2 mt-auto">
                   {project.tech.map(t => (
-                    <span class="px-3 py-1 rounded-lg text-[11px] font-mono font-medium"
-                          style={`background: color-mix(in srgb, var(--color-surface-2) 80%, transparent); border: 1px solid var(--color-border-subtle); color: var(--color-text-muted);`}>{t}</span>
+                    <span class="px-3 py-1 rounded-lg text-[11px] font-mono font-medium border border-zinc-100 bg-zinc-50/50 text-zinc-500">
+                        {t}
+                    </span>
                   ))}
                 </div>
               </div>
+
             </a>
           );
         })}

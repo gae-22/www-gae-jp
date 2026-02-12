@@ -15,60 +15,31 @@ const posts = (await getCollection('blog', ({ data }) => {
 <Layout title="Blog | gae" description="Design, Development, and the Future of Web.">
   <Header />
 
-  <main class="min-h-screen pt-40 pb-32 px-6">
+  <main class="min-h-screen pt-32 pb-32 px-6">
     <div class="max-w-7xl mx-auto">
 
       <!-- Page Header -->
-      <section class="mb-24 reveal">
-        <div class="flex flex-col items-center text-center space-y-8">
-          <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl text-xs font-mono font-medium tracking-[0.15em] uppercase"
-               style={`border: 1px solid var(--color-border); background: color-mix(in srgb, var(--color-surface) 70%, transparent); backdrop-filter: blur(12px); color: var(--color-text-muted);`}>
-              <span class="relative flex h-2 w-2">
-                <span class="absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping" style="background: var(--color-accent);"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2" style="background: var(--color-accent);"></span>
-              </span>
-              Journal
-          </div>
-
-          <h1 class="font-display font-extrabold tracking-tight" style={`font-size: clamp(4rem, 12vw, 10rem); color: var(--color-text);`}>
-              Bl<span class="text-gradient">og</span>
+      <section class="mb-24 text-center max-w-3xl mx-auto">
+          <span class="text-accent-blue font-mono text-xs uppercase tracking-[0.2em] mb-4 block">Journal</span>
+          <h1 class="font-display font-extrabold text-6xl md:text-8xl tracking-tighter text-text-primary mb-6">
+              Writing<span class="text-accent-violet">.</span>
           </h1>
-
-          <p class="max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-light text-balance" style={`color: var(--color-text-muted);`}>
-            Design, Development, and the Future of Web.<br class="hidden md:block"/>
-            <span class="opacity-50">技術とデザインが交差する、デジタルの探求記録。</span>
+          <p class="text-lg md:text-xl text-text-secondary leading-relaxed text-balance">
+            Technical deep dives, design thoughts, and updates on my engineering journey.
+            <span class="block text-sm mt-2 text-zinc-400">技術とデザインが交差する、デジタルの探求記録。</span>
           </p>
-        </div>
       </section>
 
       <!-- Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5 auto-rows-fr">
-        {posts.map((post, index) => {
-          const isMainFeatured = index === 0;
-          const isSecondaryFeatured = index === 1 || index === 2;
-
-          let colSpan = "col-span-1 md:col-span-3 lg:col-span-4";
-          let variant: 'featured' | 'basic' = 'basic';
-
-          if (isMainFeatured) {
-            colSpan = "col-span-1 md:col-span-6 lg:col-span-12";
-            variant = 'featured';
-          } else if (isSecondaryFeatured) {
-            colSpan = "col-span-1 md:col-span-3 lg:col-span-6";
-          }
-
-          return (
-            <div class:list={[colSpan, "reveal"]} style={`transition-delay: ${index * 0.06}s;`}>
-              <PostCard post={post} variant={variant} />
-            </div>
-          );
-        })}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post, index) => (
+             <PostCard post={post} class="reveal-item" />
+        ))}
       </div>
 
       {posts.length === 0 && (
-          <div class="text-center py-40 rounded-2xl border-2 border-dashed reveal"
-               style={`border-color: var(--color-border); color: var(--color-text-muted);`}>
-              <p class="font-display text-xl">No stories yet.</p>
+          <div class="text-center py-40 rounded-3xl border-2 border-dashed border-zinc-200">
+              <p class="font-display text-xl text-zinc-400">No stories yet.</p>
           </div>
       )}
     </div>

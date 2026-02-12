@@ -11,47 +11,36 @@ export interface Props {
 const { events } = Astro.props;
 ---
 
-<div class="relative ml-4 space-y-0 py-4">
+<div class="relative ml-4 space-y-8 py-4">
   <!-- Vertical Line -->
-  <div class="absolute left-0 top-0 bottom-0 w-px overflow-hidden">
-    <div class="w-full h-full origin-top" style={`background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-2), transparent); animation: line-grow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;`}></div>
-  </div>
+  <div class="absolute left-0 top-0 bottom-0 w-px bg-linear-to-b from-accent-blue via-accent-violet to-transparent"></div>
 
   {events.map((event, index) => (
-    <div class="relative pl-10 py-5 group reveal" style={`transition-delay: ${index * 0.06}s;`}>
+    <div class="relative pl-8 group">
       {/* Dot */}
-      <div class="absolute -left-1.25 top-7 w-2.5 h-2.5 rounded-full transition-all duration-500" style={`background: var(--color-surface); border: 2px solid var(--color-border);`}>
-        <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500" style={`background: var(--color-accent); box-shadow: 0 0 12px var(--color-accent-glow);`}></div>
-      </div>
+      <div class="absolute -left-1.25 top-6 w-2.5 h-2.5 rounded-full bg-white border-2 border-accent-blue z-10 transition-transform duration-300 group-hover:scale-125 group-hover:bg-accent-blue"></div>
 
       {/* Content */}
-      <div class="grid grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-2 sm:gap-6 p-4 -ml-2 rounded-2xl transition-all duration-400"
-           style="background: transparent;">
+      <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:shadow-md hover:-translate-y-1">
 
-        <div class="flex-none pt-0.5">
-          <span class="text-sm font-mono font-medium whitespace-nowrap block" style={`color: var(--color-accent-2);`}>
-            {event.year.includes('-') ? event.year.replace('-', ' — ') : event.year}
-          </span>
+        <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-2">
+           <h3 class="text-lg font-display font-bold text-text-primary">{event.title}</h3>
+           <span class="text-xs font-mono font-medium text-accent-violet bg-accent-violet/5 px-2 py-0.5 rounded">
+             {event.year}
+           </span>
         </div>
 
-        <div class="flex flex-col gap-1.5">
-           <div class="flex flex-col sm:flex-row sm:items-baseline gap-1.5">
-               <h3 class="text-lg font-display font-bold leading-tight" style={`color: var(--color-text);`}>{event.title}</h3>
-               <span class="text-sm" style={`color: var(--color-text-muted);`}>@ {event.company}</span>
-           </div>
-           {event.description && (
-            <p class="text-sm leading-relaxed max-w-xl mt-0.5" style={`color: var(--color-text-muted);`}>
+        <div class="mb-3">
+             <span class="text-sm font-medium text-zinc-500">@ {event.company}</span>
+        </div>
+
+        {event.description && (
+            <p class="text-sm leading-relaxed text-zinc-600">
                 {event.description}
             </p>
-           )}
-        </div>
+        )}
+
       </div>
     </div>
   ))}
 </div>
-
-<style>
-  .group:hover > div:nth-child(2) {
-    background: color-mix(in srgb, var(--color-surface-2) 50%, transparent) !important;
-  }
-</style>

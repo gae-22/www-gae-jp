@@ -17,79 +17,119 @@
     font-display: swap;
 }
 
-/* ─── Theme Tokens ─── */
+/* ─── Theme Tokens (Hyper-Light 2026) ─── */
 @theme {
     /*
-       2026 Modern Japanese Palette
-       Concept: "Deep & Vibrant" - High contrast, deep blues, vibrant accents.
+       Concept: "Hyper-Light"
+       Pure white backgrounds, vibrant "Aurora" accents, extreme cleanliness.
     */
-    --color-bg: #ffffff;
-    --color-surface: #f8fafc; /* Slate-50 */
-    --color-surface-2: #f1f5f9; /* Slate-100 */
+    --color-bg-base: #ffffff;
+    --color-bg-subtle: #f8fafc;
 
-    --color-text: #0f172a; /* Slate-900 */
-    --color-text-muted: #64748b; /* Slate-500 */
+    --color-surface-glass: rgba(255, 255, 255, 0.7);
+    --color-surface-glass-strong: rgba(255, 255, 255, 0.9);
 
-    --color-border: #e2e8f0; /* Slate-200 */
-    --color-border-subtle: #f1f5f9; /* Slate-100 */
+    --color-text-primary: #0f172a; /* Slate 900 - Deep, harsh dark blue-black */
+    --color-text-secondary: #475569; /* Slate 600 - Readable grey */
+    --color-text-tertiary: #94a3b8; /* Slate 400 - Subtle details */
 
-    /* Dark Mode (minimal support) */
-    --color-dark-bg: #020617; /* Slate-950 */
-    --color-dark-surface: #1e293b; /* Slate-800 */
-    --color-dark-text: #f8fafc; /* Slate-50 */
-    --color-dark-text-muted: #94a3b8; /* Slate-400 */
+    --color-border-subtle: rgba(148, 163, 184, 0.15); /* Very faint border */
+    --color-border-highlight: rgba(148, 163, 184, 0.3);
 
-    /* Accents - "Electric Vermilion" & "Deep Indigo" */
-    --color-primary: #312e81; /* Indigo-900 */
-    --color-accent: #ef4444; /* Red-500 (Vermilion-like) */
-    --color-accent-blue: #3b82f6; /* Blue-500 */
+    /* Accents - Aurora Palette */
+    --color-accent-blue: #3b82f6; /* Vivid Blue */
+    --color-accent-violet: #8b5cf6; /* Electric Violet */
+    --color-accent-cyan: #06b6d4; /* Cyan */
+    --color-accent-lime: #84cc16; /* Acid Lime */
+    --color-accent-orange: #f97316; /* Safety Orange */
 
-    --color-accent-glow: rgba(59, 130, 246, 0.5);
-
-    /* Typography - "Zen Kaku" for readability and modern feel */
-    --font-sans: 'Zen Kaku Gothic New', 'Inter', system-ui, sans-serif;
+    /* Typography */
     --font-heading: 'Zen Kaku Gothic New', 'Outfit', system-ui, sans-serif;
+    --font-body: 'Zen Kaku Gothic New', 'Inter', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --font-display: 'PleckJP', var(--font-heading);
 
-    /* Animation Config - Cinematic & Smooth */
-    --animate-fade-in: fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    --animate-slide-up: slide-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    --animate-scale-in: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-
-    @keyframes fade-in {
-        from {
-            opacity: 0;
+    /* Animation Keyframes */
+    @keyframes aurora {
+        0% {
+            background-position:
+                50% 50%,
+                50% 50%;
         }
-        to {
-            opacity: 1;
+        25% {
+            background-position:
+                100% 0%,
+                0% 100%;
+        }
+        50% {
+            background-position:
+                50% 100%,
+                100% 50%;
+        }
+        75% {
+            background-position:
+                0% 50%,
+                50% 100%;
+        }
+        100% {
+            background-position:
+                50% 50%,
+                50% 50%;
         }
     }
-    @keyframes slide-up {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
+
+    @keyframes float-slow {
+        0%,
+        100% {
             transform: translateY(0);
         }
+        50% {
+            transform: translateY(-15px);
+        }
     }
-    @keyframes scale-in {
-        from {
+
+    @keyframes grain-shift {
+        0%,
+        100% {
+            transform: translate(0, 0);
+        }
+        10% {
+            transform: translate(-5%, -10%);
+        }
+        20% {
+            transform: translate(-15%, 5%);
+        }
+        30% {
+            transform: translate(7%, -25%);
+        }
+        40% {
+            transform: translate(-5%, 25%);
+        }
+        50% {
+            transform: translate(-15%, 10%);
+        }
+        60% {
+            transform: translate(15%, 0%);
+        }
+        70% {
+            transform: translate(0%, 15%);
+        }
+        80% {
+            transform: translate(3%, 35%);
+        }
+        90% {
+            transform: translate(-10%, 10%);
+        }
+    }
+
+    @keyframes text-reveal {
+        0% {
+            transform: translateY(100%);
             opacity: 0;
-            transform: scale(0.95);
         }
-        to {
+        100% {
+            transform: translateY(0);
             opacity: 1;
-            transform: scale(1);
-        }
-    }
-    @keyframes marquee {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(-50%);
         }
     }
 }
@@ -97,21 +137,19 @@
 /* ─── Base Layer ─── */
 @layer base {
     html {
-        @apply scroll-smooth;
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        font-family: var(--font-sans);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        @apply scroll-smooth antialiased;
+        background-color: var(--color-bg-base);
+        color: var(--color-text-primary);
+        font-family: var(--font-body);
+        color-scheme: light; /* Strictly Light Mode */
     }
 
     body {
-        @apply font-sans leading-relaxed tracking-wide;
-        overflow-x: hidden;
+        @apply leading-relaxed tracking-normal relative overflow-x-hidden;
     }
 
     ::selection {
-        background: var(--color-primary);
+        background: var(--color-accent-violet);
         color: white;
     }
 
@@ -121,75 +159,126 @@
     h4,
     h5,
     h6 {
-        @apply font-heading font-bold tracking-tight;
-        color: var(--color-text);
+        @apply font-heading font-bold tracking-tight text-text-primary;
+        line-height: 1.1;
     }
 }
 
 /* ─── Component Layer ─── */
 @layer components {
-    /* Vertical Text Utility */
-    .vertical-text {
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
-        letter-spacing: 0.1em;
+    /*
+        1. Aurora Mesh Background
+        Used in Layout.astro as a fixed background.
+    */
+    .aurora-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        background-color: #ffffff;
+        background-image:
+            radial-gradient(
+                at 0% 0%,
+                rgba(59, 130, 246, 0.15) 0px,
+                transparent 50%
+            ),
+            radial-gradient(
+                at 100% 0%,
+                rgba(139, 92, 246, 0.15) 0px,
+                transparent 50%
+            ),
+            radial-gradient(
+                at 100% 100%,
+                rgba(6, 182, 212, 0.15) 0px,
+                transparent 50%
+            ),
+            radial-gradient(
+                at 0% 100%,
+                rgba(132, 204, 22, 0.15) 0px,
+                transparent 50%
+            );
+        filter: blur(80px) saturate(150%);
+        opacity: 0.8;
     }
 
-    /* Glass Effect (Enhanced) */
-    .glass-panel {
-        @apply backdrop-blur-md bg-white/70 border border-white/40 shadow-sm;
+    /*
+        2. Noise Overlay
+        Adds texture to the clean white.
+    */
+    .noise-overlay {
+        position: fixed;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        z-index: 9999;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+        opacity: 0.04;
+        mix-blend-mode: multiply;
+        animation: grain-shift 8s steps(10) infinite;
+    }
+
+    /*
+        3. Glass Components
+    */
+    .glass {
+        @apply backdrop-blur-xl bg-surface-glass border border-border-subtle shadow-sm;
     }
 
     .glass-card {
-        @apply backdrop-blur-md bg-white/70 border border-white/40 shadow-sm rounded-2xl transition-all duration-500 ease-out;
+        @apply backdrop-blur-xl bg-surface-glass border border-border-subtle shadow-sm rounded-3xl transition-all duration-300 ease-out;
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.02),
+            0 2px 4px -1px rgba(0, 0, 0, 0.02),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+
         &:hover {
-            @apply shadow-lg bg-white/90 -translate-y-1;
-            border-color: var(--color-accent-blue);
+            @apply -translate-y-1 shadow-lg bg-surface-glass-strong;
+            box-shadow:
+                0 20px 25px -5px rgba(0, 0, 0, 0.05),
+                0 10px 10px -5px rgba(0, 0, 0, 0.02),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+            border-color: var(--color-border-highlight);
         }
     }
 
-    /* Scroll Reveal */
-    .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-            opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-            transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .reveal.revealed {
-        opacity: 1;
-        transform: translateY(0);
+    /*
+        4. Typography Utilities
+    */
+    .text-display {
+        font-family: var(--font-display);
+        line-height: 0.9;
+        letter-spacing: -0.03em;
     }
 
-    .stagger-1 {
-        transition-delay: 0.1s;
-    }
-    .stagger-2 {
-        transition-delay: 0.2s;
-    }
-    .stagger-3 {
-        transition-delay: 0.3s;
+    .text-gradient {
+        background: linear-gradient(
+            135deg,
+            var(--color-text-primary) 0%,
+            var(--color-text-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 }
 
 /* ─── Utilities ─── */
-@utility thin-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-border) transparent;
-    &::-webkit-scrollbar {
-        height: 4px;
-        width: 4px;
-    }
-    &::-webkit-scrollbar-thumb {
-        border-radius: 4px;
-        background: var(--color-border);
-    }
-    &::-webkit-scrollbar-thumb:hover {
-        background: var(--color-text-muted);
-    }
-}
-
 @layer utilities {
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+
+    .backface-hidden {
+        backface-visibility: hidden;
+    }
+
     .text-balance {
         text-wrap: balance;
     }

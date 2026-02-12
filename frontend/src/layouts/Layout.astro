@@ -29,7 +29,7 @@ const socialImageURL = new URL(image, Astro.url);
 ---
 
 <!doctype html>
-<html lang="ja" class="light">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -37,7 +37,7 @@ const socialImageURL = new URL(image, Astro.url);
 		<link rel="icon" type="image/svg+xml" href="/gae.svg" />
 		<link rel="icon" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#FFFFFF" />
 
         <link rel="canonical" href={canonicalURL} />
 
@@ -62,10 +62,13 @@ const socialImageURL = new URL(image, Astro.url);
             window._PUBLIC_API_URL = publicApiUrl;
         </script>
 	</head>
-    <body class="min-h-screen relative overflow-x-hidden bg-white text-zinc-900" style={`background-color: var(--color-bg); color: var(--color-text);`}>
+    <body class="min-h-screen relative overflow-x-hidden text-text-primary bg-bg-base selection:bg-accent-violet selection:text-white">
 
-        <!-- Subtle Pattern Background -->
-        <div class="fixed inset-0 z-[-1] pointer-events-none opacity-[0.4] bg-dot-pattern"></div>
+        <!-- 1. Aurora Background -->
+        <div class="aurora-bg"></div>
+
+        <!-- 2. Noise Overlay -->
+        <div class="noise-overlay"></div>
 
         <!-- Content -->
 		<slot />
@@ -85,7 +88,7 @@ const socialImageURL = new URL(image, Astro.url);
                     },
                     { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
                 );
-                document.querySelectorAll('.reveal, .stagger-children').forEach((el) => observer.observe(el));
+                document.querySelectorAll('.reveal-item').forEach((el) => observer.observe(el));
             }
 
             // Init all

@@ -10,15 +10,13 @@ interface Props {
 }
 
 const { post, variant = 'basic', class: className } = Astro.props;
-const isFeatured = variant === 'featured';
 ---
 
-<a href={`/blog/${post.slug}`} class:list={["group relative block h-full hover-target", className]}>
-  <article class="rounded-2xl overflow-hidden h-full flex flex-col transition-all duration-500 ease-out hover:shadow-[0_0_40px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]"
-           style={`background: var(--color-surface); border: 1px solid var(--color-border-subtle);`}>
+<a href={`/blog/${post.slug}`} class:list={["group relative block h-full", className]}>
+  <article class="glass-card h-full flex flex-col overflow-hidden">
 
     <!-- Cover Image -->
-    <div class:list={["w-full overflow-hidden relative", isFeatured ? "aspect-21/9" : "aspect-video"]}>
+    <div class="w-full aspect-video overflow-hidden relative bg-zinc-100">
         {post.data.cover ? (
             <Image
                 src={post.data.cover}
@@ -26,53 +24,42 @@ const isFeatured = variant === 'featured';
                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
         ) : (
-            <div class="w-full h-full flex items-center justify-center relative overflow-hidden"
-                 style={`background: linear-gradient(135deg, var(--color-surface-2), var(--color-surface));`}>
-                <div class="absolute inset-0 opacity-[0.04] pointer-events-none" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 24px 24px;"></div>
-                <span class="font-display font-bold text-4xl opacity-5" style={`color: var(--color-text);`}>gae</span>
+            <div class="w-full h-full flex items-center justify-center bg-zinc-50">
+                 <Icon name="lucide:image" class="w-10 h-10 text-zinc-200" />
             </div>
         )}
-        {post.data.tags.length > 0 && (
-            <div class="absolute top-4 left-4 flex gap-2">
-                {post.data.tags.slice(0, isFeatured ? 3 : 1).map(tag => (
-                    <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider"
-                          style="background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.9); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);">
-                        {tag}
-                    </span>
-                ))}
-            </div>
-        )}
+
+        {/* Date Badge */}
+        <div class="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-600 shadow-sm">
+             <time datetime={post.data.publishedAt.toISOString()}>
+              {post.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+            </time>
+        </div>
     </div>
 
     <!-- Content -->
-    <div class:list={["flex-1 flex flex-col", isFeatured ? "p-8 lg:p-10" : "p-6 lg:p-8"]}>
-      <div class="flex items-center gap-3 text-[10px] font-mono uppercase tracking-[0.2em] mb-4" style={`color: var(--color-text-muted);`}>
-        <time datetime={post.data.publishedAt.toISOString()}>
-          {post.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-        </time>
+    <div class="p-6 flex flex-col flex-1">
+      <div class="flex gap-2 mb-3">
+          {post.data.tags.slice(0, 2).map(tag => (
+              <span class="text-[10px] font-bold uppercase tracking-wider text-accent-blue bg-accent-blue/5 px-2 py-0.5 rounded">
+                  {tag}
+              </span>
+          ))}
       </div>
 
-      <h3 class:list={[
-        "font-display font-semibold mb-3 leading-tight transition-colors duration-300",
-        isFeatured ? "text-2xl lg:text-3xl" : "text-lg lg:text-xl"
-      ]} style={`color: var(--color-text);`}>
+      <h3 class="text-xl font-heading font-bold text-text-primary mb-3 leading-tight group-hover:text-accent-violet transition-colors">
         {post.data.title}
       </h3>
 
-      <p class:list={[
-        "leading-relaxed mb-6 flex-1 text-balance",
-        isFeatured ? "text-base line-clamp-3" : "text-sm line-clamp-2"
-      ]} style={`color: var(--color-text-muted);`}>
+      <p class="text-sm text-text-secondary leading-relaxed line-clamp-2 mb-6 flex-1">
         {post.data.description}
       </p>
 
-      <div class="flex items-center gap-2 text-xs font-semibold transition-colors duration-300 mt-auto" style={`color: var(--color-text-muted);`}>
-        <span class="relative group-hover:text-accent transition-colors duration-300">
-            Read Article
-            <span class="absolute -bottom-1 left-0 w-full h-px transform scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left" style={`background: var(--color-accent);`}></span>
-        </span>
-        <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300" />
+      <div class="flex items-center gap-2 text-xs font-bold text-zinc-900 group/link">
+        <span class="group-hover:translate-x-1 transition-transform">Read Article</span>
+        <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
       </div>
     </div>
+
   </article>
 </a>

@@ -27,118 +27,107 @@ const techStack = [
 ];
 ---
 
-<section id="work" class="max-w-7xl mx-auto px-6 py-20 relative z-10">
+<section id="work" class="max-w-7xl mx-auto px-6 py-32 relative z-10">
 
     <!-- Section Header -->
-    <div class="flex items-end justify-between mb-12 reveal">
-        <div class="relative">
-            <span class="absolute -left-8 top-1 vertical-text text-[10px] font-mono tracking-widest text-zinc-300 hidden md:block opacity-50">
-                WORKS
-            </span>
-            <h2 class="text-4xl lg:text-5xl font-heading font-bold text-zinc-900 tracking-tight leading-none">
-                Selected <br/>
-                <span class="text-zinc-400 font-serif italic font-light">Works & Thoughts</span>
-            </h2>
-        </div>
-        <a href="/blog" class="hidden sm:flex items-center gap-2 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors group">
-            View all posts
-            <div class="bg-zinc-100 p-1.5 rounded-full group-hover:bg-zinc-200 transition-colors">
-                <Icon name="lucide:arrow-right" class="w-4 h-4" />
-            </div>
-        </a>
+    <div class="mb-20">
+        <span class="text-accent-blue font-mono text-xs uppercase tracking-widest mb-4 block">Selected Works</span>
+        <h2 class="text-display text-5xl md:text-7xl font-bold tracking-tighter text-zinc-900 mb-6">
+            Craftsmanship <br class="hidden md:block" />
+            <span class="text-zinc-400 font-serif italic font-light tracking-normal">& Engineering</span>
+        </h2>
     </div>
 
-    <!-- Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:auto-rows-[220px]">
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[300px]">
 
-        <!-- Item 1: Featured Post (Large) -->
+        <!-- Item 1: Latest Writing (Large) -->
         <BentoItem
-            class="col-span-2 md:col-span-4 lg:col-span-4 row-span-2 reveal overflow-hidden group glass-card border-none ring-1 ring-zinc-900/5"
+            class="md:col-span-2 lg:col-span-2 row-span-1 md:row-span-2 reveal-item"
             title="Latest Writing"
             href={latestPost ? `/blog/${latestPost.slug}` : undefined}
         >
-            <div class="w-full h-full relative z-10 bg-white/50 group-hover:bg-white/80 transition-colors">
+            <div class="w-full h-full relative group">
                 {latestPost ? (
                     <>
-                        <div class="absolute inset-0 flex flex-col md:flex-row">
+                        <div class="absolute inset-0">
                             {latestPost.data.cover && (
-                                <div class="w-full md:w-1/2 h-56 md:h-full relative overflow-hidden">
-                                     <Image
-                                        src={latestPost.data.cover}
-                                        alt={latestPost.data.coverAlt || ""}
-                                        class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                                    />
-                                    <div class="absolute inset-0 bg-zinc-900/5 group-hover:bg-transparent transition-colors duration-500"></div>
-                                </div>
+                                <Image
+                                    src={latestPost.data.cover}
+                                    alt={latestPost.data.coverAlt || ""}
+                                    class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-90"
+                                />
                             )}
-                            <div class="w-full md:w-1/2 p-8 flex flex-col justify-center relative">
-                                <!-- Deco -->
-                                <div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                    <Icon name="lucide:arrow-up-right" class="w-6 h-6 text-zinc-900" />
-                                </div>
+                             <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
+                        </div>
 
-                                <div class="flex items-center gap-3 mb-4">
-                                    <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold text-emerald-700 bg-emerald-100/80 border border-emerald-200/50 backdrop-blur-sm">NEW</span>
-                                    <span class="text-zinc-400 text-xs font-mono tracking-wide">
-                                        {latestPost.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                                    </span>
-                                </div>
-                                <h3 class="text-2xl md:text-3xl lg:text-4xl font-heading font-bold leading-[1.1] text-zinc-900 mb-4 group-hover:text-primary transition-colors">
-                                    {latestPost.data.title}
-                                </h3>
-                                <p class="text-sm md:text-base text-zinc-500 line-clamp-3 leading-relaxed text-balance">
-                                    {latestPost.data.description}
-                                </p>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="px-2 py-1 rounded bg-white/20 backdrop-blur-md text-white/90 text-[10px] font-mono uppercase tracking-wider border border-white/10">
+                                    New Article
+                                </span>
                             </div>
+                            <h3 class="text-3xl font-heading font-bold text-white mb-2 leading-tight group-hover:translate-x-2 transition-transform duration-300">
+                                {latestPost.data.title}
+                            </h3>
+                            <p class="text-zinc-300 text-sm line-clamp-2 max-w-md group-hover:text-white transition-colors">
+                                {latestPost.data.description}
+                            </p>
                         </div>
                     </>
                 ) : (
-                    <div class="w-full h-full flex items-center justify-center text-zinc-400">
-                        <p class="font-mono text-xs">No posts yet</p>
-                    </div>
+                    <div class="p-10 text-zinc-400 flex items-center justify-center h-full">No posts yet</div>
                 )}
             </div>
         </BentoItem>
 
-        <!-- Item 2: Clock -->
-        <BentoItem class="col-span-1 row-span-1 reveal reveal-delay-1 glass-card border-none ring-1 ring-zinc-900/5 flex items-center justify-center">
-            <Clock />
-        </BentoItem>
 
-        <!-- Item 3: GitHub -->
-        <BentoItem class="col-span-1 row-span-1 group/gh reveal reveal-delay-2 bg-zinc-900 text-white ring-1 ring-zinc-900 shadow-xl shadow-zinc-900/10" href="https://github.com/gae-22" title="GitHub">
-            <div class="p-6 flex flex-col justify-between h-full relative overflow-hidden">
-                <div class="flex justify-between items-start z-10">
-                    <Icon name="lucide:github" class="w-6 h-6" />
-                    <Icon name="lucide:arrow-up-right" class="w-4 h-4 opacity-50 group-hover/gh:opacity-100 group-hover/gh:translate-x-0.5 group-hover/gh:-translate-y-0.5 transition-all" />
+        <!-- Item 2: Tech Stack -->
+        <BentoItem class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item" title="Stack">
+             <div class="p-6 h-full flex flex-col justify-center">
+                <div class="grid grid-cols-4 gap-4">
+                    {techStack.map(tech => (
+                        <div class="flex flex-col items-center justify-center gap-2 group/icon" title={tech.name}>
+                            <Icon name={tech.icon} class="w-8 h-8 grayscale group-hover/icon:grayscale-0 transition-all duration-300 group-hover/icon:scale-110" />
+                        </div>
+                    ))}
                 </div>
-                <div class="z-10">
-                    <span class="text-base font-bold font-heading block">GitHub</span>
-                    <span class="text-[10px] font-mono text-zinc-500">@gae-22</span>
-                </div>
-                <!-- Decoration -->
-                <Icon name="lucide:github" class="absolute -bottom-4 -right-4 w-28 h-28 text-zinc-800 opacity-20 rotate-12 transition-transform duration-500 group-hover/gh:rotate-6 group-hover/gh:scale-110" />
             </div>
         </BentoItem>
 
-        <!-- Item 4: Tech Stack Marquee -->
-        <BentoItem class="col-span-2 row-span-1 overflow-hidden reveal reveal-delay-3 glass-card border-none ring-1 ring-zinc-900/5">
-            <div class="flex flex-col h-full justify-center gap-5 py-4">
-                 <div class="px-6 flex items-center gap-2">
-                    <div class="w-1.5 h-1.5 rounded-full bg-accent-blue"></div>
-                    <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400">Tech Stack</span>
-                 </div>
-                <div class="overflow-hidden relative group">
-                    <div class="flex gap-4 marquee-track group-hover:[animation-play-state:paused]">
-                        {[...techStack, ...techStack].map(tech => (
-                            <div class="flex items-center gap-2 shrink-0 px-3.5 py-2 rounded-lg bg-white/50 backdrop-blur-sm shadow-sm ring-1 ring-zinc-900/5 hover:ring-zinc-900/10 transition-all">
-                                <Icon name={tech.icon} class="w-4 h-4" />
-                                <span class="text-xs font-medium text-zinc-700">{tech.name}</span>
-                            </div>
-                        ))}
-                    </div>
-                     <div class="absolute inset-y-0 left-0 w-12 bg-linear-to-r from-white/80 to-transparent z-10"></div>
-                     <div class="absolute inset-y-0 right-0 w-12 bg-linear-to-l from-white/80 to-transparent z-10"></div>
+        <!-- Item 3: GitHub -->
+        <BentoItem
+            class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item bg-zinc-900 border-none group"
+            href="https://github.com/gae-22"
+        >
+            <div class="relative h-full w-full flex flex-col items-center justify-center p-6 bg-zinc-950 text-white overflow-hidden">
+                <div class="absolute inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] bg-size-[16px_16px] opacity-20"></div>
+                <Icon name="lucide:github" class="w-12 h-12 mb-4 relative z-10 group-hover:scale-110 transition-transform duration-300" />
+                <span class="font-heading font-bold text-xl relative z-10">GitHub</span>
+                <span class="text-xs text-zinc-500 font-mono mt-1 relative z-10">@gae-22</span>
+
+                <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl group-hover:bg-accent-violet/20 transition-colors duration-500"></div>
+            </div>
+        </BentoItem>
+
+         <!-- Item 4: Clock / Location -->
+        <BentoItem class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item grid place-items-center bg-white">
+            <Clock />
+        </BentoItem>
+
+        <!-- Item 5: About Link -->
+        <BentoItem
+            class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item bg-accent-blue/5 border-accent-blue/10"
+            href="/about"
+            title="Profile"
+        >
+            <div class="p-6 h-full flex flex-col justify-between group">
+                <div class="w-10 h-10 rounded-full bg-accent-blue/10 text-accent-blue flex items-center justify-center">
+                    <Icon name="lucide:user" class="w-5 h-5" />
+                </div>
+                <div>
+                    <span class="text-lg font-bold text-zinc-900 group-hover:text-accent-blue transition-colors">About Me</span>
+                    <p class="text-xs text-zinc-500 mt-1">Get to know the person behind the code.</p>
                 </div>
             </div>
         </BentoItem>
