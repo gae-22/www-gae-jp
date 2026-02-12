@@ -7,24 +7,13 @@ import Timeline from '~/components/features/about/Timeline.astro';
 import { Icon } from 'astro-icon/components';
 import { getEntry } from 'astro:content';
 
-const profileEntry = await getEntry('about', 'profile');
-const profileData = profileEntry?.data;
 
-const profile = {
-  name: profileData?.name || "Kanegae Ryota",
-  roles: profileData?.roles || ["Network", "Software", "Infrastructure", "IoT"],
-  stats: {
-    experience: profileData?.stats.experience || "0",
-    projects: profileData?.stats.projects || "5+"
-  },
-  timeline: profileData?.timeline || [],
-  gear: profileData?.gear || [],
-  skills: {
-    languages: profileData?.skills.languages || [],
-    frameworks: profileData?.skills.frameworks || [],
-    others: profileData?.skills.others || []
-  }
-};
+const aboutEntry = await getEntry('about', 'profile');
+if (!aboutEntry) {
+    throw new Error('About profile not found');
+}
+
+const profile = aboutEntry.data;
 
 // Icon resolver
 const getDefaultIcon = (name: string | undefined | null) => {

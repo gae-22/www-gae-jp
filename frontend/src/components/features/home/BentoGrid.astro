@@ -1,15 +1,19 @@
 ---
+import { getCollection, getEntry } from 'astro:content';
 import BentoItem from './BentoItem.astro';
-import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import Clock from './Clock.astro';
 
-// Fetch latest featured post
-const posts = await getCollection('blog', ({ data }) => {
-	return import.meta.env.PROD ? !data.draft && data.featured : true;
-});
-const latestPost = posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())[0];
+const aboutEntry = await getEntry('about', 'profile');
+const { name, roles, stats } = aboutEntry?.data || { name: 'gae', roles: [], stats: { experience: '0', projects: '0' } };
+
+const posts = (await getCollection('blog', ({ data }) => {
+	return import.meta.env.PROD ? !data.draft : true;
+})).sort(
+	(a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+const latestPost = posts[0];
 
 const techStack = [
   { name: 'TypeScript', icon: 'logos:typescript-icon' },

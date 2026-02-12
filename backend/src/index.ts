@@ -2,11 +2,6 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { secureHeaders } from 'hono/secure-headers';
-import authRoutes from './routes/auth.js';
-import profileRoutes from './routes/profile.js';
-import skillsRoutes from './routes/skills.js';
-import timelineRoutes from './routes/timeline.js';
-import gearRoutes from './routes/gear.js';
 
 const app = new Hono();
 
@@ -44,12 +39,7 @@ app.use(
 );
 
 // ルート登録
-const routes = app
-    .route('/api/auth', authRoutes)
-    .route('/api', profileRoutes)
-    .route('/api/skills', skillsRoutes)
-    .route('/api/timeline', timelineRoutes)
-    .route('/api/gear', gearRoutes);
+app.get('/api/ping', (c) => c.json({ message: 'pong' }));
 
 // ヘルスチェック
 app.get('/health', (c) => c.json({ status: 'ok' }));
@@ -70,7 +60,6 @@ app.onError((err, c) => {
 });
 
 export default app;
-export type AppType = typeof routes;
 
 // サーバー起動（Node.js環境）
 if (
