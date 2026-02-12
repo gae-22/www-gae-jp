@@ -34,7 +34,11 @@ const socialImageURL = new URL(image, Astro.url);
 		<link rel="icon" type="image/svg+xml" href="/gae.svg" />
 		<!-- Fallback / standard favicon -->
 		<link rel="icon" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+
+        <!-- Preload critical assets -->
+        <link rel="preload" href="/noise.webp" as="image" />
 
         <!-- Canonical URL -->
         <link rel="canonical" href={canonicalURL} />
@@ -63,7 +67,7 @@ const socialImageURL = new URL(image, Astro.url);
 	</head>
     <body class="min-h-screen relative overflow-x-hidden bg-paper text-ink selection:bg-accent-indigo selection:text-white">
         <!-- Global Noise Texture -->
-        <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-multiply bg-[url('/noise.webp')]"></div>
+        <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-multiply bg-[url('/noise.webp')] animate-grain"></div>
 
         <!-- Background Ambient Blobs -->
         <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">

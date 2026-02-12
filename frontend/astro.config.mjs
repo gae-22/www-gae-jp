@@ -51,7 +51,6 @@ function remarkCodeBlockComponent() {
 }
 
 import sitemap from '@astrojs/sitemap';
-import robotsTxt from 'astro-robots-txt';
 
 // https://astro.build/config
 export default defineConfig({
@@ -94,7 +93,6 @@ export default defineConfig({
             ],
         }),
         sitemap(),
-        robotsTxt(),
         icon(),
     ],
 });

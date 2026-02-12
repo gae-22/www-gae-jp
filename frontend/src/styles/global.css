@@ -129,26 +129,6 @@
     body {
         @apply font-body antialiased selection:bg-accent-indigo selection:text-white;
         overflow-x: hidden;
-
-        /* Subtle Noise Overlay for Texture */
-        &::after {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
-            width: 200%;
-            height: 200vh;
-            background: transparent
-                url('http://assets.iceable.com/img/noise-transparent.png')
-                repeat 0 0;
-            background-repeat: repeat;
-            animation: grain 8s steps(10) infinite;
-            opacity: 0.03;
-            z-index: 9999;
-            pointer-events: none;
-        }
     }
 
     h1,
@@ -269,7 +249,11 @@
 @utility glass {
     /* Sophisticated Glass - crisp edges, subtle depth */
     @apply backdrop-blur-xl border border-white/60 shadow-sm;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.7) 100%
+    );
 
     /* Inner highlight for "thick glass" feel */
     box-shadow:
@@ -283,7 +267,11 @@
 
     &:hover {
         @apply border-accent-indigo/20 shadow-[0_20px_40px_-12px_rgba(67,56,202,0.15)];
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+        background: linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(255, 255, 255, 0.85) 100%
+        );
         transform: translateY(-4px);
     }
 }
