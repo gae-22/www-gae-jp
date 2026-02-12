@@ -28,6 +28,46 @@ const profile = {
     others: profileData?.skills.others || []
   }
 };
+// Helper to get icon for skill
+const getDefaultIcon = (name: string | undefined | null) => {
+  if (!name) return null;
+  const n = name.toLowerCase();
+
+  // Languages
+  if (n.includes('typescript')) return 'logos:typescript-icon';
+  if (n.includes('javascript')) return 'logos:javascript';
+  if (n.includes('python')) return 'logos:python';
+  if (n.includes('go')) return 'logos:go';
+  if (n.includes('rust')) return 'logos:rust';
+  if (n.includes('java')) return 'logos:java';
+  if (n.includes('c++')) return 'logos:c-plusplus';
+  if (n === 'c') return 'logos:c';
+
+  // Frameworks
+  if (n.includes('react')) return 'logos:react';
+  if (n.includes('next')) return 'logos:nextjs-icon';
+  if (n.includes('astro')) return 'logos:astro-icon';
+  if (n.includes('tailwind')) return 'logos:tailwindcss-icon';
+  if (n.includes('node')) return 'logos:nodejs-icon';
+  if (n.includes('hono')) return 'logos:hono';
+  if (n.includes('vue')) return 'logos:vue';
+  if (n.includes('angular')) return 'logos:angular-icon';
+  if (n.includes('svelte')) return 'logos:svelte-icon';
+  if (n.includes('fastapi')) return 'logos:fastapi-icon';
+  if (n.includes('flask')) return 'logos:flask';
+  if (n.includes('django')) return 'logos:django-icon';
+
+  // Others
+  if (n.includes('docker')) return 'logos:docker-icon';
+  if (n.includes('aws')) return 'logos:aws';
+  if (n.includes('gcp') || n.includes('google cloud')) return 'logos:google-cloud';
+  if (n.includes('firebase')) return 'logos:firebase';
+  if (n.includes('cloudflare')) return 'logos:cloudflare-icon';
+  if (n.includes('linux')) return 'logos:linux-tux';
+  if (n.includes('git')) return 'logos:git-icon';
+
+  return null;
+};
 ---
 
 <Layout title="About | gae" description="About gae.">
@@ -135,17 +175,13 @@ const profile = {
                         </div>
 
                         <div class="flex flex-wrap gap-2">
-                            {profile.gear.map((item, index) => (
+                            {profile.gear.map((item: string, index: number) => (
                                 <div
                                     class="group/item px-4 py-2.5 rounded-xl flex items-center gap-2 bg-white/80 border border-teal-100/50 hover:border-teal-300/70 hover:bg-linear-to-r hover:from-white hover:via-teal-50/40 hover:to-cyan-50/30 hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-teal-500/20 transition-all duration-300 cursor-default backdrop-blur-sm"
                                     style={`animation-delay: ${index * 50}ms`}
                                 >
-                                    {item.icon ? (
-                                        <Icon name={item.icon} class="w-4 h-4 text-accent-teal" />
-                                    ) : (
-                                        <span class="w-1.5 h-1.5 rounded-full bg-teal-200 group-hover/item:bg-accent-teal group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-teal-500/50 transition-all duration-300"></span>
-                                    )}
-                                    <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-teal transition-colors duration-200">{item.name}</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-teal-200 group-hover/item:bg-accent-teal group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-teal-500/50 transition-all duration-300"></span>
+                                    <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-teal transition-colors duration-200">{item}</span>
                                 </div>
                             ))}
                         </div>
@@ -178,19 +214,8 @@ const profile = {
                         <div>
                             <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Languages</h3>
                             <div class="flex flex-wrap gap-2">
-                                {profile.skills.languages.map((item, index) => {
-                                    // Use icon from database or fallback to default
-                                    const getDefaultIcon = (name: string) => {
-                                        const n = name.toLowerCase();
-                                        if (n.includes('typescript')) return 'logos:typescript-icon';
-                                        if (n.includes('javascript')) return 'logos:javascript';
-                                        if (n.includes('python')) return 'logos:python';
-                                        if (n.includes('go')) return 'logos:go';
-                                        if (n.includes('rust')) return 'logos:rust';
-                                        if (n.includes('java')) return 'logos:java';
-                                        return null;
-                                    };
-                                    const icon = item.icon || getDefaultIcon(item.name);
+                                {profile.skills.languages.map((item: string, index: number) => {
+                                    const icon = getDefaultIcon(item);
 
                                     return (
                                     <div
@@ -202,7 +227,7 @@ const profile = {
                                         ) : (
                                             <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
                                         )}
-                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item.name}</span>
+                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item}</span>
                                     </div>
                                 )})}
                             </div>
@@ -212,22 +237,8 @@ const profile = {
                         <div>
                             <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Frameworks</h3>
                             <div class="flex flex-wrap gap-2">
-                                {profile.skills.frameworks.map((item, index) => {
-                                     // Use icon from database or fallback to default
-                                     const getDefaultIcon = (name: string) => {
-                                        const n = name.toLowerCase();
-                                        if (n.includes('react')) return 'logos:react';
-                                        if (n.includes('next')) return 'logos:nextjs-icon';
-                                        if (n.includes('astro')) return 'logos:astro-icon';
-                                        if (n.includes('tailwind')) return 'logos:tailwindcss-icon';
-                                        if (n.includes('node')) return 'logos:nodejs-icon';
-                                        if (n.includes('hono')) return 'logos:hono';
-                                        if (n.includes('vue')) return 'logos:vue';
-                                        if (n.includes('angular')) return 'logos:angular-icon';
-                                        if (n.includes('svelte')) return 'logos:svelte-icon';
-                                        return null;
-                                    };
-                                    const icon = item.icon || getDefaultIcon(item.name);
+                                {profile.skills.frameworks.map((item: string, index: number) => {
+                                    const icon = getDefaultIcon(item);
 
                                     return (
                                     <div
@@ -239,7 +250,7 @@ const profile = {
                                         ) : (
                                             <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
                                         )}
-                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item.name}</span>
+                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item}</span>
                                     </div>
                                 )})}
                             </div>
@@ -249,20 +260,8 @@ const profile = {
                         <div>
                             <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-wider mb-3">Others</h3>
                             <div class="flex flex-wrap gap-2">
-                                {profile.skills.others.map((item, index) => {
-                                     // Use icon from database or fallback to default
-                                     const getDefaultIcon = (name: string) => {
-                                        const n = name.toLowerCase();
-                                        if (n.includes('docker')) return 'logos:docker-icon';
-                                        if (n.includes('aws')) return 'logos:aws';
-                                        if (n.includes('gcp') || n.includes('google cloud')) return 'logos:google-cloud';
-                                        if (n.includes('firebase')) return 'logos:firebase';
-                                        if (n.includes('cloudflare')) return 'logos:cloudflare-icon';
-                                        if (n.includes('linux')) return 'logos:linux-tux';
-                                        if (n.includes('git')) return 'logos:git-icon';
-                                        return null;
-                                    };
-                                    const icon = item.icon || getDefaultIcon(item.name);
+                                {profile.skills.others.map((item: string, index: number) => {
+                                    const icon = getDefaultIcon(item);
 
                                     return (
                                     <div
@@ -274,7 +273,7 @@ const profile = {
                                         ) : (
                                             <span class="w-1.5 h-1.5 rounded-full bg-indigo-200 group-hover/item:bg-accent-indigo group-hover/item:scale-125 group-hover/item:shadow-lg group-hover/item:shadow-indigo-500/50 transition-all duration-300"></span>
                                         )}
-                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item.name}</span>
+                                        <span class="text-sm font-medium text-zinc-700 group-hover/item:text-accent-indigo transition-colors duration-200">{item}</span>
                                     </div>
                                 )})}
                             </div>
