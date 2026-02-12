@@ -11,52 +11,30 @@ const socialLinks = [
 const marqueeText = 'AVAILABLE FOR WORK · LET\'S COLLABORATE · TOKYO, JAPAN · ';
 ---
 
-<footer class="relative mt-32 overflow-hidden">
+<footer class="mt-12 py-8 flex items-center justify-center">
+  <div class="flex items-center gap-6 px-5 py-2.5 rounded-full border border-zinc-100 bg-zinc-50/50 backdrop-blur-sm">
 
-  <!-- Marquee Banner -->
-  <div class="relative py-5 overflow-hidden select-none" style={`border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);`}>
-    <div class="marquee-track whitespace-nowrap">
-      {Array(8).fill(marqueeText).map((text) => (
-        <span class="inline-flex items-center gap-3 mx-4 text-xs font-mono font-bold uppercase tracking-[0.3em] opacity-40" style={`color: var(--color-text);`}>
-          {text}
-          <span class="inline-block w-1.5 h-1.5 rounded-full" style={`background: var(--color-accent);`}></span>
-        </span>
-      ))}
-    </div>
-  </div>
+      <!-- Copyright -->
+      <span class="text-[10px] font-mono font-medium text-zinc-400">
+          © {year} gae.
+      </span>
 
-  <!-- Footer Content -->
-  <div class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="w-px h-3 bg-zinc-200"></div>
 
-    <!-- Left: Brand -->
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center"
-           style={`border: 1px solid var(--color-border); background: var(--color-surface);`}>
-        <img src="/gae.svg" alt="gae" class="w-4 h-4" />
+      <!-- Socials -->
+      <div class="flex items-center gap-3">
+        {socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={link.label}
+            class="text-zinc-400 hover:text-zinc-900 transition-colors"
+          >
+            <Icon name={link.icon} class="w-3.5 h-3.5" />
+          </a>
+        ))}
       </div>
-      <div class="flex flex-col">
-        <span class="text-sm font-display font-bold" style={`color: var(--color-text);`}>gae</span>
-        <span class="text-[10px] font-mono tracking-widest uppercase opacity-40" style={`color: var(--color-text-muted);`}>
-          &copy; {year}
-        </span>
-      </div>
-    </div>
-
-    <!-- Right: Social -->
-    <div class="flex items-center gap-1">
-      {socialLinks.map((link) => (
-        <a
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={link.label}
-          class="p-3 rounded-xl transition-all duration-300 hover:scale-110 hover-target"
-          style={`color: var(--color-text-muted);`}
-        >
-          <Icon name={link.icon} class="w-4 h-4" />
-        </a>
-      ))}
-    </div>
 
   </div>
 </footer>
