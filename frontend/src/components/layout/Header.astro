@@ -2,30 +2,30 @@
 import { Icon } from 'astro-icon/components';
 
 const navItems = [
-  { label: 'Work', href: '/', },
-  { label: 'Blog', href: '/blog', },
-  { label: 'Projects', href: '/projects', },
-  { label: 'About', href: '/about', },
+  { label: 'Work', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'About', href: '/about' },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed top-4 left-1/2 -translate-x-1/2 z-50">
-  <nav class="flex items-center gap-1 p-1 pr-1.5 rounded-full border border-zinc-200/80 shadow-sm shadow-zinc-200/50 backdrop-blur-xl bg-white/80 transition-all duration-300 hover:shadow-md hover:border-zinc-300/80">
+<header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit pointer-events-none">
+  <nav class="pointer-events-auto flex items-center gap-2 p-1.5 pr-2 rounded-full border border-white/20 shadow-xl shadow-zinc-900/5 backdrop-blur-xl bg-white/70 transition-all duration-500 hover:bg-white/90 hover:shadow-2xl hover:scale-[1.01]">
 
     <!-- Logo -->
-    <a href="/" class="pl-2 pr-1.5 py-1.5 flex items-center gap-1.5 group" aria-label="Home">
-        <div class="relative flex items-center justify-center w-5 h-5 bg-zinc-900 rounded-full text-white overflow-hidden shadow-sm">
-             <span class="font-display font-bold text-[10px]">g</span>
+    <a href="/" class="pl-2 pr-2 py-1.5 flex items-center gap-2 group" aria-label="Home">
+        <div class="relative flex items-center justify-center w-8 h-8 bg-zinc-900 text-white rounded-full overflow-hidden shadow-inner transition-transform duration-500 group-hover:rotate-12">
+             <span class="font-heading font-bold text-xs tracking-tighter">g</span>
         </div>
-        <span class="font-display font-bold text-sm tracking-tight text-zinc-900">gae</span>
+        <span class="font-heading font-bold text-sm tracking-tight text-zinc-900 hidden sm:block">gae</span>
     </a>
 
-    <div class="w-px h-3 bg-zinc-200 mx-1"></div>
+    <div class="w-px h-4 bg-zinc-200 mx-1"></div>
 
     <!-- Nav Items -->
-    <ul class="flex items-center gap-0.5">
+    <ul class="flex items-center gap-1">
       {navItems.map((item) => {
         const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
         return (
@@ -33,10 +33,10 @@ const currentPath = Astro.url.pathname;
             <a
               href={item.href}
               class:list={[
-                "relative px-3 py-1.5 rounded-full text-[11px] font-medium transition-all duration-300",
+                "relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-300",
                 isActive
-                    ? "bg-zinc-100 text-zinc-900 shadow-sm border border-zinc-200/50"
-                    : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50"
+                    ? "bg-zinc-900 text-white shadow-md"
+                    : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100/50"
               ]}
             >
               {item.label}
@@ -46,13 +46,13 @@ const currentPath = Astro.url.pathname;
       })}
     </ul>
 
-    <div class="w-px h-3 bg-zinc-200 mx-1"></div>
+    <div class="w-px h-4 bg-zinc-200 mx-1"></div>
 
     <!-- Social -->
     <a href="https://github.com/gae-22/www-gae-jp" target="_blank" rel="noopener noreferrer"
-       class="p-1.5 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-300"
+       class="p-2 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-900 transition-all duration-300"
        aria-label="GitHub">
-      <Icon name="lucide:github" class="w-3.5 h-3.5" />
+      <Icon name="lucide:github" class="w-4 h-4" />
     </a>
 
   </nav>
