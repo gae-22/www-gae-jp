@@ -83,9 +83,6 @@ const socialImageURL = new URL(image, Astro.url);
 	</head>
     <body class="min-h-screen relative overflow-x-hidden" style={`background-color: var(--color-bg); color: var(--color-text);`}>
 
-        <!-- Custom Cursor -->
-        <div class="cursor-dot" id="cursor-dot"></div>
-
         <!-- Noise Texture Overlay -->
         <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.018] mix-blend-overlay bg-[url('/noise.webp')] bg-repeat"></div>
 
@@ -136,40 +133,6 @@ const socialImageURL = new URL(image, Astro.url);
                 });
             }
 
-            // ─── Custom Cursor ───
-            function initCursor() {
-                const dot = document.getElementById('cursor-dot');
-                if (!dot || window.matchMedia('(hover: none)').matches) return;
-
-                let mouseX = 0, mouseY = 0;
-                let dotX = 0, dotY = 0;
-
-                document.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-
-                function animate() {
-                    dotX += (mouseX - dotX) * 0.15;
-                    dotY += (mouseY - dotY) * 0.15;
-                    dot.style.left = `${dotX}px`;
-                    dot.style.top = `${dotY}px`;
-                    requestAnimationFrame(animate);
-                }
-                animate();
-
-                // Hover effect on interactive elements
-                const interactives = document.querySelectorAll('a, button, [role="button"], .hover-target, input, textarea');
-                interactives.forEach(el => {
-                    el.addEventListener('mouseenter', () => dot.classList.add('hovering'));
-                    el.addEventListener('mouseleave', () => dot.classList.remove('hovering'));
-                });
-
-                // Hide cursor when leaving window
-                document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; });
-                document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; });
-            }
-
             // ─── Theme Toggle ───
             function initThemeToggle() {
                 const btn = document.getElementById('theme-toggle');
@@ -189,7 +152,6 @@ const socialImageURL = new URL(image, Astro.url);
             function initAll() {
                 initRevealObserver();
                 initTextSplit();
-                initCursor();
                 initThemeToggle();
             }
 
