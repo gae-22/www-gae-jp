@@ -55,7 +55,8 @@ gear:
 
 skills:
     languages:
-        - 'C/C++'
+        - 'C'
+        - 'C++'
         - 'Python'
         - 'Rust'
         - 'Java'
@@ -67,6 +68,7 @@ skills:
         - 'Next.js'
         - 'Astro'
         - 'TailwindCSS'
+        - 'Hono'
         - 'FastAPI'
         - 'Flask'
         - 'Django'

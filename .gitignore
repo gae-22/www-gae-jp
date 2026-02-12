@@ -34,18 +34,13 @@ lerna-debug.log*
 # Drizzle
 drizzle/meta/
 
-# macOS-specific files
+# OS-specific files
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Windows-specific files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-
-# Linux-specific files
-*~
 .directory
 
 # IDE and editor folders
@@ -71,8 +66,3 @@ Desktop.ini
 # Testing
 coverage/
 .nyc_output/
-
-# Lock files (optional - uncomment if you want to ignore lock files)
-# pnpm-lock.yaml
-# package-lock.json
-# yarn.lock

@@ -7,50 +7,25 @@ import Timeline from '~/components/features/about/Timeline.astro';
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 
-// バックエンドAPIのURL
-const API_URL = process.env.PUBLIC_API_URL || import.meta.env.PUBLIC_API_URL || 'http://localhost:4000';
+import { getEntry } from 'astro:content';
 
-// バックエンドAPIからデータ取得
-let profileData: any = null;
-let timelineData: any[] = [];
-let skillsData: any[] = [];
-let gearData: any[] =[];
+// Setup data via src/content/about/profile.yaml
+const profileEntry = await getEntry('about', 'profile');
+const profileData = profileEntry?.data;
 
-try {
-  const [profileRes, timelineRes, skillsRes, gearRes] = await Promise.all([
-    fetch(`${API_URL}/api/profile`),
-    fetch(`${API_URL}/api/timeline`),
-    fetch(`${API_URL}/api/skills`),
-    fetch(`${API_URL}/api/gear`)
-  ]);
-
-  if (profileRes.ok) profileData = await profileRes.json();
-  if (timelineRes.ok) timelineData = await timelineRes.json();
-  if (skillsRes.ok) skillsData = await skillsRes.json();
-  if (gearRes.ok) gearData = await gearRes.json();
-} catch (error) {
-  console.error('Failed to fetch data from backend:', error);
-}
-
-// データフォーマット変換
 const profile = {
   name: profileData?.name || "Kanegae Ryota",
   roles: profileData?.roles || ["Network", "Software", "Infrastructure", "IoT"],
   stats: {
-    experience: profileData?.experienceYears?.toString() || "0",
-    projects: `${profileData?.projectCount || 5}+`
+    experience: profileData?.stats.experience || "0",
+    projects: profileData?.stats.projects || "5+"
   },
-  timeline: timelineData.map((item: any) => ({
-    year: item.startDate + (item.endDate ? ` - ${item.endDate}` : ''),
-    title: item.title,
-    company: item.organization || '',
-    description: item.description
-  })),
-  gear: gearData.map((item: any) => ({ name: item.name, icon: item.icon })),
+  timeline: profileData?.timeline || [],
+  gear: profileData?.gear || [],
   skills: {
-    languages: skillsData.filter((s: any) => s.category === 'languages').map((s: any) => ({ name: s.name, icon: s.icon })),
-    frameworks: skillsData.filter((s: any) => s.category === 'frameworks').map((s: any) => ({ name: s.name, icon: s.icon })),
-    others: skillsData.filter((s: any) => s.category === 'others').map((s: any) => ({ name: s.name, icon: s.icon }))
+    languages: profileData?.skills.languages || [],
+    frameworks: profileData?.skills.frameworks || [],
+    others: profileData?.skills.others || []
   }
 };
 ---
