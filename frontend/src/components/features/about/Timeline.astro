@@ -11,36 +11,36 @@ export interface Props {
 const { events } = Astro.props;
 ---
 
-<div class="relative ml-4 space-y-8 py-4">
-  <!-- Vertical Line -->
-  <div class="absolute left-0 top-0 bottom-0 w-px bg-linear-to-b from-accent-blue via-accent-violet to-transparent"></div>
+<div class="relative space-y-12 pl-4">
+  {/* Continuous Line (Subtle Gradient) */}
+  <div class="absolute left-3 top-2 bottom-2 w-px bg-linear-to-b from-zinc-200 via-zinc-100 to-transparent"></div>
 
   {events.map((event, index) => (
-    <div class="relative pl-8 group">
-      {/* Dot */}
-      <div class="absolute -left-1.25 top-6 w-2.5 h-2.5 rounded-full bg-white border-2 border-accent-blue z-10 transition-transform duration-300 group-hover:scale-125 group-hover:bg-accent-blue"></div>
+    <div class="relative pl-12 group">
+      {/* Timeline Node */}
+      <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-white border border-zinc-200 shadow-sm flex items-center justify-center z-10 transition-all duration-500 group-hover:border-violet-300 group-hover:shadow-[0_0_0_4px_rgba(139,92,246,0.1)] group-hover:scale-110">
+        <div class="w-1.5 h-1.5 rounded-full bg-zinc-300 group-hover:bg-violet-500 transition-colors duration-500"></div>
+      </div>
 
       {/* Content */}
-      <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-
-        <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-2">
-           <h3 class="text-lg font-display font-bold text-text-primary">{event.title}</h3>
-           <span class="text-xs font-mono font-medium text-accent-violet bg-accent-violet/5 px-2 py-0.5 rounded">
+      <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-2">
+           <h3 class="text-lg font-bold text-zinc-800 leading-none group-hover:text-violet-700 transition-colors duration-300">{event.title}</h3>
+           <span class="text-[10px] font-mono font-medium text-zinc-400 bg-zinc-50 px-2.5 py-0.5 rounded-full border border-zinc-100 group-hover:border-violet-100 group-hover:text-violet-600 transition-colors duration-300 self-start sm:self-auto">
              {event.year}
            </span>
-        </div>
-
-        <div class="mb-3">
-             <span class="text-sm font-medium text-zinc-500">@ {event.company}</span>
-        </div>
-
-        {event.description && (
-            <p class="text-sm leading-relaxed text-zinc-600">
-                {event.description}
-            </p>
-        )}
-
       </div>
+
+      <div class="mb-3">
+           <span class="text-xs font-bold tracking-wider text-zinc-400 uppercase flex items-center gap-1 group-hover:text-zinc-600 transition-colors">
+             {event.company}
+           </span>
+      </div>
+
+      {event.description && (
+          <p class="text-sm leading-relaxed text-zinc-500 max-w-xl border-l-2 border-transparent pl-0 group-hover:pl-4 group-hover:border-zinc-100 transition-all duration-300">
+              {event.description}
+          </p>
+      )}
     </div>
   ))}
 </div>

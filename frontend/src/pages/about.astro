@@ -7,7 +7,6 @@ import Timeline from '~/components/features/about/Timeline.astro';
 import { Icon } from 'astro-icon/components';
 import { getEntry } from 'astro:content';
 
-
 const aboutEntry = await getEntry('about', 'profile');
 if (!aboutEntry) {
     throw new Error('About profile not found');
@@ -15,16 +14,23 @@ if (!aboutEntry) {
 
 const profile = aboutEntry.data;
 
-// Icon resolver (Simplified for brevity, ensuring covers main ones)
+// Icon resolver
 const getDefaultIcon = (name: string | undefined | null) => {
   if (!name) return null;
   const n = name.toLowerCase();
+
+  // 1. Exact/Priority Matches
+  if (n === 'c++' || n.includes('c++')) return 'logos:c-plusplus';
+  if (n === 'c') return 'logos:c';
+  if (n === 'go' || n === 'golang') return 'logos:go';
+  if (n.includes('rust')) return 'logos:rust';
+
+  // 2. Prefix/Include Map
   const map: Record<string, string> = {
       typescript: 'logos:typescript-icon',
       javascript: 'logos:javascript',
       python: 'logos:python',
-      go: 'logos:go',
-      rust: 'logos:rust',
+      java: 'logos:java',
       react: 'logos:react',
       next: 'logos:nextjs-icon',
       astro: 'logos:astro-icon',
@@ -33,14 +39,19 @@ const getDefaultIcon = (name: string | undefined | null) => {
       linux: 'logos:linux-tux',
       git: 'logos:git-icon',
       vscode: 'logos:visual-studio-code',
+      hono: 'logos:hono',
+      fastapi: 'logos:fastapi-icon',
+      flask: 'logos:flask',
+      django: 'logos:django-icon',
+      cloudflare: 'logos:cloudflare-icon',
+      'internal tools': 'lucide:wrench',
+      aws: 'logos:aws',
+      gcp: 'logos:google-cloud',
   };
 
   for (const key of Object.keys(map)) {
       if (n.includes(key)) return map[key];
   }
-
-  if (n.includes('aws')) return 'logos:aws';
-  if (n.includes('gcp')) return 'logos:google-cloud';
 
   return 'lucide:code'; // Default
 };
@@ -55,136 +66,203 @@ const skillCategories = [
 <Layout title="About | gae" description="About gae.">
   <Header />
 
-  <main class="min-h-screen pt-32 pb-20 px-6">
+  <main class="min-h-screen pt-32 pb-20 px-4 sm:px-6 relative overflow-hidden">
+      <!-- Background Elements -->
+      <div class="aurora-bg fixed inset-0 z-0 pointer-events-none"></div>
+      <div class="noise-overlay fixed inset-0 z-50 pointer-events-none"></div>
 
-      <!-- Cinematic Header -->
-      <section class="max-w-5xl mx-auto mb-20 relative">
-          <div class="space-y-6 reveal-item">
-              <span class="text-accent-violet text-[10px] font-mono font-medium uppercase tracking-[0.3em] block">Profile</span>
-              <h1 class="font-display font-extrabold text-6xl md:text-8xl tracking-tighter text-text-primary leading-[0.9]">
-                  Hello, I'm<br />
-                  <span class="text-gradient">{profile.name}</span>.
-              </h1>
-              <div class="flex flex-wrap gap-2">
-                  {profile.roles.map((role: string) => (
-                      <div class="px-4 py-2 rounded-full border border-zinc-200 bg-white/50 backdrop-blur-sm text-xs font-medium text-zinc-600 shadow-sm hover:scale-105 transition-transform cursor-default">
-                        {role}
-                      </div>
-                  ))}
-              </div>
-          </div>
-      </section>
+      <div class="max-w-6xl mx-auto space-y-6 relative z-10">
 
-      <!-- Stats -->
-      <section class="max-w-5xl mx-auto mb-24">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div class="glass-card p-6 flex flex-col justify-center items-center text-center group">
-                  <span class="text-4xl font-display font-bold text-text-primary mb-1 group-hover:scale-110 transition-transform">{profile.stats.experience}</span>
-                  <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400">Years Exp</span>
-              </div>
-              <div class="glass-card p-6 flex flex-col justify-center items-center text-center group">
-                  <span class="text-4xl font-display font-bold text-text-primary mb-1 group-hover:scale-110 transition-transform">{profile.stats.projects}</span>
-                  <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400">Projects</span>
-              </div>
-              <div class="glass-card p-6 flex flex-col justify-center items-center text-center group">
-                  <span class="text-4xl font-display font-bold text-text-primary mb-1 group-hover:scale-110 transition-transform">∞</span>
-                  <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400">Curiosity</span>
-              </div>
-              <div class="glass-card p-6 flex flex-col justify-center items-center text-center group">
-                  <span class="text-4xl font-display font-bold text-accent-orange mb-1 group-hover:rotate-12 transition-transform">☕</span>
-                  <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400">Fuel</span>
-              </div>
-          </div>
-      </section>
+          <!-- 1. Hero / Intro Section -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 reveal-item">
 
-      <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+              <!-- Large Typography Title -->
+              <div class="md:col-span-8 bg-white/80 backdrop-blur-md rounded-4xl sm:p-12 flex flex-col justify-between min-h-100 border border-white/50 relative overflow-hidden group shadow-sm hover:shadow-xl transition-all duration-700">
+                  <!-- Sophisticated Gradient Backgrounds -->
+                  <div class="absolute top-0 right-0 w-150 h-150 bg-radial-gradient from-violet-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -mr-20 -mt-20 pointer-events-none"></div>
+                  <div class="absolute bottom-0 left-0 w-100 h-100 bg-radial-gradient from-blue-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -ml-10 -mb-10 pointer-events-none"></div>
 
-          <!-- Main Content: Timeline -->
-          <div class="lg:col-span-7 space-y-12">
-              <section class="reveal-item">
-                  <div class="flex items-center gap-3 mb-8">
-                      <div class="p-2.5 rounded-xl bg-accent-blue/10 text-accent-blue">
-                          <Icon name="lucide:briefcase" class="w-5 h-5" />
-                      </div>
-                      <h2 class="text-2xl font-display font-bold text-text-primary">Career</h2>
+                  <div class="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 transform group-hover:scale-105 origin-top-right">
+                       <Icon name="lucide:fingerprint" class="w-80 h-80 -mr-20 -mt-20 text-zinc-900" />
                   </div>
+
+                  <div class="relative z-10 p-6 sm:p-0">
+                    <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-zinc-100 bg-white/60 backdrop-blur-md text-xs font-mono font-medium text-zinc-500 mb-8 shadow-sm">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span class="tracking-[0.2em] uppercase">Est. 2022</span>
+                    </span>
+                  </div>
+
+                  <h1 class="relative z-10 font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tighter leading-[0.85] text-zinc-900 p-6 sm:p-0">
+                      HELLO<span class="text-zinc-300">.</span><br />
+                      I AM<br />
+                      <span class="text-transparent bg-clip-text bg-linear-to-r from-zinc-800 to-zinc-500 group-hover:from-violet-600 group-hover:to-indigo-500 transition-all duration-700">GAE</span>
+                  </h1>
+              </div>
+
+              <!-- Profile & Roles -->
+              <div class="md:col-span-4 flex flex-col gap-6">
+                  <!-- Photo / Avatar Card -->
+                  <div class="flex-1 bg-white/80 backdrop-blur-md rounded-4xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden group border border-white/50 shadow-sm hover:shadow-xl transition-all duration-500">
+                       <div class="absolute inset-0 bg-linear-to-b from-slate-50 to-white opacity-50"></div>
+                       <!-- Subtle aurora glow behind avatar -->
+                       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-indigo-100/50 rounded-full blur-3xl group-hover:bg-indigo-200/50 transition-colors duration-700"></div>
+
+                       <div class="relative z-10">
+                           <div class="w-40 h-40 rounded-full p-1 bg-linear-to-b from-white to-white/0 mx-auto mb-6 backdrop-blur-sm shadow-lg group-hover:scale-105 transition-transform duration-500">
+                                <div class="w-full h-full rounded-full overflow-hidden bg-white relative">
+                                    <img src="/gae.svg" alt="gae" class="w-full h-full object-cover p-2 hover:opacity-90 transition-opacity" />
+                                </div>
+                           </div>
+                           <h2 class="text-3xl font-display font-bold text-zinc-900 mb-2 tracking-tight">{profile.name}</h2>
+                           <p class="text-zinc-500 text-sm font-medium tracking-wide flex items-center justify-center gap-2">
+                                <Icon name="lucide:code-2" class="w-4 h-4 text-violet-500" />
+                                Fullstack Developer
+                           </p>
+                       </div>
+                  </div>
+
+                  <!-- Quick Roles -->
+                  <div class="bg-white/60 backdrop-blur-md rounded-4xl p-6 border border-white/50 flex flex-wrap gap-2 content-center justify-center shadow-sm hover:shadow-lg transition-all duration-500">
+                    {profile.roles.map((role: string) => (
+                        <span class="px-4 py-2 rounded-full bg-white border border-zinc-100 text-xs font-bold text-zinc-600 hover:text-violet-600 hover:border-violet-100 hover:shadow-sm transition-all cursor-default">
+                          {role}
+                        </span>
+                    ))}
+                  </div>
+              </div>
+          </div>
+
+
+          <!-- 2. Bento Grid Details -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 reveal-item">
+
+              <!-- Left Column: Stats & Skills -->
+              <div class="md:col-span-4 space-y-6">
+
+                  <!-- Stats Row -->
+                  <div class="grid grid-cols-2 gap-4">
+                      <div class="bg-white/80 backdrop-blur-md rounded-4xl p-6 flex flex-col justify-center text-center border border-white/50 hover:border-violet-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-md">
+                          <div class="absolute inset-0 bg-linear-to-br from-violet-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                          <span class="text-5xl font-black text-zinc-800 mb-2 relative z-10 group-hover:text-violet-600 transition-colors duration-500">{profile.stats.experience}</span>
+                          <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400 relative z-10">Years Exp</span>
+                      </div>
+                      <div class="bg-white/80 backdrop-blur-md rounded-4xl p-6 flex flex-col justify-center text-center border border-white/50 hover:border-blue-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-md">
+                          <div class="absolute inset-0 bg-linear-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                          <span class="text-5xl font-black text-zinc-800 mb-2 relative z-10 group-hover:text-blue-600 transition-colors duration-500">{profile.stats.projects}</span>
+                          <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400 relative z-10">Projects</span>
+                      </div>
+                  </div>
+
+                  <!-- Skills Section -->
+                  <div class="bg-white/80 backdrop-blur-md rounded-4xl p-8 border border-white/50 h-full shadow-sm hover:shadow-lg transition-all relative overflow-hidden">
+                      <h3 class="text-lg font-bold text-zinc-900 mb-8 flex items-center gap-3">
+                          <div class="p-2 rounded-xl bg-zinc-50 text-zinc-400">
+                             <Icon name="lucide:boxes" class="w-5 h-5" />
+                          </div>
+                          Skills
+                      </h3>
+
+                      <div class="space-y-10 relative z-10">
+                        {skillCategories.map(({ label, items }) => (
+                            <div>
+                                <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-4 pl-1">{label}</h4>
+                                <div class="flex flex-wrap gap-3">
+                                    {items.map((item: string) => {
+                                        const icon = getDefaultIcon(item);
+                                        return (
+                                            <div title={item} class="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:scale-110 hover:shadow-md transition-all duration-300 border border-zinc-100 cursor-help group/icon relative overflow-hidden">
+                                                <div class="absolute inset-0 bg-zinc-50 opacity-0 group-hover/icon:opacity-100 transition-opacity"></div>
+                                                {icon ? <Icon name={icon} class="w-6 h-6 transition-transform relative z-10" /> : <span class="text-[10px] font-bold relative z-10">{item.substring(0,2)}</span>}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ))}
+                      </div>
+                  </div>
+
+              </div>
+
+              <!-- Middle Column: Timeline (Wider) -->
+              <div class="md:col-span-8 bg-white/80 backdrop-blur-md rounded-4xl p-8 sm:p-12 border border-white/50 shadow-sm hover:shadow-xl transition-all relative overflow-hidden">
+                  <div class="absolute top-0 right-0 w-full h-px bg-linear-to-r from-transparent via-zinc-200 to-transparent opacity-50"></div>
+
+                  <h3 class="text-2xl font-bold text-zinc-900 mb-10 flex items-center gap-3">
+                      <div class="p-2.5 rounded-xl bg-zinc-50 text-zinc-500">
+                        <Icon name="lucide:history" class="w-6 h-6" />
+                      </div>
+                      Journey
+                  </h3>
                   <Timeline events={profile.timeline} />
-              </section>
+              </div>
+
           </div>
 
-          <!-- Sidebar -->
-          <div class="lg:col-span-5 space-y-6">
 
-              <!-- Tech & Gear -->
-              <section class="glass-card p-8 group overflow-hidden relative">
-                  <div class="absolute -top-10 -right-10 w-40 h-40 bg-accent-cyan/10 rounded-full blur-3xl group-hover:bg-accent-cyan/20 transition-colors"></div>
+          <!-- 3. Bottom Row: Gear & Vision -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal-item">
 
-                  <div class="relative z-10">
-                      <div class="flex items-center gap-3 mb-6">
-                          <div class="p-2 rounded-xl bg-accent-cyan/10 text-accent-cyan">
-                              <Icon name="lucide:cpu" class="w-5 h-5" />
-                          </div>
-                          <h2 class="text-xl font-display font-bold text-text-primary">Tech & Gear</h2>
-                      </div>
-                      <div class="flex flex-wrap gap-2">
-                          {profile.gear.map((item: string) => {
-                              const icon = getDefaultIcon(item);
-                              return (
-                                  <div class="px-3 py-1.5 rounded-lg border border-zinc-100 bg-white/50 flex items-center gap-2 hover:bg-white hover:shadow-sm transition-all text-xs text-zinc-600">
-                                      {icon ? <Icon name={icon} class="w-3.5 h-3.5" /> : <span class="w-1.5 h-1.5 rounded-full bg-accent-cyan"></span>}
-                                      <span>{item}</span>
-                                  </div>
-                              );
-                          })}
-                      </div>
-                  </div>
-              </section>
+               <!-- Gear -->
+               <div class="bg-zinc-900 rounded-4xl p-8 text-white relative overflow-hidden group shadow-xl">
+                    <!-- Subtle ambient glow -->
+                    <div class="absolute -top-[50%] -left-[20%] w-[80%] h-[150%] bg-zinc-800/50 blur-[100px] rounded-full"></div>
 
-              <!-- Skills -->
-              <section class="glass-card p-8 group overflow-hidden relative">
-                  <div class="absolute -top-10 -right-10 w-40 h-40 bg-accent-violet/10 rounded-full blur-3xl group-hover:bg-accent-violet/20 transition-colors"></div>
+                    <div class="absolute top-0 right-0 p-12 opacity-5 scale-150 transform group-hover:rotate-12 transition-transform duration-1000">
+                       <Icon name="lucide:cpu" class="w-64 h-64 -mr-16 -mt-16 text-white" />
+                   </div>
 
-                  <div class="relative z-10">
-                      <div class="flex items-center gap-3 mb-6">
-                          <div class="p-2 rounded-xl bg-accent-violet/10 text-accent-violet">
-                              <Icon name="lucide:layers" class="w-5 h-5" />
-                          </div>
-                          <h2 class="text-xl font-display font-bold text-text-primary">Skills</h2>
-                      </div>
-                      <div class="space-y-6">
-                          {skillCategories.map(({ label, items }) => (
-                              <div>
-                                  <h3 class="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-2">{label}</h3>
-                                  <div class="flex flex-wrap gap-2">
-                                      {items.map((item: string) => {
-                                          const icon = getDefaultIcon(item);
-                                          return (
-                                              <div class="px-3 py-1.5 rounded-lg border border-zinc-100 bg-white/50 flex items-center gap-2 hover:bg-white hover:shadow-sm transition-all text-xs text-zinc-600">
-                                                  {icon ? <Icon name={icon} class="w-3.5 h-3.5" /> : <span class="w-1.5 h-1.5 rounded-full bg-accent-violet"></span>}
-                                                  <span>{item}</span>
-                                              </div>
-                                          );
-                                      })}
-                                  </div>
-                              </div>
-                          ))}
-                      </div>
-                  </div>
-              </section>
+                   <h3 class="text-xl font-bold mb-8 flex items-center gap-3 relative z-10">
+                       <div class="p-2 rounded-xl bg-white/10 text-zinc-300 backdrop-blur-sm border border-white/5">
+                           <Icon name="lucide:monitor" class="w-5 h-5" />
+                       </div>
+                       Gear
+                   </h3>
 
-              <!-- Policy -->
-              <section class="glass-card p-8 group">
-                   <Icon name="lucide:sparkles" class="w-6 h-6 mb-4 text-accent-orange" />
-                   <h3 class="text-lg font-bold font-display mb-2 text-text-primary">Policy</h3>
-                   <p class="text-sm leading-relaxed text-zinc-500">
-                       技術は課題解決の手段．<br>
-                       常にユーザーの視点に立ち，シンプルかつ堅牢な実装で，長く愛されるシステムを作ります．
+                   <div class="flex flex-wrap gap-2.5 relative z-10">
+                        {profile.gear.map((item: string) => {
+                            const icon = getDefaultIcon(item);
+                            return (
+                                <div class="px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 flex items-center gap-3 hover:bg-white/10 hover:border-white/20 transition-all text-xs text-zinc-400 hover:text-white backdrop-blur-sm">
+                                    <div class="opacity-70">
+                                        {icon ? <Icon name={icon} class="w-4 h-4" /> : <Icon name="lucide:settings" class="w-4 h-4" />}
+                                    </div>
+                                    <span class="font-medium tracking-wide">{item}</span>
+                                </div>
+                            );
+                        })}
+                   </div>
+               </div>
+
+                <!-- Vision / Policy -->
+               <div class="bg-white/80 backdrop-blur-md rounded-4xl p-10 border border-white/50 flex flex-col justify-center relative overflow-hidden group shadow-sm hover:shadow-lg transition-all">
+                   <div class="absolute inset-0 bg-linear-to-br from-violet-50/20 via-transparent to-blue-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+                   <div class="absolute right-0 bottom-0 opacity-5 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none">
+                       <Icon name="lucide:sparkles" class="w-64 h-64 -mr-16 -mb-16 text-zinc-900" />
+                   </div>
+
+                   <h3 class="text-xs font-bold text-zinc-400 mb-6 uppercase tracking-widest flex items-center gap-3">
+                        <span class="w-8 h-px bg-zinc-200"></span>
+                        Philosophy
+                   </h3>
+
+                   <p class="text-xl sm:text-2xl leading-relaxed text-zinc-800 font-display font-medium z-10">
+                       "技術は<span class="text-zinc-900 bg-zinc-100/80 px-2 py-0.5 rounded-lg border border-zinc-200/50">課題解決</span>の手段。<br />
+                       常にユーザーの視点に立ち、<br/>
+                       シンプルかつ堅牢な実装で、<br/>
+                       <span class="underline decoration-zinc-200 decoration-2 underline-offset-4 hover:decoration-violet-300 transition-colors">長く愛される</span>システムを作ります。"
                    </p>
-              </section>
+               </div>
 
           </div>
 
       </div>
+
   </main>
 
   <Footer />
