@@ -37,7 +37,7 @@ const getDefaultIcon = (name: string | undefined | null) => {
   if (n.includes('typescript')) return 'logos:typescript-icon';
   if (n.includes('javascript')) return 'logos:javascript';
   if (n.includes('python')) return 'logos:python';
-  if (n.includes('go')) return 'logos:go';
+  if (n === 'go' || n === 'golang') return 'logos:go';
   if (n.includes('rust')) return 'logos:rust';
   if (n.includes('java')) return 'logos:java';
   if (n.includes('c++')) return 'logos:c-plusplus';
