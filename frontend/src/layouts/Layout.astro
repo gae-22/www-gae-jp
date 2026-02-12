@@ -34,7 +34,6 @@ const socialImageURL = new URL(image, Astro.url);
 		<link rel="icon" type="image/svg+xml" href="/gae.svg" />
 		<!-- Fallback / standard favicon -->
 		<link rel="icon" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 
         <!-- Preload critical assets -->
@@ -67,16 +66,32 @@ const socialImageURL = new URL(image, Astro.url);
 	</head>
     <body class="min-h-screen relative overflow-x-hidden bg-paper text-ink selection:bg-accent-indigo selection:text-white">
         <!-- Global Noise Texture -->
-        <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-multiply bg-[url('/noise.webp')] animate-grain"></div>
+        <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.025] mix-blend-multiply bg-[url('/noise.webp')]"></div>
 
-        <!-- Background Ambient Blobs -->
+        <!-- Background Ambient Gradients -->
         <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-            <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-violet-200/30 blur-[120px] mix-blend-multiply animate-blob"></div>
-            <div class="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-cyan-200/30 blur-[120px] mix-blend-multiply animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-32 left-20 w-[60%] h-[60%] rounded-full bg-fuchsia-200/30 blur-[120px] mix-blend-multiply animate-blob animation-delay-4000"></div>
+            <div class="absolute top-[-20%] left-[-15%] w-[70%] h-[70%] rounded-full bg-indigo-200/20 blur-[140px] mix-blend-multiply animate-float"></div>
+            <div class="absolute top-[-15%] right-[-10%] w-[55%] h-[55%] rounded-full bg-teal-200/15 blur-[130px] mix-blend-multiply animate-float animation-delay-2000"></div>
+            <div class="absolute -bottom-40 left-1/4 w-[50%] h-[50%] rounded-full bg-violet-200/15 blur-[140px] mix-blend-multiply animate-float animation-delay-4000"></div>
         </div>
 
         <!-- Contents are here -->
 		<slot />
+
+        <!-- Scroll Reveal Observer -->
+        <script>
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+            );
+            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        </script>
 	</body>
 </html>

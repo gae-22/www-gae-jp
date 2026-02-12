@@ -10,7 +10,7 @@ const { class: className, title } = Astro.props;
 <div class:list={["glass-card rounded-3xl overflow-hidden relative group", className]}>
   {title && (
     <div class="absolute top-4 left-4 z-20">
-      <h3 class="text-xs font-mono text-text-muted uppercase tracking-widest">{title}</h3>
+      <h3 class="text-xs font-mono text-ink-muted/60 uppercase tracking-widest">{title}</h3>
     </div>
   )}
   <slot />

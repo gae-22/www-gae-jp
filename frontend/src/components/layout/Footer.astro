@@ -1,15 +1,42 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 const year = new Date().getFullYear();
+
+const socialLinks = [
+  { label: 'GitHub', href: 'https://github.com/gae-22/www-gae-jp', icon: 'lucide:github' },
+  { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: 'simple-icons:discord' },
+];
 ---
 
-<footer class="w-full py-12 mt-20 lg:mt-32 text-center border-t border-zinc-200/50 relative">
+<footer class="w-full py-14 mt-24 lg:mt-40 relative">
+  <!-- Gradient top border -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 max-w-md h-px bg-linear-to-r from-transparent via-stone-300/60 to-transparent"></div>
 
-  <div class="max-w-4xl mx-auto px-4 flex flex-col items-center gap-6">
-    <div class="text-xl font-display font-medium text-zinc-300 select-none pointer-events-none">
+  <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+    <!-- Left: Brand -->
+    <div class="flex flex-col items-center md:items-start gap-2">
+      <span class="text-lg font-display font-semibold text-stone-300 select-none pointer-events-none tracking-tight">
         gae
-    </div>
-    <p class="text-ink-muted text-[10px] font-mono tracking-widest uppercase opacity-70">
+      </span>
+      <p class="text-ink-muted text-[10px] font-mono tracking-widest uppercase opacity-60">
         &copy; {year} gae. All rights reserved.
-    </p>
+      </p>
+    </div>
+
+    <!-- Right: Social -->
+    <div class="flex items-center gap-2">
+      {socialLinks.map((link) => (
+        <a
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={link.label}
+          class="p-2.5 rounded-xl text-stone-400 hover:text-ink hover:bg-stone-100/60 transition-all duration-300"
+        >
+          <Icon name={link.icon} class="w-4 h-4" />
+        </a>
+      ))}
+    </div>
   </div>
 </footer>

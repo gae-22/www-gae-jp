@@ -11,13 +11,16 @@ export interface Props {
 const { events } = Astro.props;
 ---
 
-<div class="relative border-l border-zinc-200 ml-4 space-y-12 py-4">
-  {events.map((event) => (
-    <div class="relative pl-8 group">
-      {/* Dot */}
-      <div class="absolute -left-1.25 top-2 w-2.5 h-2.5 rounded-full bg-white border border-zinc-300 group-hover:bg-accent-indigo group-hover:border-accent-indigo group-hover:shadow-[0_0_10px_rgba(67,56,202,0.3)] transition-all duration-300"></div>
+<div class="relative ml-4 space-y-10 py-4">
+  <!-- Vertical line -->
+  <div class="absolute left-0 top-0 bottom-0 w-px bg-linear-to-b from-accent-indigo/20 via-stone-200 to-transparent"></div>
 
-      {/* Grid Layout: Year mapped to fixed width, Content takes rest */}
+  {events.map((event, index) => (
+    <div class={`relative pl-10 group reveal reveal-delay-${Math.min(index, 4)}`}>
+      {/* Dot */}
+      <div class="absolute -left-1.25 top-2.5 w-2.5 h-2.5 rounded-full bg-white border-2 border-stone-300 group-hover:border-accent-indigo group-hover:bg-accent-indigo group-hover:shadow-[0_0_12px_rgba(67,56,202,0.25)] transition-all duration-400"></div>
+
+      {/* Grid Layout */}
       <div class="grid grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-2 sm:gap-6">
 
         {/* Year Column */}
@@ -28,14 +31,14 @@ const { events } = Astro.props;
         </div>
 
         {/* Content Column */}
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1.5 p-5 -mt-2 rounded-2xl bg-transparent group-hover:bg-stone-50/60 transition-all duration-400">
            <div class="flex flex-col sm:flex-row sm:items-baseline gap-2">
-               <h3 class="text-xl font-display font-bold text-ink leading-tight">{event.title}</h3>
-               <span class="text-ink-muted text-sm pb-0.5">@ {event.company}</span>
+               <h3 class="text-lg font-display font-bold text-ink leading-tight">{event.title}</h3>
+               <span class="text-ink-muted text-sm">@ {event.company}</span>
            </div>
 
            {event.description && (
-            <p class="text-ink-muted text-sm leading-relaxed max-w-xl mt-1">
+            <p class="text-ink-muted text-sm leading-relaxed max-w-xl mt-0.5">
                 {event.description}
             </p>
            )}
