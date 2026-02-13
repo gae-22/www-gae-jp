@@ -11,33 +11,33 @@ export interface Props {
 const { events } = Astro.props;
 ---
 
-<div class="relative space-y-12 pl-4">
+<div class="relative space-y-12">
   {/* Continuous Line (Subtle Gradient) */}
   <div class="absolute left-3 top-2 bottom-2 w-px bg-linear-to-b from-zinc-200 via-zinc-200/50 to-transparent"></div>
 
   {events.map((event, index) => (
-    <div class="relative pl-12 group">
+    <div class="relative pl-10 group/timeline-item reveal-item">
       {/* Timeline Node */}
-      <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-white border border-zinc-200 shadow-sm flex items-center justify-center z-10 transition-all duration-500 group-hover:border-violet-300 group-hover:shadow-[0_0_0_4px_rgba(139,92,246,0.1)] group-hover:scale-110">
-        <div class="w-1.5 h-1.5 rounded-full bg-zinc-300 group-hover:bg-violet-500 transition-colors duration-500"></div>
+      <div class="absolute left-1.5 top-2 w-3 h-3 rounded-full bg-white border border-zinc-200 shadow-sm flex items-center justify-center z-10 transition-all duration-500 group-hover/timeline-item:border-violet-300 group-hover/timeline-item:shadow-[0_0_0_4px_rgba(139,92,246,0.1)] group-hover/timeline-item:scale-125">
+        <div class="w-1 h-1 rounded-full bg-zinc-300 group-hover/timeline-item:bg-violet-500 transition-colors duration-500"></div>
       </div>
 
       {/* Content */}
       <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-2">
-           <h3 class="text-lg font-bold text-zinc-800 leading-none group-hover:text-violet-700 transition-colors duration-300 tracking-tight">{event.title}</h3>
-           <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 bg-white/50 px-3 py-1 rounded-full border border-zinc-200/50 group-hover:border-violet-100 group-hover:text-violet-600 transition-colors duration-300 self-start sm:self-auto backdrop-blur-sm shadow-sm">
+           <h3 class="text-lg font-bold text-zinc-800 leading-none group-hover/timeline-item:text-violet-700 transition-colors duration-300 tracking-tight">{event.title}</h3>
+           <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 bg-white/50 px-3 py-1 rounded-full border border-zinc-200/50 group-hover/timeline-item:border-violet-100 group-hover/timeline-item:text-violet-600 transition-colors duration-300 self-start sm:self-auto backdrop-blur-sm shadow-sm">
              {event.year}
            </span>
       </div>
 
       <div class="mb-3">
-           <span class="text-xs font-bold tracking-wider text-zinc-500 uppercase flex items-center gap-1 group-hover:text-zinc-700 transition-colors">
+           <span class="text-xs font-bold tracking-wider text-zinc-500 uppercase flex items-center gap-1 group-hover/timeline-item:text-zinc-700 transition-colors">
              {event.company}
            </span>
       </div>
 
       {event.description && (
-          <p class="text-sm leading-relaxed text-zinc-500 max-w-xl border-l-2 border-transparent pl-0 group-hover:pl-4 group-hover:border-violet-100 transition-all duration-300">
+          <p class="text-sm leading-relaxed text-zinc-500 max-w-xl border-l-2 border-transparent pl-0 group-hover/timeline-item:pl-4 group-hover/timeline-item:border-violet-100 transition-all duration-300">
               {event.description}
           </p>
       )}
