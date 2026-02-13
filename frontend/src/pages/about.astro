@@ -207,28 +207,29 @@ const skillCategories = [
           <!-- 3. Bottom Row: Gear & Vision -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal-item">
 
-               <!-- Gear -->
-               <div class="bg-zinc-900 rounded-4xl p-8 text-white relative overflow-hidden group shadow-xl">
+               <!-- Gear (Light Glass Refinement) -->
+               <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-8 sm:p-10 text-zinc-900 relative overflow-hidden group shadow-sm hover:shadow-xl border border-white/60 transition-all duration-500">
                     <!-- Subtle ambient glow -->
-                    <div class="absolute -top-[50%] -left-[20%] w-[80%] h-[150%] bg-zinc-800/50 blur-[100px] rounded-full"></div>
+                    <div class="absolute -top-[50%] -left-[20%] w-[80%] h-[150%] bg-violet-100/40 blur-[120px] rounded-full pointer-events-none"></div>
+                    <div class="absolute bottom-0 right-0 w-[60%] h-[60%] bg-blue-100/40 blur-[100px] rounded-full pointer-events-none group-hover:bg-blue-200/50 transition-colors duration-1000"></div>
 
-                    <div class="absolute top-0 right-0 p-12 opacity-5 scale-150 transform group-hover:rotate-12 transition-transform duration-1000">
-                       <Icon name="lucide:cpu" class="w-64 h-64 -mr-16 -mt-16 text-white" />
+                    <div class="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] scale-150 transform group-hover:rotate-12 transition-all duration-1000 pointer-events-none origin-center">
+                       <Icon name="lucide:cpu" class="w-64 h-64 -mr-16 -mt-16 text-indigo-900" />
                    </div>
 
                    <h3 class="text-xl font-bold mb-8 flex items-center gap-3 relative z-10">
-                       <div class="p-2 rounded-xl bg-white/10 text-zinc-300 backdrop-blur-sm border border-white/5">
+                       <div class="p-2.5 rounded-xl bg-white/40 text-zinc-500 backdrop-blur-md border border-white/40 shadow-sm">
                            <Icon name="lucide:monitor" class="w-5 h-5" />
                        </div>
-                       Gear
+                       <span class="tracking-tight text-zinc-800">Gear</span>
                    </h3>
 
-                   <div class="flex flex-wrap gap-2.5 relative z-10">
+                   <div class="flex flex-wrap gap-3 relative z-10">
                         {profile.gear.map((item: string) => {
                             const icon = getDefaultIcon(item);
                             return (
-                                <div class="px-4 py-2.5 rounded-lg border border-white/10 bg-white/5 flex items-center gap-3 hover:bg-white/10 hover:border-white/20 transition-all text-xs text-zinc-400 hover:text-white backdrop-blur-sm">
-                                    <div class="opacity-70">
+                                <div class="pl-3 pr-4 py-2.5 rounded-xl border border-white/40 bg-white/30 flex items-center gap-3 hover:bg-white/60 hover:border-white/60 transition-all text-sm text-zinc-600 hover:text-zinc-900 backdrop-blur-md group/item cursor-default shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-300">
+                                    <div class="opacity-70 group-hover/item:opacity-100 transition-opacity">
                                         {icon ? <Icon name={icon} class="w-4 h-4" /> : <Icon name="lucide:settings" class="w-4 h-4" />}
                                     </div>
                                     <span class="font-medium tracking-wide">{item}</span>
@@ -238,25 +239,40 @@ const skillCategories = [
                    </div>
                </div>
 
-                <!-- Vision / Policy -->
-               <div class="bg-white/80 backdrop-blur-md rounded-4xl p-10 border border-white/50 flex flex-col justify-center relative overflow-hidden group shadow-sm hover:shadow-lg transition-all">
-                   <div class="absolute inset-0 bg-linear-to-br from-violet-50/20 via-transparent to-blue-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <!-- Philosophy (Refined Light Glass & Typography) -->
+               <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-10 border border-white/60 flex flex-col justify-between relative overflow-hidden group shadow-sm hover:shadow-xl transition-all duration-500 hover:bg-white/80">
+                   <div class="absolute inset-0 bg-linear-to-br from-violet-50/30 via-transparent to-blue-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
-                   <div class="absolute right-0 bottom-0 opacity-5 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none">
-                       <Icon name="lucide:sparkles" class="w-64 h-64 -mr-16 -mb-16 text-zinc-900" />
+                   <!-- Noise overlay for texture -->
+                   <div class="absolute inset-0 opacity-[0.4] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
+                   <div class="absolute right-0 bottom-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none transform group-hover:scale-105 origin-bottom-right">
+                       <Icon name="lucide:sparkles" class="w-80 h-80 -mr-20 -mb-20 text-indigo-900" />
                    </div>
 
-                   <h3 class="text-xs font-bold text-zinc-400 mb-6 uppercase tracking-widest flex items-center gap-3">
-                        <span class="w-8 h-px bg-zinc-200"></span>
-                        Philosophy
-                   </h3>
+                   <div class="relative z-10">
+                       <h3 class="text-[10px] font-bold text-zinc-400 mb-8 uppercase tracking-[0.2em] flex items-center gap-4">
+                            <span class="w-8 h-px bg-zinc-300"></span>
+                            Philosophy
+                       </h3>
 
-                   <p class="text-xl sm:text-2xl leading-relaxed text-zinc-800 font-display font-medium z-10">
-                       "技術は<span class="text-zinc-900 bg-zinc-100/80 px-2 py-0.5 rounded-lg border border-zinc-200/50">課題解決</span>の手段。<br />
-                       常にユーザーの視点に立ち、<br/>
-                       シンプルかつ堅牢な実装で、<br/>
-                       <span class="underline decoration-zinc-200 decoration-2 underline-offset-4 hover:decoration-violet-300 transition-colors">長く愛される</span>システムを作ります。"
-                   </p>
+                       <p class="text-2xl sm:text-3xl leading-[1.6] text-zinc-800 font-display font-medium">
+                           "技術は<br/>
+                           <span class="text-zinc-900 inline-block bg-white/50 px-3 py-0 rounded-lg border border-zinc-200/50 shadow-sm backdrop-blur-sm mx-1 my-1">課題解決</span>の手段。<br />
+                           <span class="text-base sm:text-lg text-zinc-500 font-normal mt-4 block leading-relaxed tracking-wide">
+                               常にユーザーの視点に立ち、<br/>
+                               シンプルかつ堅牢な実装で、
+                           </span>
+                           <span class="mt-4 block font-bold text-zinc-900 relative decoration-indigo-200/50 underline underline-offset-4 decoration-4 hover:decoration-indigo-300 transition-colors">
+                               長く愛される
+                           </span>
+                           <span class="text-base sm:text-lg text-zinc-500 font-normal">システムを作ります。"</span>
+                       </p>
+                   </div>
+
+                   <div class="relative z-10 mt-8 flex justify-end">
+                        <Icon name="lucide:quote" class="w-8 h-8 text-zinc-200 rotate-180" />
+                   </div>
                </div>
 
           </div>
