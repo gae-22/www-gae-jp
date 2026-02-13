@@ -145,37 +145,38 @@ const skillCategories = [
 
                   <!-- Stats Row -->
                   <div class="grid grid-cols-2 gap-4">
-                      <div class="bg-white/80 backdrop-blur-md rounded-4xl p-6 flex flex-col justify-center text-center border border-white/50 hover:border-violet-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-md">
-                          <div class="absolute inset-0 bg-linear-to-br from-violet-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                          <span class="text-5xl font-black text-zinc-800 mb-2 relative z-10 group-hover:text-violet-600 transition-colors duration-500">{profile.stats.experience}</span>
-                          <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400 relative z-10">Years Exp</span>
+                      <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-6 flex flex-col justify-center text-center border border-white/60 hover:border-violet-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 duration-500">
+                          <div class="absolute inset-0 bg-linear-to-br from-violet-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                          <span class="text-5xl font-display font-black text-zinc-800 mb-2 relative z-10 group-hover:text-violet-600 transition-colors duration-500 tracking-tighter">{profile.stats.experience}</span>
+                          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 relative z-10">Years Exp</span>
                       </div>
-                      <div class="bg-white/80 backdrop-blur-md rounded-4xl p-6 flex flex-col justify-center text-center border border-white/50 hover:border-blue-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-md">
-                          <div class="absolute inset-0 bg-linear-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                          <span class="text-5xl font-black text-zinc-800 mb-2 relative z-10 group-hover:text-blue-600 transition-colors duration-500">{profile.stats.projects}</span>
-                          <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-400 relative z-10">Projects</span>
+                      <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-6 flex flex-col justify-center text-center border border-white/60 hover:border-blue-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 duration-500">
+                          <div class="absolute inset-0 bg-linear-to-br from-blue-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                          <span class="text-5xl font-display font-black text-zinc-800 mb-2 relative z-10 group-hover:text-blue-600 transition-colors duration-500 tracking-tighter">{profile.stats.projects}</span>
+                          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 relative z-10">Projects</span>
                       </div>
                   </div>
 
                   <!-- Skills Section -->
-                  <div class="bg-white/80 backdrop-blur-md rounded-4xl p-8 border border-white/50 h-full shadow-sm hover:shadow-lg transition-all relative overflow-hidden">
-                      <h3 class="text-lg font-bold text-zinc-900 mb-8 flex items-center gap-3">
-                          <div class="p-2 rounded-xl bg-zinc-50 text-zinc-400">
+                  <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-8 border border-white/60 h-full shadow-sm hover:shadow-xl transition-all relative overflow-hidden group">
+                      <div class="absolute inset-0 bg-linear-to-b from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+                      <h3 class="text-lg font-bold text-zinc-900 mb-8 flex items-center gap-3 relative z-10">
+                          <div class="p-2.5 rounded-xl bg-white/50 text-zinc-500 shadow-sm border border-white/50 backdrop-blur-sm">
                              <Icon name="lucide:boxes" class="w-5 h-5" />
                           </div>
-                          Skills
+                          <span class="tracking-tight">Skills</span>
                       </h3>
 
                       <div class="space-y-10 relative z-10">
                         {skillCategories.map(({ label, items }) => (
                             <div>
-                                <h4 class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-4 pl-1">{label}</h4>
+                                <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-4 pl-1">{label}</h4>
                                 <div class="flex flex-wrap gap-3">
                                     {items.map((item: string) => {
                                         const icon = getDefaultIcon(item);
                                         return (
-                                            <div title={item} class="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:scale-110 hover:shadow-md transition-all duration-300 border border-zinc-100 cursor-help group/icon relative overflow-hidden">
-                                                <div class="absolute inset-0 bg-zinc-50 opacity-0 group-hover/icon:opacity-100 transition-opacity"></div>
+                                            <div title={item} class="w-12 h-12 rounded-xl bg-white/40 border border-white/40 flex items-center justify-center text-zinc-400 hover:text-zinc-900 hover:scale-110 hover:shadow-lg hover:bg-white/80 transition-all duration-300 cursor-help group/icon relative overflow-hidden hover:-translate-y-1">
                                                 {icon ? <Icon name={icon} class="w-6 h-6 transition-transform relative z-10" /> : <span class="text-[10px] font-bold relative z-10">{item.substring(0,2)}</span>}
                                             </div>
                                         );
@@ -189,16 +190,18 @@ const skillCategories = [
               </div>
 
               <!-- Middle Column: Timeline (Wider) -->
-              <div class="md:col-span-8 bg-white/80 backdrop-blur-md rounded-4xl p-8 sm:p-12 border border-white/50 shadow-sm hover:shadow-xl transition-all relative overflow-hidden">
-                  <div class="absolute top-0 right-0 w-full h-px bg-linear-to-r from-transparent via-zinc-200 to-transparent opacity-50"></div>
+              <div class="md:col-span-8 bg-white/60 backdrop-blur-xl rounded-4xl p-8 sm:p-12 border border-white/60 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group">
+                  <div class="absolute inset-0 bg-linear-to-b from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
-                  <h3 class="text-2xl font-bold text-zinc-900 mb-10 flex items-center gap-3">
-                      <div class="p-2.5 rounded-xl bg-zinc-50 text-zinc-500">
+                  <h3 class="text-2xl font-bold text-zinc-900 mb-10 flex items-center gap-3 relative z-10">
+                      <div class="p-2.5 rounded-xl bg-white/50 text-zinc-500 shadow-sm border border-white/50 backdrop-blur-sm">
                         <Icon name="lucide:history" class="w-6 h-6" />
                       </div>
-                      Journey
+                      <span class="tracking-tight">Journey</span>
                   </h3>
-                  <Timeline events={profile.timeline} />
+                  <div class="relative z-10">
+                    <Timeline events={profile.timeline} />
+                  </div>
               </div>
 
           </div>
