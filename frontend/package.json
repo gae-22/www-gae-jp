@@ -33,6 +33,7 @@
         "@iconify-json/logos": "^1.2.10",
         "@iconify-json/lucide": "^1.2.89",
         "@iconify-json/simple-icons": "^1.2.70",
+        "@iconify-json/vscode-icons": "^1.2.42",
         "@lucia-auth/adapter-sqlite": "^3.0.2",
         "@node-rs/argon2": "^2.0.2",
         "@shikijs/transformers": "^3.22.0",

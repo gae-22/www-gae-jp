@@ -93,6 +93,12 @@ export default defineConfig({
             ],
         }),
         sitemap(),
-        icon(),
+        icon({
+            include: {
+                logos: ['*'],
+                lucide: ['*'],
+                'vscode-icons': ['*'],
+            },
+        }),
     ],
 });

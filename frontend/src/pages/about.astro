@@ -14,48 +14,6 @@ if (!aboutEntry) {
 
 const profile = aboutEntry.data;
 
-// Icon resolver
-const getDefaultIcon = (name: string | undefined | null) => {
-  if (!name) return null;
-  const n = name.toLowerCase();
-
-  // 1. Exact/Priority Matches
-  if (n === 'c++' || n.includes('c++')) return 'logos:c-plusplus';
-  if (n === 'c') return 'logos:c';
-  if (n === 'go' || n === 'golang') return 'logos:go';
-  if (n.includes('rust')) return 'logos:rust';
-
-  // 2. Prefix/Include Map
-  const map: Record<string, string> = {
-      typescript: 'logos:typescript-icon',
-      javascript: 'logos:javascript',
-      python: 'logos:python',
-      java: 'logos:java',
-      react: 'logos:react',
-      next: 'logos:nextjs-icon',
-      astro: 'logos:astro-icon',
-      tailwind: 'logos:tailwindcss-icon',
-      docker: 'logos:docker-icon',
-      linux: 'logos:linux-tux',
-      git: 'logos:git-icon',
-      vscode: 'logos:visual-studio-code',
-      hono: 'logos:hono',
-      fastapi: 'logos:fastapi-icon',
-      flask: 'logos:flask',
-      django: 'logos:django-icon',
-      cloudflare: 'logos:cloudflare-icon',
-      'internal tools': 'lucide:wrench',
-      aws: 'logos:aws',
-      gcp: 'logos:google-cloud',
-  };
-
-  for (const key of Object.keys(map)) {
-      if (n.includes(key)) return map[key];
-  }
-
-  return 'lucide:code'; // Default
-};
-
 const skillCategories = [
   { label: 'Languages', items: profile.skills.languages },
   { label: 'Frameworks', items: profile.skills.frameworks },
@@ -198,17 +156,14 @@ const skillCategories = [
                             <div>
                                 <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2 pl-1">{label}</h4>
                                 <div class="flex flex-wrap gap-2 relative z-10 w-full">
-                                    {items.map((item: string) => {
-                                        const icon = getDefaultIcon(item);
-                                        return (
-                                            <div class="skill-item relative group/icon cursor-help transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1" data-skill={item} data-icon={icon}>
-                                                <div class="w-10 h-10 rounded-xl bg-white/40 border border-white/40 flex items-center justify-center text-zinc-400 group-hover/icon:text-zinc-900 group-hover/icon:bg-white/80 group-hover/icon:border-white/60 group-hover/icon:shadow-xl transition-all duration-300 relative z-20 overflow-hidden shadow-sm">
-                                                    <div class="absolute inset-0 bg-linear-to-br from-white/60 to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-500"></div>
-                                                    {icon ? <Icon name={icon} class="w-5 h-5 transition-transform group-hover/icon:scale-110 relative z-30" /> : <span class="text-[10px] font-bold relative z-30 group-hover/icon:tracking-widest transition-all duration-300">{item.substring(0,2)}</span>}
-                                                </div>
+                                    {items.map((item) => (
+                                        <div class="skill-item relative group/icon cursor-help transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1" data-skill={item.name} data-icon={item.icon}>
+                                            <div class="w-10 h-10 rounded-xl bg-white/40 border border-white/40 flex items-center justify-center text-zinc-400 group-hover/icon:text-zinc-900 group-hover/icon:bg-white/80 group-hover/icon:border-white/60 group-hover/icon:shadow-xl transition-all duration-300 relative z-20 overflow-hidden shadow-sm">
+                                                <div class="absolute inset-0 bg-linear-to-br from-white/60 to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-500"></div>
+                                                <Icon name={item.icon} class="w-5 h-5 transition-transform group-hover/icon:scale-110 relative z-30" />
                                             </div>
-                                        );
-                                    })}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         ))}
@@ -233,17 +188,14 @@ const skillCategories = [
                       </h3>
 
                       <div class="flex flex-wrap gap-2 relative z-10">
-                           {profile.gear.map((item: string) => {
-                               const icon = getDefaultIcon(item);
-                               return (
-                                   <div class="pl-3 pr-4 py-2 rounded-xl border border-white/40 bg-white/30 flex items-center gap-2 hover:bg-white/60 hover:border-white/60 transition-all text-xs text-zinc-600 hover:text-zinc-900 backdrop-blur-md group/item cursor-default shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-300">
-                                       <div class="opacity-70 group-hover/item:opacity-100 transition-opacity">
-                                           {icon ? <Icon name={icon} class="w-3.5 h-3.5" /> : <Icon name="lucide:settings" class="w-3.5 h-3.5" />}
-                                       </div>
-                                       <span class="font-medium tracking-wide">{item}</span>
+                           {profile.gear.map((item) => (
+                               <div class="pl-3 pr-4 py-2 rounded-xl border border-white/40 bg-white/30 flex items-center gap-2 hover:bg-white/60 hover:border-white/60 transition-all text-xs text-zinc-600 hover:text-zinc-900 backdrop-blur-md group/item cursor-default shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-300">
+                                   <div class="opacity-70 group-hover/item:opacity-100 transition-opacity">
+                                       <Icon name={item.icon} class="w-3.5 h-3.5" />
                                    </div>
-                               );
-                           })}
+                                   <span class="font-medium tracking-wide">{item.name}</span>
+                               </div>
+                           ))}
                       </div>
                   </div>
 

@@ -145,6 +145,9 @@ importers:
       '@iconify-json/simple-icons':
         specifier: ^1.2.70
         version: 1.2.70
+      '@iconify-json/vscode-icons':
+        specifier: ^1.2.42
+        version: 1.2.42
       '@lucia-auth/adapter-sqlite':
         specifier: ^3.0.2
         version: 3.0.2(better-sqlite3@12.6.2)(lucia@3.2.2)
@@ -900,6 +903,9 @@ packages:
 
   '@iconify-json/simple-icons@1.2.70':
     resolution: {integrity: sha512-CYNRCgN6nBTjN4dNkrBCjHXNR2e4hQihdsZUs/afUNFOWLSYjfihca4EFN05rRvDk4Xoy2n8tym6IxBZmcn+Qg==}
+
+  '@iconify-json/vscode-icons@1.2.42':
+    resolution: {integrity: sha512-nAZoq0XGDXQtoj74++gxIO2CTmm5H348KbGSyb+d1kRBqm2dvG4q8gGvdfjbm/r1jAyuIbCam1qRqlm0Bi1uTw==}
 
   '@iconify/tools@4.2.0':
     resolution: {integrity: sha512-WRxPva/ipxYkqZd1+CkEAQmd86dQmrwH0vwK89gmp2Kh2WyyVw57XbPng0NehP3x4V1LzLsXUneP1uMfTMZmUA==}
@@ -4102,6 +4108,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/simple-icons@1.2.70':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/vscode-icons@1.2.42':
     dependencies:
       '@iconify/types': 2.0.0
 
