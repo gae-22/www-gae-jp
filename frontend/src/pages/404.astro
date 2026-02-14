@@ -1,39 +1,31 @@
 ---
 import Layout from '~/layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
 ---
 
 <Layout title="404 | Not Found">
-  <main class="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-white">
-
-    <!-- Background Decoration -->
-    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-[20%] left-[20%] w-96 h-96 bg-neon-violet/5 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-[20%] right-[20%] w-96 h-96 bg-neon-cyan/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-    </div>
+  <main class="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-void">
 
     <!-- Content -->
-    <div class="relative z-10 text-center space-y-8 animate-fade-in px-4">
+    <div class="relative z-10 text-center space-y-8 px-4">
         <div class="relative inline-block">
-            <h1 class="text-[6rem] sm:text-[8rem] md:text-[12rem] font-display font-medium leading-none text-transparent bg-clip-text bg-linear-to-b from-zinc-200/80 to-transparent select-none">
+            <h1 class="text-[6rem] sm:text-[8rem] md:text-[12rem] font-display font-bold leading-none text-text-tertiary select-none">
                 404
             </h1>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform hover:rotate-12 transition-transform duration-500">
-                <Icon name="lucide:rocket" class="w-24 h-24 md:w-32 md:h-32 text-neon-cyan drop-shadow-xl" />
-            </div>
         </div>
 
-        <div class="space-y-4 max-w-lg mx-auto glass p-8 rounded-2xl">
-            <h2 class="text-3xl font-bold text-ink tracking-wide">Page Not Found</h2>
-            <p class="text-ink-muted text-lg">
+        <div class="space-y-4 max-w-lg mx-auto">
+            <h2 class="text-3xl font-bold text-text-primary tracking-tight">Page Not Found</h2>
+            <p class="text-text-secondary text-lg">
                 お探しのページは見つかりませんでした。
             </p>
         </div>
 
         <div class="pt-4">
-            <a href="/" class="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-ink text-zinc-50 hover:bg-zinc-800 transition-all duration-300 hover:scale-105 shadow-xl shadow-zinc-200/50">
-                <Icon name="lucide:home" class="w-5 h-5 text-neon-cyan group-hover:rotate-12 transition-transform" />
-                <span>トップページへ戻る</span>
+            <a href="/" class="link-hover font-mono text-sm text-accent inline-flex items-center gap-2">
+                トップページへ戻る
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
             </a>
         </div>
     </div>

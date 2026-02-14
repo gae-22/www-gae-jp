@@ -1,0 +1,44 @@
+---
+const techsRow1 = [
+  'TypeScript', 'React', 'Next.js', 'Astro', 'Go', 'Python', 'Rust',
+  'Docker', 'Tailwind', 'Hono', 'FastAPI', 'C++', 'Java', 'Git',
+  'Linux', 'AWS', 'Cloudflare', 'Vercel', 'PostgreSQL', 'Redis',
+];
+
+const techsRow2 = [
+  'GraphQL', 'Prisma', 'Drizzle', 'Vitest', 'Playwright', 'Figma',
+  'WebSocket', 'gRPC', 'Kubernetes', 'Terraform', 'Nginx', 'Bun',
+  'SQLite', 'MongoDB', 'Firebase', 'Supabase', 'Deno', 'Node.js',
+];
+
+const row1Text = techsRow1.join('  ·  ') + '  ·  ';
+const row2Text = techsRow2.join('  ·  ') + '  ·  ';
+---
+
+<section class="relative select-none overflow-hidden border-y border-border-subtle group" aria-hidden="true">
+  <!-- Edge fade masks -->
+  <div class="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-linear-to-r from-void to-transparent"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-linear-to-l from-void to-transparent"></div>
+
+  <!-- Row 1: Left to Right -->
+  <div class="flex items-center h-10 md:h-12 overflow-hidden border-b border-border-subtle/50">
+    <div class="marquee-track flex whitespace-nowrap group-hover:[animation-play-state:paused]" style="animation: marquee 35s linear infinite;">
+      {[...Array(4)].map(() => (
+        <span class="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.15em] text-text-tertiary group-hover:text-text-secondary transition-colors duration-500">
+          {row1Text}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <!-- Row 2: Right to Left (reverse) -->
+  <div class="flex items-center h-10 md:h-12 overflow-hidden">
+    <div class="marquee-track flex whitespace-nowrap group-hover:[animation-play-state:paused]" style="animation: marquee-reverse 40s linear infinite;">
+      {[...Array(4)].map(() => (
+        <span class="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.15em] text-text-tertiary/60 group-hover:text-text-secondary/80 transition-colors duration-500">
+          {row2Text}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

@@ -37,7 +37,7 @@ const socialImageURL = new URL(image, Astro.url);
 		<link rel="icon" type="image/svg+xml" href="/gae.svg" />
 		<link rel="icon" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-        <meta name="theme-color" content="#FFFFFF" />
+        <meta name="theme-color" content="#0a0a0a" />
 
         <link rel="canonical" href={canonicalURL} />
 
@@ -62,10 +62,7 @@ const socialImageURL = new URL(image, Astro.url);
             window._PUBLIC_API_URL = publicApiUrl;
         </script>
 	</head>
-    <body class="min-h-screen relative overflow-x-hidden text-text-primary bg-bg-base selection:bg-accent-violet selection:text-white">
-
-        <!-- Aurora Background -->
-        <div class="aurora-bg"></div>
+    <body class="min-h-screen relative overflow-x-hidden text-text-primary bg-void">
 
         <!-- Content -->
 		<slot />
@@ -83,14 +80,39 @@ const socialImageURL = new URL(image, Astro.url);
                             }
                         });
                     },
-                    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+                    { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
                 );
-                document.querySelectorAll('.reveal-item').forEach((el) => observer.observe(el));
+
+                // Observe all reveal types
+                document.querySelectorAll('.reveal-item, .reveal-left, .reveal-scale, .section-line').forEach((el) => observer.observe(el));
+            }
+
+            // ─── Scroll-Driven Hide for Hero Scroll Indicator ───
+            function initScrollHide() {
+                const hero = document.getElementById('hero');
+                if (!hero) return;
+
+                const scrollIndicator = hero.querySelector('.absolute.bottom-10');
+                if (!scrollIndicator) return;
+
+                let hidden = false;
+                const onScroll = () => {
+                    if (window.scrollY > 100 && !hidden) {
+                        hidden = true;
+                        (scrollIndicator as HTMLElement).style.opacity = '0';
+                        (scrollIndicator as HTMLElement).style.transition = 'opacity 0.5s ease';
+                    } else if (window.scrollY <= 100 && hidden) {
+                        hidden = false;
+                        (scrollIndicator as HTMLElement).style.opacity = '1';
+                    }
+                };
+                window.addEventListener('scroll', onScroll, { passive: true });
             }
 
             // Init all
             function initAll() {
                 initRevealObserver();
+                initScrollHide();
             }
 
             // Run on initial load

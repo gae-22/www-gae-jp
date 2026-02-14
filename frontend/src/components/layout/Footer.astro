@@ -1,81 +1,19 @@
 ---
-import { Icon } from 'astro-icon/components';
-
 const year = new Date().getFullYear();
-
-const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/gae-22', icon: 'lucide:github' },
-  { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: 'simple-icons:discord' },
-  { label: 'X', href: 'https://x.com/gae_dev', icon: 'simple-icons:x' }, // Added Twitter/X placeholder
-];
-
-const sitemap = [
-    { label: 'Home', href: '/' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'About', href: '/about' },
-];
 ---
 
-<footer class="relative mt-32 pb-10 px-6 sm:px-12 max-w-7xl mx-auto z-10">
+<footer class="relative z-10 border-t border-border-subtle">
+  <div class="max-w-7xl mx-auto px-6 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
 
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 border-t border-zinc-200 pt-16">
+    <!-- Left -->
+    <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-tertiary">
+      &copy; {year} gae
+    </p>
 
-      <!-- Brand & CTA -->
-      <div class="col-span-1 md:col-span-6 flex flex-col justify-between h-full min-h-50">
-          <div>
-              <h2 class="text-display text-6xl md:text-8xl font-bold tracking-tighter text-zinc-900 mb-6">
-                  Say Hello.
-              </h2>
-              <p class="text-zinc-500 max-w-md text-balance">
-                  Crafting digital experiences with a focus on simplicity, aesthetics, and performance.
-              </p>
-          </div>
-          <div class="mt-8">
-              <a href="mailto:gaedev22@gmail.com" class="inline-flex items-center gap-2 text-xl font-medium text-zinc-900 hover:text-indigo-600 transition-colors group">
-                  <span>Let's talk</span>
-                  <Icon name="lucide:arrow-up-right" class="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </a>
-          </div>
-      </div>
-
-      <!-- Sitemap -->
-      <div class="col-span-1 md:col-span-3">
-          <h3 class="font-mono text-xs uppercase tracking-widest text-zinc-400 mb-6">Sitemap</h3>
-          <ul class="space-y-4">
-              {sitemap.map(item => (
-                  <li>
-                      <a href={item.href} class="text-zinc-600 hover:text-zinc-900 transition-colors font-medium text-lg">
-                          {item.label}
-                      </a>
-                  </li>
-              ))}
-          </ul>
-      </div>
-
-      <!-- Socials & Meta -->
-      <div class="col-span-1 md:col-span-3 flex flex-col justify-between">
-          <div>
-              <h3 class="font-mono text-xs uppercase tracking-widest text-zinc-400 mb-6">Socials</h3>
-              <ul class="space-y-4">
-                  {socialLinks.map(link => (
-                      <li>
-                          <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-zinc-600 hover:text-indigo-600 transition-colors group">
-                              <Icon name={link.icon} class="w-5 h-5 transition-transform group-hover:scale-110" />
-                              <span class="font-medium text-lg">{link.label}</span>
-                          </a>
-                      </li>
-                  ))}
-              </ul>
-          </div>
-
-          <div class="mt-12 md:mt-0">
-              <p class="text-[10px] font-mono text-zinc-400">
-                  © {year} gae. All rights reserved.<br/>
-                  Designed with ❤️ in Tokyo.
-              </p>
-          </div>
-      </div>
+    <!-- Right -->
+    <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-tertiary">
+      Designed in Tokyo
+    </p>
 
   </div>
 </footer>

@@ -1,0 +1,38 @@
+---
+---
+
+<!-- Session-aware page loader - full intro for first visit, quick fade for return -->
+<div id="page-loader" class="page-loader" aria-hidden="true">
+  <span class="loader-text">gae</span>
+  <div class="loader-progress">
+    <div class="loader-progress-bar"></div>
+  </div>
+</div>
+
+<script>
+  function initLoader() {
+    const loader = document.getElementById('page-loader');
+    if (!loader) return;
+
+    const isFirstVisit = !sessionStorage.getItem('visited');
+    const delay = isFirstVisit ? 2200 : 800;
+
+    if (isFirstVisit) {
+      sessionStorage.setItem('visited', 'true');
+    }
+
+    document.body.classList.add('is-loading');
+
+    setTimeout(() => {
+      loader.classList.add('loader-exit');
+      document.body.classList.remove('is-loading');
+
+      setTimeout(() => {
+        loader.remove();
+      }, 1000);
+    }, delay);
+  }
+
+  // Run immediately
+  initLoader();
+</script>

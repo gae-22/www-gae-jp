@@ -1,9 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
-import BentoItem from './BentoItem.astro';
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
-import Clock from './Clock.astro';
 
 const aboutEntry = await getEntry('about', 'profile');
 const { name, roles, stats } = aboutEntry?.data || { name: 'gae', roles: [], stats: { experience: '0', projects: '0' } };
@@ -27,110 +25,194 @@ const techStack = [
 ];
 ---
 
-<section id="work" class="max-w-7xl mx-auto px-6 py-32 relative z-10">
+<section id="bento" class="relative z-10 py-32 md:py-44 px-6">
+  <div class="max-w-6xl mx-auto">
 
-    <!-- Section Header -->
-    <div class="mb-20">
-        <span class="text-accent-blue font-mono text-xs uppercase tracking-widest mb-4 block">Selected Works</span>
-        <h2 class="text-display text-5xl md:text-7xl font-bold tracking-tighter text-zinc-900 mb-6">
-            Craftsmanship <br class="hidden md:block" />
-            <span class="text-zinc-400 font-serif italic font-light tracking-normal">& Engineering</span>
-        </h2>
+    <!-- Section Label -->
+    <div class="flex items-center gap-6 mb-16 reveal-item">
+      <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
+        Overview
+      </span>
+      <div class="flex-1 h-px bg-border-subtle"></div>
     </div>
 
     <!-- Bento Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[300px]">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[280px]">
 
-        <!-- Item 1: Latest Writing (Large) -->
-        <BentoItem
-            class="md:col-span-2 lg:col-span-2 row-span-1 md:row-span-2 reveal-item"
-            title="Latest Writing"
-            href={latestPost ? `/blog/${latestPost.slug}` : undefined}
-        >
-            <div class="w-full h-full relative group">
-                {latestPost ? (
-                    <>
-                        <div class="absolute inset-0">
-                            {latestPost.data.cover && (
-                                <Image
-                                    src={latestPost.data.cover}
-                                    alt={latestPost.data.coverAlt || ""}
-                                    class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-90"
-                                />
-                            )}
-                             <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
-                        </div>
-
-                        <div class="absolute bottom-0 left-0 p-8 w-full">
-                            <div class="flex items-center gap-3 mb-4">
-                                <span class="px-2 py-1 rounded bg-white/20 backdrop-blur-md text-white/90 text-[10px] font-mono uppercase tracking-wider border border-white/10">
-                                    New Article
-                                </span>
-                            </div>
-                            <h3 class="text-3xl font-heading font-bold text-white mb-2 leading-tight group-hover:translate-x-2 transition-transform duration-300">
-                                {latestPost.data.title}
-                            </h3>
-                            <p class="text-zinc-300 text-sm line-clamp-2 max-w-md group-hover:text-white transition-colors">
-                                {latestPost.data.description}
-                            </p>
-                        </div>
-                    </>
-                ) : (
-                    <div class="p-10 text-zinc-400 flex items-center justify-center h-full">No posts yet</div>
-                )}
+      <!-- 1: Latest Writing (Large) -->
+      {latestPost ? (
+        <a href={`/blog/${latestPost.slug}`}
+           class="bento-card md:col-span-2 lg:col-span-2 row-span-1 md:row-span-2 reveal-item group relative overflow-hidden">
+          <div class="absolute inset-0">
+            {latestPost.data.cover && (
+              <Image
+                src={latestPost.data.cover}
+                alt={latestPost.data.coverAlt || ""}
+                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-[1.04]"
+              />
+            )}
+            <div class="absolute inset-0 bg-linear-to-t from-void via-void/60 to-transparent"></div>
+          </div>
+          <div class="absolute top-5 left-5 z-10">
+            <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Latest Article</span>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="px-2.5 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-[9px] font-mono uppercase tracking-wider">
+                New
+              </span>
             </div>
-        </BentoItem>
+            <h3 class="font-heading text-2xl md:text-3xl font-bold text-text-primary mb-2 leading-tight group-hover:text-accent transition-colors duration-300">
+              {latestPost.data.title}
+            </h3>
+            <p class="text-sm text-text-secondary line-clamp-2 max-w-md">
+              {latestPost.data.description}
+            </p>
+          </div>
+          <div class="bento-card-glow"></div>
+        </a>
+      ) : (
+        <div class="bento-card md:col-span-2 lg:col-span-2 row-span-1 md:row-span-2 reveal-item flex items-center justify-center">
+          <span class="font-mono text-sm text-text-tertiary">No articles yet</span>
+        </div>
+      )}
 
-
-        <!-- Item 2: Tech Stack -->
-        <BentoItem class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item" title="Stack">
-             <div class="p-6 h-full flex flex-col justify-center">
-                <div class="grid grid-cols-4 gap-4">
-                    {techStack.map(tech => (
-                        <div class="flex flex-col items-center justify-center gap-2 group/icon" title={tech.name}>
-                            <Icon name={tech.icon} class="w-8 h-8 grayscale group-hover/icon:grayscale-0 transition-all duration-300 group-hover/icon:scale-110" />
-                        </div>
-                    ))}
+      <!-- 2: Tech Stack -->
+      <div class="bento-card reveal-item relative overflow-hidden group">
+        <div class="absolute top-5 left-5 z-10">
+          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Stack</span>
+        </div>
+        <div class="p-6 pt-14 h-full flex flex-col justify-center">
+          <div class="grid grid-cols-4 gap-5">
+            {techStack.map((tech) => (
+              <div class="flex flex-col items-center gap-2 group/icon" title={tech.name}>
+                <div class="w-10 h-10 rounded-xl bg-void-elevated border border-border-subtle flex items-center justify-center group-hover/icon:border-accent/30 transition-all duration-300 group-hover/icon:scale-110">
+                  <Icon name={tech.icon} class="w-5 h-5 grayscale group-hover/icon:grayscale-0 transition-all duration-300" />
                 </div>
-            </div>
-        </BentoItem>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="bento-card-glow"></div>
+      </div>
 
-        <!-- Item 3: GitHub -->
-        <BentoItem
-            class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item bg-zinc-900 border-none group"
-            href="https://github.com/gae-22"
-        >
-            <div class="relative h-full w-full flex flex-col items-center justify-center p-6 bg-zinc-950 text-white overflow-hidden">
-                <div class="absolute inset-0 bg-[radial-gradient(#333_1px,transparent_1px)] bg-size-[16px_16px] opacity-20"></div>
-                <Icon name="lucide:github" class="w-12 h-12 mb-4 relative z-10 group-hover:scale-110 transition-transform duration-300" />
-                <span class="font-heading font-bold text-xl relative z-10">GitHub</span>
-                <span class="text-xs text-zinc-500 font-mono mt-1 relative z-10">@gae-22</span>
+      <!-- 3: GitHub -->
+      <a href="https://github.com/gae-22" target="_blank" rel="noopener noreferrer"
+         class="bento-card reveal-item relative overflow-hidden group" aria-label="GitHub Profile">
+        <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[16px_16px]"></div>
+        <div class="absolute top-5 left-5 z-10">
+          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">GitHub</span>
+        </div>
+        <div class="relative z-10 h-full flex flex-col items-center justify-center">
+          <Icon name="lucide:github" class="w-12 h-12 text-text-primary mb-4 group-hover:text-accent group-hover:scale-110 transition-all duration-500" />
+          <span class="font-heading font-bold text-lg text-text-primary">@gae-22</span>
+          <span class="font-mono text-[10px] text-text-tertiary mt-1.5 uppercase tracking-wider">Open Source</span>
+        </div>
+        <!-- Arrow indicator -->
+        <div class="absolute bottom-5 right-5 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
+          <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+          </svg>
+        </div>
+        <div class="bento-card-glow"></div>
+      </a>
 
-                <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl group-hover:bg-accent-violet/20 transition-colors duration-500"></div>
-            </div>
-        </BentoItem>
+      <!-- 4: Clock / Location -->
+      <div class="bento-card reveal-item relative overflow-hidden group">
+        <div class="absolute top-5 left-5 z-10">
+          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Location</span>
+        </div>
+        <div class="h-full flex flex-col items-center justify-center relative">
+          <!-- Radial glow on hover -->
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+               style="background: radial-gradient(circle at 50% 50%, rgba(200,255,0,0.04), transparent 70%);">
+          </div>
+          <time class="bento-clock font-display text-4xl font-light tabular-nums tracking-wider text-text-primary relative z-10">
+            --:--
+          </time>
+          <span class="font-mono text-[9px] mt-3 uppercase tracking-[0.25em] text-text-tertiary relative z-10">Tokyo, Japan</span>
+          <!-- Seconds pulse -->
+          <div class="absolute bottom-5 flex items-center gap-1.5">
+            <div class="w-1.5 h-1.5 rounded-full bg-accent" style="animation: pulse-accent 2s ease-in-out infinite;"></div>
+            <span class="font-mono text-[8px] uppercase tracking-[0.2em] text-text-tertiary">Live</span>
+          </div>
+        </div>
+        <div class="bento-card-glow"></div>
+      </div>
 
-         <!-- Item 4: Clock / Location -->
-        <BentoItem class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item grid place-items-center bg-white">
-            <Clock />
-        </BentoItem>
+      <!-- 5: Stats -->
+      <div class="bento-card reveal-item relative overflow-hidden group">
+        <div class="absolute top-5 left-5 z-10">
+          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Stats</span>
+        </div>
+        <div class="h-full flex flex-col justify-center p-6 pt-14 gap-6">
+          <div>
+            <span class="font-display text-5xl font-bold text-text-primary tracking-tight">{stats.experience}+</span>
+            <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary mt-1">Years Experience</p>
+          </div>
+          <div class="w-full h-px bg-border-subtle"></div>
+          <div>
+            <span class="font-display text-5xl font-bold text-accent tracking-tight">{stats.projects}</span>
+            <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary mt-1">Projects Built</p>
+          </div>
+        </div>
+        <div class="bento-card-glow"></div>
+      </div>
 
-        <!-- Item 5: About Link -->
-        <BentoItem
-            class="md:col-span-1 lg:col-span-1 row-span-1 reveal-item bg-accent-blue/5 border-accent-blue/10"
-            href="/about"
-            title="Profile"
-        >
-            <div class="p-6 h-full flex flex-col justify-between group">
-                <div class="w-10 h-10 rounded-full bg-accent-blue/10 text-accent-blue flex items-center justify-center">
-                    <Icon name="lucide:user" class="w-5 h-5" />
-                </div>
-                <div>
-                    <span class="text-lg font-bold text-zinc-900 group-hover:text-accent-blue transition-colors">About Me</span>
-                    <p class="text-xs text-zinc-500 mt-1">Get to know the person behind the code.</p>
-                </div>
-            </div>
-        </BentoItem>
+      <!-- 6: About Link -->
+      <a href="/about" class="bento-card reveal-item relative overflow-hidden group" aria-label="About Me">
+        <div class="absolute top-5 left-5 z-10">
+          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Profile</span>
+        </div>
+        <div class="h-full flex flex-col items-start justify-end p-6">
+          <div class="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mb-4 group-hover:bg-accent/20 transition-colors duration-300">
+            <Icon name="lucide:user" class="w-5 h-5 text-accent" />
+          </div>
+          <span class="font-heading text-xl font-bold text-text-primary group-hover:text-accent transition-colors duration-300">About Me</span>
+          <p class="font-body text-xs text-text-secondary mt-1">Get to know the person behind the code.</p>
+          <!-- Roles -->
+          <div class="flex flex-wrap gap-1.5 mt-4">
+            {roles.map((role: string) => (
+              <span class="px-2.5 py-1 rounded-full border border-border-subtle font-mono text-[9px] uppercase tracking-wider text-text-tertiary group-hover:border-accent/20 group-hover:text-text-secondary transition-all duration-300">
+                {role}
+              </span>
+            ))}
+          </div>
+        </div>
+        <!-- Arrow indicator -->
+        <div class="absolute bottom-5 right-5 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
+          <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </div>
+        <div class="bento-card-glow"></div>
+      </a>
 
     </div>
+
+  </div>
 </section>
+
+<script>
+  function initBentoClock() {
+    const displays = document.querySelectorAll('.bento-clock');
+    if (!displays.length) return;
+
+    function update() {
+      const now = new Date();
+      const timeString = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Tokyo',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }).format(now);
+      displays.forEach(d => { d.textContent = timeString; });
+    }
+
+    update();
+    setInterval(update, 1000);
+  }
+
+  document.addEventListener('DOMContentLoaded', initBentoClock);
+  document.addEventListener('astro:after-swap', initBentoClock);
+</script>

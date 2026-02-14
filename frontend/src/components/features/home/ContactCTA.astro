@@ -1,0 +1,61 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const socialLinks = [
+  { label: 'GitHub', href: 'https://github.com/gae-22', icon: 'lucide:github' },
+  { label: 'Discord', href: 'https://discord.gg/nqsegJHjBb', icon: 'simple-icons:discord' },
+  { label: 'X', href: 'https://x.com/gae_dev', icon: 'simple-icons:x' },
+];
+---
+
+<section class="relative z-10 min-h-svh flex flex-col items-center justify-center px-6">
+
+  <!-- Top line -->
+  <div class="absolute top-0 left-6 right-6">
+    <div class="section-line reveal-item w-full"></div>
+  </div>
+
+  <div class="max-w-5xl mx-auto text-center">
+
+    <!-- Small label -->
+    <div class="reveal-item mb-16">
+      <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-text-tertiary">
+        Get in touch
+      </span>
+    </div>
+
+    <!-- Main CTA Text -->
+    <div class="reveal-item reveal-delay-1 mb-16">
+      <h2 class="text-display text-[clamp(3.5rem,12vw,10rem)] leading-[0.85] tracking-[-0.04em]">
+        <span class="block font-extralight text-text-secondary">Let's</span>
+        <span class="block font-extrabold text-text-primary">Talk.</span>
+      </h2>
+    </div>
+
+    <!-- Email — prominent -->
+    <div class="reveal-item reveal-delay-2 mb-16">
+      <a href="mailto:gaedev22@gmail.com"
+         class="link-hover font-mono text-base md:text-xl text-accent tracking-wide">
+        gaedev22@gmail.com
+      </a>
+    </div>
+
+    <!-- Social Links — horizontal with separators -->
+    <div class="reveal-item reveal-delay-3 flex items-center justify-center gap-6 md:gap-10">
+      {socialLinks.map((link, i) => (
+        <>
+          {i > 0 && <span class="w-px h-4 bg-border-hover"></span>}
+          <a href={link.href}
+             target="_blank"
+             rel="noopener noreferrer"
+             class="flex items-center gap-2.5 text-text-secondary hover:text-text-primary transition-colors duration-300 group"
+             aria-label={link.label}>
+            <Icon name={link.icon} class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+            <span class="font-mono text-[10px] uppercase tracking-[0.15em]">{link.label}</span>
+          </a>
+        </>
+      ))}
+    </div>
+
+  </div>
+</section>

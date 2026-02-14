@@ -13,24 +13,24 @@ const { post, variant = 'basic', class: className } = Astro.props;
 ---
 
 <a href={`/blog/${post.slug}`} class:list={["group relative block h-full", className]}>
-  <article class="glass-card h-full flex flex-col overflow-hidden">
+  <article class="project-card h-full flex flex-col overflow-hidden">
 
     <!-- Cover Image -->
-    <div class="w-full aspect-video overflow-hidden relative bg-zinc-100">
+    <div class="w-full aspect-video overflow-hidden relative bg-void-elevated">
         {post.data.cover ? (
             <Image
                 src={post.data.cover}
                 alt={post.data.coverAlt || post.data.title}
-                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 grayscale group-hover:grayscale-0"
             />
         ) : (
-            <div class="w-full h-full flex items-center justify-center bg-zinc-50">
-                 <Icon name="lucide:image" class="w-10 h-10 text-zinc-200" />
+            <div class="w-full h-full flex items-center justify-center">
+                 <Icon name="lucide:image" class="w-10 h-10 text-text-tertiary" />
             </div>
         )}
 
         {/* Date Badge */}
-        <div class="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-600 shadow-sm">
+        <div class="absolute top-4 left-4 bg-void/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider text-text-secondary border border-border-subtle">
              <time datetime={post.data.publishedAt.toISOString()}>
               {post.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
             </time>
@@ -41,13 +41,13 @@ const { post, variant = 'basic', class: className } = Astro.props;
     <div class="p-6 flex flex-col flex-1">
       <div class="flex gap-2 mb-3">
           {post.data.tags.slice(0, 2).map(tag => (
-              <span class="text-[10px] font-bold uppercase tracking-wider text-accent-blue bg-accent-blue/5 px-2 py-0.5 rounded">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-accent bg-accent-dim px-2 py-0.5 rounded">
                   {tag}
               </span>
           ))}
       </div>
 
-      <h3 class="text-xl font-heading font-bold text-text-primary mb-3 leading-tight group-hover:text-accent-violet transition-colors">
+      <h3 class="text-xl font-heading font-bold text-text-primary mb-3 leading-tight group-hover:text-accent transition-colors duration-300">
         {post.data.title}
       </h3>
 
@@ -55,9 +55,9 @@ const { post, variant = 'basic', class: className } = Astro.props;
         {post.data.description}
       </p>
 
-      <div class="flex items-center gap-2 text-xs font-bold text-zinc-900 group/link">
-        <span class="group-hover:translate-x-1 transition-transform">Read Article</span>
-        <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+      <div class="flex items-center gap-2 text-xs font-mono text-accent">
+        <span class="group-hover:translate-x-1 transition-transform duration-300">Read Article</span>
+        <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
       </div>
     </div>
 

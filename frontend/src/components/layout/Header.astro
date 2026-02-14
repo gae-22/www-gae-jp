@@ -2,31 +2,30 @@
 import { Icon } from 'astro-icon/components';
 
 const navItems = [
-  { label: 'Work', href: '/' },
+  { label: 'Home', href: '/' },
+  { label: 'Work', href: '/work' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Projects', href: '/projects' },
   { label: 'About', href: '/about' },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
-  <nav class="pointer-events-auto flex items-center gap-2 p-2 rounded-full glass-card border border-white/50 shadow-xl shadow-indigo-500/5 transition-all duration-500 hover:shadow-indigo-500/15 hover:scale-[1.005]">
+<!-- Scroll progress indicator -->
+<div class="scroll-progress" aria-hidden="true">
+  <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
+</div>
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-700">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
     <!-- Logo -->
-    <a href="/" class="pl-2 pr-4 py-1 flex items-center gap-2.5 group" aria-label="Home">
-        <div class="relative flex items-center justify-center w-10 h-10 text-white rounded-full overflow-hidden shadow-inner transition-transform duration-500 group-hover:rotate-360 group-hover:scale-110">
-             <img src="/gae.svg" alt="gae logo" class="w-full h-full object-cover scale-80" />
-        </div>
-        <span class="font-heading font-bold text-sm tracking-tight text-zinc-800 hidden sm:block group-hover:text-indigo-600 transition-colors">gae</span>
+    <a href="/" class="flex items-center group" aria-label="Home">
+      <span class="font-heading font-bold text-sm tracking-tight text-text-primary group-hover:text-accent transition-colors duration-300">gae</span>
     </a>
 
-    <!-- Divider -->
-    <div class="w-px h-5 bg-zinc-200/80 mx-1"></div>
-
-    <!-- Nav Items -->
-    <ul class="flex items-center gap-1.5 relative">
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex items-center gap-10">
       {navItems.map((item) => {
         const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
         return (
@@ -34,31 +33,125 @@ const currentPath = Astro.url.pathname;
             <a
               href={item.href}
               class:list={[
-                "relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-500 tracking-wide flex items-center justify-center overflow-hidden group",
+                "font-mono text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 relative",
                 isActive
-                    ? "text-zinc-900 font-bold bg-white shadow-sm ring-1 ring-zinc-200"
-                    : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100/80"
+                  ? "text-accent"
+                  : "text-text-secondary hover:text-text-primary"
               ]}
             >
-              <span class="relative z-10">{item.label}</span>
-              {isActive && (
-                  <span class="absolute inset-0 bg-linear-to-tr from-white to-zinc-50 opacity-100"></span>
-              )}
+              {item.label}
+              {isActive && <span class="absolute -bottom-1 left-0 w-full h-px bg-accent"></span>}
             </a>
           </li>
         );
       })}
+      <li class="ml-2">
+        <a href="https://github.com/gae-22" target="_blank" rel="noopener noreferrer"
+           class="text-text-secondary hover:text-text-primary transition-colors duration-300"
+           aria-label="GitHub">
+          <Icon name="lucide:github" class="w-4 h-4" />
+        </a>
+      </li>
     </ul>
 
-    <!-- Divider -->
-    <div class="w-px h-5 bg-zinc-200/80 mx-1"></div>
-
-    <!-- Social -->
-    <a href="https://github.com/gae-22/www-gae-jp" target="_blank" rel="noopener noreferrer"
-       class="p-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-900 transition-all duration-300 hover:scale-110 hover:rotate-12 group"
-       aria-label="GitHub">
-      <Icon name="lucide:github" class="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-    </a>
+    <!-- Mobile Menu Button -->
+    <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2 group" aria-label="Toggle menu" aria-expanded="false">
+      <span class="menu-line w-6 h-px bg-text-primary transition-all duration-300 origin-center"></span>
+      <span class="menu-line w-6 h-px bg-text-primary transition-all duration-300"></span>
+    </button>
 
   </nav>
 </header>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-void flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
+  <nav class="flex flex-col items-center gap-10">
+    <a href="/" class="font-display text-4xl font-bold text-text-primary hover:text-accent transition-colors duration-300 mobile-nav-link">
+      Home
+    </a>
+    {navItems.map((item, i) => (
+      <a
+        href={item.href}
+        class="font-display text-4xl font-bold text-text-primary hover:text-accent transition-colors duration-300 mobile-nav-link"
+        style={`transition-delay: ${(i + 1) * 0.05}s`}
+      >
+        {item.label}
+      </a>
+    ))}
+    <a href="https://github.com/gae-22" target="_blank" rel="noopener noreferrer"
+       class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.15em] text-text-secondary hover:text-text-primary transition-colors duration-300 mt-6">
+      <Icon name="lucide:github" class="w-5 h-5" />
+      <span>GitHub</span>
+    </a>
+  </nav>
+</div>
+
+<script>
+  function initHeader() {
+    const header = document.getElementById('site-header');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const progressBar = document.getElementById('scroll-progress-bar');
+    if (!header || !menuToggle || !mobileMenu) return;
+
+    let isOpen = false;
+
+    // Scroll effect + progress bar
+    const onScroll = () => {
+      // Header background
+      if (window.scrollY > 50) {
+        header.style.backgroundColor = 'rgba(10, 10, 10, 0.85)';
+        header.style.backdropFilter = 'blur(20px)';
+        (header.style as any).WebkitBackdropFilter = 'blur(20px)';
+      } else {
+        header.style.backgroundColor = 'transparent';
+        header.style.backdropFilter = 'none';
+        (header.style as any).WebkitBackdropFilter = 'none';
+      }
+
+      // Scroll progress
+      if (progressBar) {
+        const scrollH = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollH > 0 ? window.scrollY / scrollH : 0;
+        progressBar.style.transform = `scaleX(${progress})`;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Mobile menu toggle
+    const lines = menuToggle.querySelectorAll<HTMLElement>('.menu-line');
+    menuToggle.addEventListener('click', () => {
+      isOpen = !isOpen;
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      if (isOpen) {
+        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = 'hidden';
+        lines[0].style.transform = 'rotate(45deg) translateY(4px)';
+        lines[1].style.transform = 'rotate(-45deg) translateY(-4px)';
+      } else {
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = '';
+        lines[0].style.transform = '';
+        lines[1].style.transform = '';
+      }
+    });
+
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        isOpen = false;
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = '';
+        lines[0].style.transform = '';
+        lines[1].style.transform = '';
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initHeader);
+  document.addEventListener('astro:after-swap', initHeader);
+</script>

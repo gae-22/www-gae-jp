@@ -25,405 +25,112 @@ const skillCategories = [
   <Header />
 
   <main class="min-h-screen pt-32 pb-20 px-4 sm:px-6 relative overflow-hidden">
-      <!-- Background Elements -->
-      <div class="aurora-bg fixed inset-0 z-0 pointer-events-none"></div>
+      <div class="max-w-5xl mx-auto space-y-16 relative z-10">
 
-      <div class="max-w-6xl mx-auto space-y-6 relative z-10">
+          <!-- Page Header -->
+          <header class="reveal-item">
+            <div class="flex items-center gap-6 mb-6">
+              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">About</span>
+              <div class="flex-1 h-px bg-border-subtle"></div>
+            </div>
+            <h1 class="font-display font-extrabold text-6xl sm:text-8xl md:text-9xl tracking-tighter leading-[0.85] text-text-primary mb-4">
+              HELLO<span class="text-text-tertiary">.</span>
+            </h1>
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary flex items-center gap-3 mt-6">
+              <span class="relative flex h-2 w-2">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" style="animation: pulse-accent 2s ease-in-out infinite;"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+              </span>
+              {profile.name} — Fullstack Developer
+            </p>
+          </header>
 
-          <!-- 1. Hero / Intro Section -->
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 reveal-item">
-
-              <!-- Large Typography Title -->
-              <div class="tilt-card md:col-span-8 bg-white/80 backdrop-blur-md rounded-4xl sm:p-12 flex flex-col justify-between min-h-100 border border-white/50 relative overflow-hidden group shadow-sm hover:shadow-xl transition-all duration-700 ease-out transform-gpu">
-                  <!-- Sophisticated Gradient Backgrounds -->
-                  <div class="absolute top-0 right-0 w-150 h-150 bg-radial-gradient from-violet-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -mr-20 -mt-20 pointer-events-none"></div>
-                  <div class="absolute bottom-0 left-0 w-100 h-100 bg-radial-gradient from-blue-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -ml-10 -mb-10 pointer-events-none"></div>
-
-                  <div class="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 transform group-hover:scale-105 origin-top-right">
-                       <Icon name="lucide:fingerprint" class="w-80 h-80 -mr-20 -mt-20 text-zinc-900" />
-                  </div>
-
-                  <div class="relative z-10 p-6 sm:p-0">
-                    <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-zinc-100 bg-white/60 backdrop-blur-md text-xs font-mono font-medium text-zinc-500 mb-8 shadow-sm">
-                        <span class="relative flex h-2 w-2">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                        </span>
-                        <span class="tracking-[0.2em] uppercase">Est. 2022</span>
-                    </span>
-                  </div>
-
-                  <h1 class="relative z-10 font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tighter leading-[0.85] text-zinc-900 p-6 sm:p-0">
-                      HELLO<span class="text-zinc-300">.</span><br />
-                      I AM<br />
-                      <span class="text-transparent bg-clip-text bg-linear-to-r from-zinc-800 to-zinc-500 group-hover:from-violet-600 group-hover:to-indigo-500 transition-all duration-700">GAE</span>
-                  </h1>
-              </div>
-
-              <!-- Profile & Roles -->
-              <div class="md:col-span-4 h-full">
-                  <!-- Photo / Avatar Card -->
-                  <div class="h-full tilt-card bg-white/60 backdrop-blur-xl rounded-4xl p-8 relative overflow-hidden group border border-white/60 shadow-sm hover:shadow-xl transition-all duration-700 ease-out transform-gpu rotate-1 hover:rotate-0">
-                       <div class="absolute inset-0 bg-linear-to-b from-slate-50/50 to-white/50 opacity-50"></div>
-
-                       <!-- Text Content (Top Left) -->
-                       <div class="relative z-20 flex flex-col items-start h-full justify-start">
-                           <h2 class="text-4xl font-display font-black text-zinc-900 mb-1 tracking-tighter">{profile.name}</h2>
-                           <p class="text-zinc-500 text-sm font-medium tracking-wide flex items-center gap-2">
-                                <Icon name="lucide:code-2" class="w-4 h-4 text-violet-500" />
-                                Fullstack Developer
-                           </p>
-                       </div>
-
-                       <!-- Large Image (Bottom Right, Overflowing) -->
-                       <div class="absolute -bottom-10 -right-10 w-80 h-80 sm:w-80 sm:h-80 z-10 transition-all duration-700 group-hover:scale-105 group-hover:-rotate-2 rotate-6 origin-bottom-right">
-                            <img src="/gae.svg" alt="gae" class="w-full h-full object-contain drop-shadow-2xl opacity-90 mask-image-b-r" />
-                       </div>
-                  </div>
-              </div>
+          <!-- Stats Row -->
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 reveal-item">
+            <div class="p-6 rounded-2xl border border-border-subtle bg-void-subtle text-center hover:border-accent/20 transition-all duration-500">
+              <span class="text-4xl font-display font-bold text-text-primary block mb-2">{profile.stats.experience}</span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Years Exp</span>
+            </div>
+            <div class="p-6 rounded-2xl border border-border-subtle bg-void-subtle text-center hover:border-accent/20 transition-all duration-500">
+              <span class="text-4xl font-display font-bold text-text-primary block mb-2">{profile.stats.projects}</span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Projects</span>
+            </div>
+            <div class="p-6 rounded-2xl border border-border-subtle bg-void-subtle text-center hover:border-accent/20 transition-all duration-500 col-span-2 md:col-span-1">
+              <span class="text-4xl font-display font-bold text-text-primary block mb-2">&infin;</span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Curiosity</span>
+            </div>
           </div>
 
-
-          <!-- 2. Bento Grid Details -->
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 reveal-item">
-
-              <!-- Left Column: Stats & Skills -->
-              <div class="md:col-span-4 space-y-6">
-
-                  <!-- Stats Row -->
-                  <div class="grid grid-cols-2 gap-4">
-                      <div class="spotlight-card bg-white/60 backdrop-blur-xl rounded-4xl p-6 flex flex-col justify-center text-center border border-white/60 hover:border-violet-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 duration-500">
-                          <div class="absolute inset-0 bg-linear-to-br from-violet-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                          <!-- Spotlight Overlay: Added via JS but we can prep data -->
-                          <div class="spotlight-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(139, 92, 246, 0.15), transparent 40%); mix-blend-mode: multiply;"></div>
-
-                          <span class="count-up text-5xl font-display font-black text-zinc-800 mb-2 relative z-10 group-hover:text-violet-600 transition-colors duration-500 tracking-tighter" data-target={profile.stats.experience}>0</span>
-                          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 relative z-10">Years Exp</span>
+          <!-- Skills Section -->
+          <section class="reveal-item">
+            <div class="flex items-center gap-6 mb-10">
+              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Skills</span>
+              <div class="flex-1 h-px bg-border-subtle"></div>
+            </div>
+            <div class="space-y-8">
+              {skillCategories.map(({ label, items }) => (
+                <div>
+                  <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mb-4">{label}</h4>
+                  <div class="flex flex-wrap gap-2">
+                    {items.map((item) => (
+                      <div class="px-4 py-2 rounded-full border border-border-subtle bg-void-subtle flex items-center gap-2.5 hover:border-accent/20 hover:bg-void-elevated transition-all duration-300 group cursor-default">
+                        <Icon name={item.icon} class="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors duration-300" />
+                        <span class="font-mono text-xs text-text-secondary group-hover:text-text-primary transition-colors duration-300">{item.name}</span>
                       </div>
-                      <div class="spotlight-card bg-white/60 backdrop-blur-xl rounded-4xl p-6 flex flex-col justify-center text-center border border-white/60 hover:border-blue-200 transition-all group relative overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 duration-500">
-                          <div class="absolute inset-0 bg-linear-to-br from-blue-50/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                           <!-- Spotlight Overlay -->
-                          <div class="spotlight-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.15), transparent 40%); mix-blend-mode: multiply;"></div>
-
-                          <span class="count-up text-5xl font-display font-black text-zinc-800 mb-2 relative z-10 group-hover:text-blue-600 transition-colors duration-500 tracking-tighter" data-target={profile.stats.projects}>0</span>
-                          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 relative z-10">Projects</span>
-                      </div>
+                    ))}
                   </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
-                  <!-- Skills Section -->
-                  <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-8 border border-white/60 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group">
-                      <div class="absolute inset-0 bg-linear-to-b from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+          <!-- Gear Section -->
+          <section class="reveal-item">
+            <div class="flex items-center gap-6 mb-10">
+              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Gear</span>
+              <div class="flex-1 h-px bg-border-subtle"></div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {profile.gear.map((item) => (
+                <div class="px-4 py-2 rounded-full border border-border-subtle bg-void-subtle flex items-center gap-2.5 hover:border-accent/20 transition-all duration-300 group cursor-default">
+                  <Icon name={item.icon} class="w-3.5 h-3.5 text-text-tertiary group-hover:text-text-secondary transition-colors duration-300" />
+                  <span class="font-mono text-xs text-text-secondary group-hover:text-text-primary transition-colors duration-300">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </section>
 
-                      <div class="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] scale-150 transform group-hover:-rotate-12 transition-all duration-1000 pointer-events-none origin-center">
-                          <Icon name="lucide:shapes" class="w-64 h-64 -mr-16 -mt-16 text-indigo-900" />
-                      </div>
+          <!-- Timeline Section -->
+          <section class="reveal-item">
+            <div class="flex items-center gap-6 mb-10">
+              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Journey</span>
+              <div class="flex-1 h-px bg-border-subtle"></div>
+            </div>
+            <div class="p-8 md:p-12 rounded-2xl border border-border-subtle bg-void-subtle">
+              <Timeline events={profile.timeline} />
+            </div>
+          </section>
 
-                      <div class="h-10 flex items-center mb-6"> {/* Compact header */}
-                          <h3 class="text-lg font-bold text-zinc-900 flex items-center gap-3 relative z-10 w-full">
-                              <div class="p-2.5 rounded-xl bg-white/50 text-zinc-500 shadow-sm border border-white/50 backdrop-blur-sm transition-colors duration-300" id="skills-icon-container">
-                                 <Icon name="lucide:boxes" class="w-5 h-5 transition-all duration-300" id="skills-title-icon" />
-                              </div>
-                              <span id="skills-title" class="tracking-tight transition-all duration-300 min-w-25">Skills</span>
-                          </h3>
-                      </div>
-
-                      <div class="space-y-6 relative z-10">
-                        {skillCategories.map(({ label, items }) => (
-                            <div>
-                                <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2 pl-1">{label}</h4>
-                                <div class="flex flex-wrap gap-2 relative z-10 w-full">
-                                    {items.map((item) => (
-                                        <div class="skill-item relative group/icon cursor-help transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1" data-skill={item.name} data-icon={item.icon}>
-                                            <div class="w-10 h-10 rounded-xl bg-white/40 border border-white/40 flex items-center justify-center text-zinc-400 group-hover/icon:text-zinc-900 group-hover/icon:bg-white/80 group-hover/icon:border-white/60 group-hover/icon:shadow-xl transition-all duration-300 relative z-20 overflow-hidden shadow-sm">
-                                                <div class="absolute inset-0 bg-linear-to-br from-white/60 to-transparent opacity-0 group-hover/icon:opacity-100 transition-opacity duration-500"></div>
-                                                <Icon name={item.icon} class="w-5 h-5 transition-transform group-hover/icon:scale-110 relative z-30" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                      </div>
-                  </div>
-
-                  <!-- Gear (Relocated below Skills) -->
-                   <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-8 border border-white/60 text-zinc-900 relative overflow-hidden group shadow-sm hover:shadow-xl transition-all duration-500 hover:rotate-0 -rotate-1 transform-gpu">
-                       <!-- Subtle ambient glow -->
-                       <div class="absolute -top-[50%] -left-[20%] w-[80%] h-[150%] bg-violet-100/40 blur-[120px] rounded-full pointer-events-none"></div>
-                       <div class="absolute bottom-0 right-0 w-[60%] h-[60%] bg-blue-100/40 blur-[100px] rounded-full pointer-events-none group-hover:bg-blue-200/50 transition-colors duration-1000"></div>
-
-                       <div class="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] scale-150 transform group-hover:rotate-12 transition-all duration-1000 pointer-events-none origin-center">
-                          <Icon name="lucide:cpu" class="w-64 h-64 -mr-16 -mt-16 text-indigo-900" />
-                      </div>
-
-                      <h3 class="text-xl font-bold mb-6 flex items-center gap-3 relative z-10">
-                          <div class="p-2.5 rounded-xl bg-white/40 text-zinc-500 backdrop-blur-md border border-white/40 shadow-sm">
-                              <Icon name="lucide:monitor" class="w-5 h-5" />
-                          </div>
-                          <span class="tracking-tight text-zinc-800">Gear</span>
-                      </h3>
-
-                      <div class="flex flex-wrap gap-2 relative z-10">
-                           {profile.gear.map((item) => (
-                               <div class="pl-3 pr-4 py-2 rounded-xl border border-white/40 bg-white/30 flex items-center gap-2 hover:bg-white/60 hover:border-white/60 transition-all text-xs text-zinc-600 hover:text-zinc-900 backdrop-blur-md group/item cursor-default shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-300">
-                                   <div class="opacity-70 group-hover/item:opacity-100 transition-opacity">
-                                       <Icon name={item.icon} class="w-3.5 h-3.5" />
-                                   </div>
-                                   <span class="font-medium tracking-wide">{item.name}</span>
-                               </div>
-                           ))}
-                      </div>
-                  </div>
-
-
+          <!-- Philosophy -->
+          <section class="reveal-item py-20">
+            <div class="max-w-3xl">
+              <h3 class="flex items-center gap-3 mb-10">
+                <span class="w-8 h-px bg-accent"></span>
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Philosophy</span>
+              </h3>
+              <p class="text-3xl sm:text-4xl md:text-5xl leading-[1.1] text-text-primary font-display font-bold tracking-tight mb-6">
+                技術は課題解決の手段。
+              </p>
+              <div class="h-px w-full bg-border-subtle my-8"></div>
+              <div class="text-lg text-text-secondary leading-relaxed space-y-2">
+                <p>常にユーザーの視点に立ち、シンプルかつ堅牢な実装で、</p>
+                <p class="text-text-primary font-bold">"長く愛されるシステムを作ります。"</p>
               </div>
+            </div>
+          </section>
 
-              {/* Middle Column: Timeline (Wider) */}
-              <div class="md:col-span-8 bg-white/60 backdrop-blur-xl rounded-4xl p-8 sm:p-12 border border-white/60 shadow-sm hover:shadow-xl transition-all relative overflow-hidden group">
-                  <div class="absolute inset-0 bg-linear-to-b from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-                  <h3 class="text-2xl font-bold text-zinc-900 mb-10 flex items-center gap-3 relative z-10">
-                      <div class="p-2.5 rounded-xl bg-white/50 text-zinc-500 shadow-sm border border-white/50 backdrop-blur-sm">
-                        <Icon name="lucide:history" class="w-6 h-6" />
-                      </div>
-                      <span class="tracking-tight">Journey</span>
-                  </h3>
-                  <div class="relative z-10">
-                    <Timeline events={profile.timeline} />
-                  </div>
-              </div>
-
-          </div>
-
-
-          <!-- 3. Bottom Row: Vision (Full Width) -->
-          <div class="grid grid-cols-1 gap-6 reveal-item">
-
-                <!-- Philosophy (Refined Light Glass & Typography) -->
-               <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-10 md:p-12 border border-white/60 flex flex-col justify-between relative overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-700 hover:bg-white/80">
-                   <div class="absolute inset-0 bg-linear-to-br from-violet-50/20 via-transparent to-blue-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-                   <div class="absolute -right-20 -bottom-20 w-96 h-96 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] transform group-hover:rotate-12 group-hover:scale-110 pointer-events-none origin-center">
-                       <Icon name="lucide:sparkles" class="w-full h-full text-indigo-900" />
-                   </div>
-
-                   <div class="relative z-10">
-                       <h3 class="flex items-center gap-3 mb-8">
-                            <span class="w-8 h-px bg-zinc-300 group-hover:w-12 group-hover:bg-violet-300 transition-all duration-500"></span>
-                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] group-hover:text-violet-500 transition-colors duration-500">Philosophy</span>
-                       </h3>
-
-                       <div class="space-y-6">
-                           <p class="text-3xl sm:text-4xl md:text-5xl leading-[1.1] text-zinc-800 font-display font-black tracking-tight">
-                               技術は<br/>
-                               <span class="text-transparent bg-clip-text bg-linear-to-r from-zinc-900 to-zinc-600 inline-block decoration-indigo-200/50 underline underline-offset-8 decoration-4 group-hover:decoration-indigo-300 transition-all">課題解決</span>の手段。
-                           </p>
-
-                           <div class="w-full h-px bg-linear-to-r from-zinc-200/50 to-transparent my-6"></div>
-
-                           <div class="text-base sm:text-lg text-zinc-500 font-medium leading-relaxed tracking-wide space-y-1">
-                               <p>常にユーザーの視点に立ち、<br/>シンプルかつ堅牢な実装で、</p>
-                               <p class="text-zinc-800 font-bold group-hover:text-violet-700 transition-colors duration-500">"長く愛されるシステムを作ります。"</p>
-                           </div>
-                       </div>
-                   </div>
-
-               </div>
-          </div>
       </div>
   </main>
 
   <Footer />
 </Layout>
-
-<script>
-    // Dynamic Header Interaction
-    const skillItems = document.querySelectorAll('.skill-item');
-    const skillsTitle = document.getElementById('skills-title');
-    const skillsTitleIcon = document.getElementById('skills-title-icon');
-    const skillsIconContainer = document.getElementById('skills-icon-container');
-
-    const defaultTitle = 'Skills';
-    // Use innerHTML for revert to handle complex SVGs
-    let originalIconHTML = '';
-    if (skillsIconContainer) {
-        originalIconHTML = skillsIconContainer.innerHTML;
-    }
-
-    skillItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            const skillName = item.getAttribute('data-skill');
-            const sourceIcon = item.querySelector('svg, img');
-
-            if (skillsTitle && skillName) {
-                // Animate text change
-                skillsTitle.style.opacity = '0';
-                skillsTitle.style.transform = 'translateY(-5px)';
-
-                setTimeout(() => {
-                    skillsTitle.textContent = skillName;
-                    skillsTitle.classList.add('text-violet-600');
-                    skillsTitle.style.opacity = '1';
-                    skillsTitle.style.transform = 'translateY(0)';
-                }, 150);
-
-                // Animate icon container style
-                if (skillsIconContainer) {
-                    skillsIconContainer.classList.add('bg-violet-100', 'text-violet-600', 'border-violet-200');
-                    skillsIconContainer.classList.remove('bg-white/50', 'text-zinc-500', 'border-white/50');
-                }
-
-                // Swap Icon
-                if (skillsIconContainer && sourceIcon) {
-                    const clonedIcon = sourceIcon.cloneNode(true);
-
-                    if (clonedIcon instanceof Element) {
-                        // Reset sizing classes for header context
-                        clonedIcon.setAttribute('class', 'w-5 h-5 transition-all duration-300');
-
-                        skillsIconContainer.style.opacity = '0';
-                        skillsIconContainer.style.transform = 'scale(0.8)';
-
-                        setTimeout(() => {
-                            skillsIconContainer.innerHTML = '';
-                            skillsIconContainer.appendChild(clonedIcon);
-                            skillsIconContainer.style.opacity = '1';
-                            skillsIconContainer.style.transform = 'scale(1)';
-                        }, 150);
-                    }
-                }
-            }
-        });
-
-        item.addEventListener('mouseleave', () => {
-            if (skillsTitle) {
-                // Revert text
-                skillsTitle.style.opacity = '0';
-                skillsTitle.style.transform = 'translateY(5px)';
-
-                setTimeout(() => {
-                    skillsTitle.textContent = defaultTitle;
-                    skillsTitle.classList.remove('text-violet-600');
-                    skillsTitle.style.opacity = '1';
-                    skillsTitle.style.transform = 'translateY(0)';
-                }, 150);
-
-                // Revert icon container style
-                if (skillsIconContainer) {
-                    skillsIconContainer.classList.remove('bg-violet-100', 'text-violet-600', 'border-violet-200');
-                    skillsIconContainer.classList.add('bg-white/50', 'text-zinc-500', 'border-white/50');
-                }
-
-                // Revert Icon html
-                if (skillsIconContainer) {
-                    skillsIconContainer.style.opacity = '0';
-                    skillsIconContainer.style.transform = 'scale(0.8)';
-
-                    setTimeout(() => {
-                        skillsIconContainer.innerHTML = originalIconHTML;
-                        skillsIconContainer.style.opacity = '1';
-                        skillsIconContainer.style.transform = 'scale(1)';
-                    }, 150);
-                }
-            }
-        });
-    });
-
-    // ─── 3D Tilt Effect ───
-    const tiltCards = document.querySelectorAll('.tilt-card');
-
-    tiltCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            if (!(card instanceof HTMLElement)) return;
-            const me = e as MouseEvent;
-
-            const rect = card.getBoundingClientRect();
-            const x = me.clientX - rect.left;
-            const y = me.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -5; // Max rotation deg
-            const rotateY = ((x - centerX) / centerX) * 5;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-             if (!(card instanceof HTMLElement)) return;
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-        });
-    });
-
-    // ─── Spotlight Effect ───
-    const spotlightCards = document.querySelectorAll('.spotlight-card');
-    spotlightCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            if (!(card instanceof HTMLElement)) return;
-            const me = e as MouseEvent;
-            const rect = card.getBoundingClientRect();
-            const x = me.clientX - rect.left;
-            const y = me.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
-
-    // ─── Count-Up Animation ───
-    const countUpElements = document.querySelectorAll('.count-up');
-    const countUpObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const el = entry.target;
-                if (!(el instanceof HTMLElement)) return;
-                const target = parseInt(el.getAttribute('data-target') || '0', 10);
-                let start = 0;
-                const duration = 2000;
-                const stepTime = Math.abs(Math.floor(duration / target));
-
-                const timer = window.setInterval(() => {
-                    start += 1;
-                    el.textContent = String(start);
-                    if (start >= target) {
-                        clearInterval(timer);
-                        el.textContent = String(target);
-                    }
-                }, stepTime);
-
-                countUpObserver.unobserve(el);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    countUpElements.forEach(el => countUpObserver.observe(el));
-
-    // ─── Scroll-driven Aurora Parallax & Hue Shift ───
-    const auroraBg = document.querySelector('.aurora-bg');
-    if (auroraBg instanceof HTMLElement) {
-        window.addEventListener('scroll', () => {
-             const scrollY = window.scrollY;
-             // Parallax movement
-             auroraBg.style.transform = `translateY(${scrollY * 0.2}px)`;
-             // Subtle hue rotation for dynamic feel
-             auroraBg.style.filter = `blur(80px) saturate(150%) hue-rotate(${scrollY * 0.05}deg)`;
-        });
-    }
-
-</script>
-
-<style>
-    @keyframes infinite-scroll {
-        from { transform: translateX(0); }
-        to { transform: translateX(-100%); }
-    }
-    .animate-infinite-scroll {
-        animation: infinite-scroll 20s linear infinite;
-    }
-    .animate-infinite-scroll:hover {
-        animation-play-state: paused;
-    }
-    .mask-image-linear-gradient {
-        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    }
-</style>

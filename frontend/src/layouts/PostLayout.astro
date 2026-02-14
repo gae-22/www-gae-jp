@@ -16,10 +16,6 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
 ---
 
 <Layout title={`${title} | gae`} description={description} image={cover?.src}>
-    <!-- Reading Progress Bar -->
-    <div class="fixed top-0 left-0 w-full h-1 z-60 bg-zinc-100">
-        <div class="h-full origin-left scale-x-0 transition-transform duration-100 ease-out bg-accent-blue" id="reading-progress"></div>
-    </div>
 
     <Header />
 
@@ -28,11 +24,11 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
         <!-- Header -->
         <header class="pt-40 pb-20 px-6 max-w-4xl mx-auto text-center">
 
-            <div class="flex items-center justify-center gap-4 text-xs font-mono uppercase tracking-widest text-zinc-400 mb-8">
+            <div class="flex items-center justify-center gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-8">
                 <time datetime={publishedAt.toISOString()}>
                     {publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </time>
-                <span>•</span>
+                <span>·</span>
                 <span>{post.data.tags[0] || 'Article'}</span>
             </div>
 
@@ -41,7 +37,7 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
             </h1>
 
             {cover && (
-                <div class="w-full aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-indigo-500/10 mt-12 relative">
+                <div class="w-full aspect-video rounded-2xl overflow-hidden mt-12 relative border border-border-subtle">
                     <Image src={cover} alt={coverAlt || ""} class="w-full h-full object-cover" />
                 </div>
             )}
@@ -54,12 +50,12 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
             <!-- Sidebar (TOC) -->
             <aside class="hidden lg:block lg:col-span-3 lg:col-start-1">
                 <div class="sticky top-32">
-                    <h4 class="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-6">Contents</h4>
-                    <ul class="space-y-3 text-sm border-l-2 border-zinc-100 pl-4">
+                    <h4 class="text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-6">Contents</h4>
+                    <ul class="space-y-3 text-sm border-l border-border-subtle pl-4">
                         {headings.filter(h => h.depth <= 3).map((heading) => (
                             <li class="transition-colors duration-300">
                                 <a href={`#${heading.slug}`} class:list={[
-                                    "block text-zinc-500 hover:text-accent-blue transition-colors",
+                                    "block text-text-secondary hover:text-accent transition-colors duration-300",
                                     heading.depth === 3 ? "pl-4 text-xs" : ""
                                 ]}>
                                     {heading.text}
@@ -72,21 +68,21 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
 
             <!-- Prose -->
             <div class="lg:col-span-7 lg:col-start-4 pb-32">
-                <div class="prose prose-lg prose-slate max-w-none
+                <div class="prose prose-lg prose-invert max-w-none
                     prose-headings:font-display prose-headings:font-bold prose-headings:text-text-primary
                     prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-6
-                    prose-p:leading-8 prose-p:text-text-secondary prose-p:font-light
-                    prose-a:text-accent-blue prose-a:no-underline prose-a:font-medium hover:prose-a:text-accent-violet
-                    prose-img:rounded-2xl prose-img:shadow-lg
-                    prose-code:text-accent-violet prose-code:bg-accent-violet/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-                    prose-pre:bg-zinc-900 prose-pre:text-zinc-100 prose-pre:shadow-xl prose-pre:rounded-2xl">
+                    prose-p:leading-8 prose-p:text-text-secondary
+                    prose-a:text-accent prose-a:no-underline prose-a:font-medium hover:prose-a:underline
+                    prose-img:rounded-2xl
+                    prose-code:text-accent prose-code:bg-accent-dim prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+                    prose-pre:bg-void-elevated prose-pre:text-text-primary prose-pre:rounded-2xl prose-pre:border prose-pre:border-border-subtle">
                     <slot />
                 </div>
 
-                <div class="mt-20 pt-10 border-t border-zinc-200">
-                     <a href="/blog" class="inline-flex items-center gap-2 text-sm font-bold text-zinc-900 hover:text-accent-blue transition-colors">
+                <div class="mt-20 pt-10 border-t border-border-subtle">
+                     <a href="/blog" class="link-hover inline-flex items-center gap-2 text-sm font-mono text-accent transition-colors">
                         <Icon name="lucide:arrow-left" class="w-4 h-4" />
-                        Back to Journal
+                        Back to Blog
                      </a>
                 </div>
             </div>
@@ -96,16 +92,4 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
     </article>
 
     <Footer />
-
-    <script>
-        const progressBar = document.getElementById('reading-progress');
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = scrollTop / docHeight;
-            if (progressBar) {
-                progressBar.style.transform = `scaleX(${scrollPercent})`;
-            }
-        });
-    </script>
 </Layout>

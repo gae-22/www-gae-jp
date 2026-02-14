@@ -1,0 +1,81 @@
+---
+const lines = [
+  '東京を拠点に活動するソフトウェアエンジニア。',
+  'パフォーマンスと美しさの両立を追求し、',
+  'フロントエンドからバックエンドまで',
+  '一気通貫でプロダクトを作り上げる。',
+];
+---
+
+<section class="relative z-10 py-40 md:py-56 px-6">
+  <div class="max-w-3xl mx-auto">
+
+    <!-- Label with line -->
+    <div class="flex items-center gap-6 mb-16 reveal-item">
+      <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
+        About
+      </span>
+      <div class="flex-1 h-px bg-border-subtle"></div>
+    </div>
+
+    <!-- Statement — word-by-word reveal on scroll -->
+    <div id="about-statement" class="space-y-3">
+      {lines.map((line, lineIdx) => (
+        <p class="text-xl md:text-2xl lg:text-[1.75rem] font-body font-normal leading-loose tracking-[0.02em]" data-line={lineIdx}>
+          {line.split('').map((char, charIdx) => (
+            <span
+              class="word-reveal"
+              data-word-idx={lineIdx * 100 + charIdx}
+              style={`transition-delay: ${charIdx * 0.02}s`}
+            >{char}</span>
+          ))}
+        </p>
+      ))}
+    </div>
+
+    <!-- Bottom stat pills -->
+    <div class="mt-20 flex flex-wrap gap-4 reveal-item reveal-delay-2">
+      <div class="px-5 py-2.5 rounded-full border border-border-subtle">
+        <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">4+ years experience</span>
+      </div>
+      <div class="px-5 py-2.5 rounded-full border border-border-subtle">
+        <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">30+ projects</span>
+      </div>
+      <div class="px-5 py-2.5 rounded-full border border-border-subtle">
+        <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">Full-Stack</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initWordReveal() {
+    const statement = document.getElementById('about-statement');
+    if (!statement) return;
+
+    const words = statement.querySelectorAll<HTMLElement>('.word-reveal');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Activate all words with stagger
+            words.forEach((word, i) => {
+              setTimeout(() => {
+                word.classList.add('word-active');
+              }, i * 15);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3, rootMargin: '0px 0px -60px 0px' }
+    );
+
+    observer.observe(statement);
+  }
+
+  document.addEventListener('DOMContentLoaded', initWordReveal);
+  document.addEventListener('astro:after-swap', initWordReveal);
+</script>
