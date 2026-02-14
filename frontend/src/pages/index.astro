@@ -3,7 +3,6 @@ import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/layout/Header.astro';
 import Footer from '~/components/layout/Footer.astro';
 import PageLoader from '~/components/features/home/PageLoader.astro';
-import AmbientBackground from '~/components/features/home/AmbientBackground.astro';
 import Hero from '~/components/features/home/Hero.astro';
 import MarqueeStrip from '~/components/features/home/MarqueeStrip.astro';
 import AboutStatement from '~/components/features/home/AboutStatement.astro';
@@ -15,7 +14,6 @@ import ContactCTA from '~/components/features/home/ContactCTA.astro';
 
 <Layout title="gae — Software Engineer">
   <PageLoader />
-  <AmbientBackground />
   <Header />
 
   <main class="relative">
@@ -24,7 +22,7 @@ import ContactCTA from '~/components/features/home/ContactCTA.astro';
     <AboutStatement />
     <BentoGrid />
     <!-- <ProjectShowcase /> -->
-    <LatestPost />
+    <!-- <LatestPost /> -->
     <ContactCTA />
   </main>
 

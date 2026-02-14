@@ -1,4 +1,16 @@
 ---
+/**
+ * MarqueeStrip — 技術スタック名の無限横スクロール
+ *
+ * 3行構成:
+ *   Row 1 — 左方向, 30s (速め)
+ *   Row 2 — 右方向, 40s (中速)
+ *   Row 3 — 左方向, 50s (ゆったり)
+ *
+ * ホバー: 一時停止 + テキスト色を text-secondary に昇格
+ * カーソル追従のアクセントグロー付き
+ */
+
 const techsRow1 = [
   'TypeScript', 'React', 'Next.js', 'Astro', 'Go', 'Python', 'Rust',
   'Docker', 'Tailwind', 'Hono', 'FastAPI', 'C++', 'Java', 'Git',
@@ -11,34 +23,187 @@ const techsRow2 = [
   'SQLite', 'MongoDB', 'Firebase', 'Supabase', 'Deno', 'Node.js',
 ];
 
-const row1Text = techsRow1.join('  ·  ') + '  ·  ';
-const row2Text = techsRow2.join('  ·  ') + '  ·  ';
+const techsRow3 = [
+  'Three.js', 'WebGL', 'GSAP', 'Framer Motion', 'Svelte', 'Vue',
+  'Electron', 'Tauri', 'Remix', 'SolidJS', 'Qwik', 'Turbopack',
+  'Vite', 'Biome', 'tRPC', 'Zod', 'Haskell', 'OCaml',
+];
+
+const SEP = '  ·  ';
+const row1 = techsRow1.join(SEP) + SEP;
+const row2 = techsRow2.join(SEP) + SEP;
+const row3 = techsRow3.join(SEP) + SEP;
+
+interface Row {
+  text: string;
+  duration: string;
+  direction: 'normal' | 'reverse';
+  border: string;
+}
+
+const rows: Row[] = [
+  { text: row1, duration: '30s', direction: 'normal',  border: 'border-b border-border-subtle/50' },
+  { text: row2, duration: '40s', direction: 'reverse', border: 'border-b border-border-subtle/30' },
+  { text: row3, duration: '50s', direction: 'normal',  border: '' },
+];
 ---
 
-<section class="relative select-none overflow-hidden border-y border-border-subtle group" aria-hidden="true">
+<section class="marquee-section relative select-none overflow-hidden border-y border-border-subtle" aria-hidden="true">
   <!-- Edge fade masks -->
-  <div class="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-linear-to-r from-void to-transparent"></div>
-  <div class="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-linear-to-l from-void to-transparent"></div>
+  <div class="pointer-events-none absolute inset-y-0 left-0 w-24 md:w-32 z-10 bg-linear-to-r from-void to-transparent"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-32 z-10 bg-linear-to-l from-void to-transparent"></div>
 
-  <!-- Row 1: Left to Right -->
-  <div class="flex items-center h-10 md:h-12 overflow-hidden border-b border-border-subtle/50">
-    <div class="marquee-track flex whitespace-nowrap group-hover:[animation-play-state:paused]" style="animation: marquee 35s linear infinite;">
-      {[...Array(4)].map(() => (
-        <span class="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.15em] text-text-tertiary group-hover:text-text-secondary transition-colors duration-500">
-          {row1Text}
-        </span>
-      ))}
+  {rows.map(({ text, duration, direction, border }) => (
+    <div class:list={['marquee-row', border]}>
+      <div
+        class="marquee-track"
+        data-marquee-dur={duration}
+        data-marquee-dir={direction}
+      >
+        {/* JS will clone this span enough times to always fill the viewport */}
+        <span class="marquee-content">{text}</span>
+      </div>
     </div>
-  </div>
-
-  <!-- Row 2: Right to Left (reverse) -->
-  <div class="flex items-center h-10 md:h-12 overflow-hidden">
-    <div class="marquee-track flex whitespace-nowrap group-hover:[animation-play-state:paused]" style="animation: marquee-reverse 40s linear infinite;">
-      {[...Array(4)].map(() => (
-        <span class="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.15em] text-text-tertiary/60 group-hover:text-text-secondary/80 transition-colors duration-500">
-          {row2Text}
-        </span>
-      ))}
-    </div>
-  </div>
+  ))}
 </section>
+
+<style>
+  /* ── Layout ── */
+  .marquee-row {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;          /* 40px */
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .marquee-row {
+      height: 2.75rem;       /* 44px */
+    }
+  }
+
+  /* ── Track animation ── */
+  .marquee-track {
+    display: inline-flex;
+    flex-shrink: 0;
+    gap: 0;
+    white-space: nowrap;
+    will-change: transform;
+    /* Animation is applied by JS after measuring content width */
+  }
+
+  .marquee-track.is-ready {
+    animation:
+      marquee-slide
+      var(--marquee-dur, 30s)
+      linear
+      infinite
+      var(--marquee-dir, normal);
+  }
+
+  @keyframes marquee-slide {
+    from { transform: translateX(0); }
+    to   { transform: translateX(var(--scroll-dist)); }
+  }
+
+  /* ── Content typography ── */
+  .marquee-content {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-tertiary);
+    transition: color 0.4s ease;
+  }
+
+  @media (min-width: 768px) {
+    .marquee-content {
+      font-size: 11px;
+    }
+  }
+
+  /* ── Hover: pause + brighten ── */
+  .marquee-section:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-section:hover .marquee-content {
+    color: var(--color-text-secondary);
+  }
+
+  /* ── Cursor-following glow ── */
+  .marquee-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--mouse-x, -100%);
+    width: 200px;
+    height: 100%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(200, 255, 0, 0.06) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    transition: left 0.3s ease-out;
+    z-index: 5;
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation-play-state: paused !important;
+    }
+  }
+</style>
+
+<script>
+  function initMarquee() {
+    const section = document.querySelector<HTMLElement>('.marquee-section');
+    if (!section) return;
+
+    // ── Cursor-following glow ──
+    section.addEventListener('mousemove', (e) => {
+      const x = e.clientX - section.getBoundingClientRect().left - 100;
+      section.style.setProperty('--mouse-x', `${x}px`);
+    });
+
+    // ── Measure, clone, and activate each track ──
+    section.querySelectorAll<HTMLElement>('.marquee-track').forEach((track) => {
+      const original = track.querySelector<HTMLElement>('.marquee-content');
+      if (!original) return;
+
+      // Read data-attributes
+      const dur = track.dataset.marqueeDur ?? '30s';
+      const dir = track.dataset.marqueeDir ?? 'normal';
+
+      // Measure the width of a single copy
+      const contentWidth = original.getBoundingClientRect().width;
+      if (contentWidth === 0) return;
+
+      // Calculate how many total copies needed to always fill the viewport
+      // (viewport + one extra copy so the loop point is never visible)
+      const copies = Math.ceil(window.innerWidth / contentWidth) + 2;
+
+      // Clone until we have enough
+      while (track.children.length < copies) {
+        track.appendChild(original.cloneNode(true));
+      }
+
+      // Set exact scroll distance = one copy's width (pixel-perfect loop)
+      track.style.setProperty('--scroll-dist', `-${contentWidth}px`);
+      track.style.setProperty('--marquee-dur', dur);
+      track.style.setProperty('--marquee-dir', dir);
+
+      // Activate the animation (avoids FOUC / jump on first frame)
+      requestAnimationFrame(() => {
+        track.classList.add('is-ready');
+      });
+    });
+  }
+
+  // astro:page-load fires on initial load AND after client-side navigations
+  document.addEventListener('astro:page-load', initMarquee);
+</script>

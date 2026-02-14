@@ -77,26 +77,7 @@ const techStack = [
         </div>
       )}
 
-      <!-- 2: Tech Stack -->
-      <div class="bento-card reveal-item relative overflow-hidden group">
-        <div class="absolute top-5 left-5 z-10">
-          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Stack</span>
-        </div>
-        <div class="p-6 pt-14 h-full flex flex-col justify-center">
-          <div class="grid grid-cols-4 gap-5">
-            {techStack.map((tech) => (
-              <div class="flex flex-col items-center gap-2 group/icon" title={tech.name}>
-                <div class="w-10 h-10 rounded-xl bg-void-elevated border border-border-subtle flex items-center justify-center group-hover/icon:border-accent/30 transition-all duration-300 group-hover/icon:scale-110">
-                  <Icon name={tech.icon} class="w-5 h-5 grayscale group-hover/icon:grayscale-0 transition-all duration-300" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div class="bento-card-glow"></div>
-      </div>
-
-      <!-- 3: GitHub -->
+      <!-- 2: GitHub -->
       <a href="https://github.com/gae-22" target="_blank" rel="noopener noreferrer"
          class="bento-card reveal-item relative overflow-hidden group" aria-label="GitHub Profile">
         <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[16px_16px]"></div>
@@ -117,7 +98,7 @@ const techStack = [
         <div class="bento-card-glow"></div>
       </a>
 
-      <!-- 4: Clock / Location -->
+      <!-- 3: Clock / Location -->
       <div class="bento-card reveal-item relative overflow-hidden group">
         <div class="absolute top-5 left-5 z-10">
           <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Location</span>
@@ -147,19 +128,19 @@ const techStack = [
         </div>
         <div class="h-full flex flex-col justify-center p-6 pt-14 gap-6">
           <div>
-            <span class="font-display text-5xl font-bold text-text-primary tracking-tight">{stats.experience}+</span>
+            <span class="font-display text-5xl font-bold text-text-primary tracking-tight count-up" data-count-target={stats.experience} data-count-suffix="+">0</span>
             <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary mt-1">Years Experience</p>
           </div>
           <div class="w-full h-px bg-border-subtle"></div>
           <div>
-            <span class="font-display text-5xl font-bold text-accent tracking-tight">{stats.projects}</span>
+            <span class="font-display text-5xl font-bold text-accent tracking-tight count-up" data-count-target={stats.projects} data-count-suffix="">0</span>
             <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary mt-1">Projects Built</p>
           </div>
         </div>
         <div class="bento-card-glow"></div>
       </div>
 
-      <!-- 6: About Link -->
+      <!-- 4: About Link -->
       <a href="/about" class="bento-card reveal-item relative overflow-hidden group" aria-label="About Me">
         <div class="absolute top-5 left-5 z-10">
           <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary">Profile</span>
@@ -213,6 +194,61 @@ const techStack = [
     setInterval(update, 1000);
   }
 
-  document.addEventListener('DOMContentLoaded', initBentoClock);
-  document.addEventListener('astro:after-swap', initBentoClock);
+  // Count-up animation
+  function initCountUp() {
+    const counters = document.querySelectorAll<HTMLElement>('.count-up');
+    if (!counters.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.dataset.countTarget || '0', 10);
+          const suffix = el.dataset.countSuffix || '';
+          let current = 0;
+          const duration = 2000;
+          const step = target / (duration / 16);
+
+          function animate() {
+            current += step;
+            if (current >= target) {
+              el.textContent = target + suffix;
+              return;
+            }
+            el.textContent = Math.floor(current) + suffix;
+            requestAnimationFrame(animate);
+          }
+          animate();
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(el => observer.observe(el));
+  }
+
+  // Card mouse-follow glow effect
+  function initCardGlow() {
+    const cards = document.querySelectorAll<HTMLElement>('.bento-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--glow-x', `${x}px`);
+        card.style.setProperty('--glow-y', `${y}px`);
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initBentoClock();
+    initCountUp();
+    initCardGlow();
+  });
+  document.addEventListener('astro:after-swap', () => {
+    initBentoClock();
+    initCountUp();
+    initCardGlow();
+  });
 </script>

@@ -17,14 +17,23 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
 
 <Layout title={`${title} | gae`} description={description} image={cover?.src}>
 
+    <!-- Reading progress bar -->
+    <div class="reading-progress" id="reading-progress">
+      <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
     <Header />
 
-    <article class="min-h-screen">
+    <article class="min-h-screen relative">
+
+        {/* Floating accent dots */}
+        <div class="floating-dot" style="top: 12%; right: 6%; animation-delay: -2s; animation-duration: 16s;"></div>
+        <div class="floating-dot" style="top: 45%; left: 2%; animation-delay: -8s; animation-duration: 20s; opacity: 0.15;"></div>
 
         <!-- Header -->
-        <header class="pt-40 pb-20 px-6 max-w-4xl mx-auto text-center">
+        <header class="pt-40 pb-20 px-6 max-w-4xl mx-auto text-center reveal-item">
 
-            <div class="flex items-center justify-center gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-8">
+            <div class="flex items-center justify-center gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-8 reveal-item reveal-delay-1">
                 <time datetime={publishedAt.toISOString()}>
                     {publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </time>
@@ -32,12 +41,20 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
                 <span>{post.data.tags[0] || 'Article'}</span>
             </div>
 
-            <h1 class="text-4xl md:text-6xl font-display font-bold leading-tight text-text-primary mb-8 text-balance">
+            <h1 class="text-4xl md:text-6xl font-display font-bold leading-tight text-text-primary mb-8 text-balance reveal-item reveal-delay-2">
                 {title}
             </h1>
 
+            <div class="flex items-center justify-center gap-2 mb-4 reveal-item reveal-delay-3">
+                {post.data.tags.map(tag => (
+                    <span class="text-[10px] font-mono uppercase tracking-wider text-accent bg-accent-dim px-2.5 py-1 rounded-full">
+                        {tag}
+                    </span>
+                ))}
+            </div>
+
             {cover && (
-                <div class="w-full aspect-video rounded-2xl overflow-hidden mt-12 relative border border-border-subtle">
+                <div class="w-full aspect-video rounded-2xl overflow-hidden mt-12 relative border border-border-subtle shimmer-hover reveal-scale reveal-delay-3">
                     <Image src={cover} alt={coverAlt || ""} class="w-full h-full object-cover" />
                 </div>
             )}
@@ -48,16 +65,17 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
 
             <!-- Sidebar (TOC) -->
-            <aside class="hidden lg:block lg:col-span-3 lg:col-start-1">
+            <aside class="hidden lg:block lg:col-span-3 lg:col-start-1 reveal-left reveal-delay-3">
                 <div class="sticky top-32">
                     <h4 class="text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-6">Contents</h4>
-                    <ul class="space-y-3 text-sm border-l border-border-subtle pl-4">
+                    <ul id="toc-list" class="space-y-3 text-sm pl-4">
                         {headings.filter(h => h.depth <= 3).map((heading) => (
-                            <li class="transition-colors duration-300">
+                            <li>
                                 <a href={`#${heading.slug}`} class:list={[
-                                    "block text-text-secondary hover:text-accent transition-colors duration-300",
+                                    "toc-link",
                                     heading.depth === 3 ? "pl-4 text-xs" : ""
-                                ]}>
+                                ]}
+                                data-toc-slug={heading.slug}>
                                     {heading.text}
                                 </a>
                             </li>
@@ -67,20 +85,25 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
             </aside>
 
             <!-- Prose -->
-            <div class="lg:col-span-7 lg:col-start-4 pb-32">
+            <div class="lg:col-span-7 lg:col-start-4 pb-32 reveal-item reveal-delay-2">
                 <div class="prose prose-lg prose-invert max-w-none
                     prose-headings:font-display prose-headings:font-bold prose-headings:text-text-primary
                     prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-6
-                    prose-p:leading-8 prose-p:text-text-secondary
+                    prose-h3:text-xl prose-h3:mt-10 prose-h3:mb-4
+                    prose-p:leading-8 prose-p:text-text-secondary prose-p:text-base
+                    prose-li:text-text-secondary
+                    prose-strong:text-text-primary prose-strong:font-semibold
                     prose-a:text-accent prose-a:no-underline prose-a:font-medium hover:prose-a:underline
                     prose-img:rounded-2xl
-                    prose-code:text-accent prose-code:bg-accent-dim prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-                    prose-pre:bg-void-elevated prose-pre:text-text-primary prose-pre:rounded-2xl prose-pre:border prose-pre:border-border-subtle">
+                    prose-code:text-accent prose-code:bg-accent-dim prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
+                    prose-pre:bg-void-elevated prose-pre:text-text-primary prose-pre:rounded-2xl prose-pre:border prose-pre:border-border-subtle
+                    prose-blockquote:border-accent/30 prose-blockquote:bg-void-subtle prose-blockquote:rounded-r-xl prose-blockquote:py-1 prose-blockquote:px-6
+                    prose-hr:border-border-subtle">
                     <slot />
                 </div>
 
                 <div class="mt-20 pt-10 border-t border-border-subtle">
-                     <a href="/blog" class="link-hover inline-flex items-center gap-2 text-sm font-mono text-accent transition-colors">
+                     <a href="/blog" class="link-hover inline-flex items-center gap-2 text-sm font-mono text-accent transition-colors" data-magnetic>
                         <Icon name="lucide:arrow-left" class="w-4 h-4" />
                         Back to Blog
                      </a>
@@ -93,3 +116,67 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
 
     <Footer />
 </Layout>
+
+<script>
+  // Reading progress bar
+  function initReadingProgress() {
+    const bar = document.getElementById('reading-progress-bar');
+    if (!bar) return;
+
+    const article = document.querySelector('article');
+    if (!article) return;
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = article!.scrollHeight - window.innerHeight;
+      const progress = Math.min(Math.max(scrollTop / docHeight, 0), 1);
+      bar!.style.transform = `scaleX(${progress})`;
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  // TOC active state tracking
+  function initTocTracking() {
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>('[data-toc-slug]');
+    if (!tocLinks.length) return;
+
+    const headingElements: { el: Element; slug: string }[] = [];
+    tocLinks.forEach(link => {
+      const slug = link.dataset.tocSlug;
+      if (slug) {
+        const heading = document.getElementById(slug);
+        if (heading) headingElements.push({ el: heading, slug });
+      }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const slug = entry.target.id;
+          tocLinks.forEach(link => {
+            if (link.dataset.tocSlug === slug) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, {
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0,
+    });
+
+    headingElements.forEach(({ el }) => observer.observe(el));
+  }
+
+  function initPostLayout() {
+    initReadingProgress();
+    initTocTracking();
+  }
+
+  document.addEventListener('DOMContentLoaded', initPostLayout);
+  document.addEventListener('astro:after-swap', initPostLayout);
+</script>

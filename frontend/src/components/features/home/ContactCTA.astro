@@ -8,7 +8,13 @@ const socialLinks = [
 ];
 ---
 
-<section class="relative z-10 min-h-svh flex flex-col items-center justify-center px-6">
+<section class="relative z-10 min-h-svh flex flex-col items-center justify-center px-6 overflow-hidden">
+
+  <!-- Animated background gradient for CTA section -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="cta-gradient"></div>
+    <div class="cta-pulse"></div>
+  </div>
 
   <!-- Top line -->
   <div class="absolute top-0 left-6 right-6">
@@ -27,15 +33,16 @@ const socialLinks = [
     <!-- Main CTA Text -->
     <div class="reveal-item reveal-delay-1 mb-16">
       <h2 class="text-display text-[clamp(3.5rem,12vw,10rem)] leading-[0.85] tracking-[-0.04em]">
-        <span class="block font-extralight text-text-secondary">Let's</span>
-        <span class="block font-extrabold text-text-primary">Talk.</span>
+        <span class="block font-extralight text-text-secondary cta-float" style="animation: cta-float 6s ease-in-out infinite;">Let's</span>
+        <span class="block font-extrabold text-text-primary cta-float" style="animation: cta-float 6s ease-in-out infinite; animation-delay: -3s;">Talk.</span>
       </h2>
     </div>
 
     <!-- Email — prominent -->
     <div class="reveal-item reveal-delay-2 mb-16">
       <a href="mailto:gaedev22@gmail.com"
-         class="link-hover font-mono text-base md:text-xl text-accent tracking-wide">
+         class="link-hover font-mono text-base md:text-xl text-accent tracking-wide"
+         data-scramble data-cursor-text="Copy">
         gaedev22@gmail.com
       </a>
     </div>
@@ -59,3 +66,62 @@ const socialLinks = [
 
   </div>
 </section>
+
+<style>
+  /* CTA section animated background */
+  .cta-gradient {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(200, 255, 0, 0.04) 0%,
+      transparent 50%
+    );
+    animation: cta-gradient-drift 15s ease-in-out infinite;
+  }
+
+  .cta-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(300px, 50vw, 800px);
+    height: clamp(300px, 50vw, 800px);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(200, 255, 0, 0.03) 0%,
+      transparent 70%
+    );
+    animation: cta-pulse-anim 8s ease-in-out infinite;
+  }
+
+  @keyframes cta-gradient-drift {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(10%, -5%) scale(1.1); }
+    66% { transform: translate(-5%, 8%) scale(0.95); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @keyframes cta-pulse-anim {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+  }
+
+  @keyframes cta-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-gradient,
+    .cta-pulse {
+      animation: none !important;
+    }
+    .cta-float {
+      animation: none !important;
+    }
+  }
+</style>

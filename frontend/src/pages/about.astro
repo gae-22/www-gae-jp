@@ -27,13 +27,18 @@ const skillCategories = [
   <main class="min-h-screen pt-32 pb-20 px-4 sm:px-6 relative overflow-hidden">
       <div class="max-w-5xl mx-auto space-y-16 relative z-10">
 
+          {/* Floating accent dots */}
+          <div class="floating-dot" style="top: 8%; right: 12%; animation-delay: 0s; animation-duration: 14s;"></div>
+          <div class="floating-dot" style="top: 35%; left: 5%; animation-delay: -4s; animation-duration: 18s; opacity: 0.2;"></div>
+          <div class="floating-dot" style="top: 65%; right: 8%; animation-delay: -8s; animation-duration: 16s; opacity: 0.15;"></div>
+
           <!-- Page Header -->
-          <header class="reveal-item">
-            <div class="flex items-center gap-6 mb-6">
-              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">About</span>
-              <div class="flex-1 h-px bg-border-subtle"></div>
+          <header class="reveal-item" data-scroll-skew>
+            <div class="page-section-label reveal-item">
+              <span>About</span>
+              <div class="section-line-animated"></div>
             </div>
-            <h1 class="font-display font-extrabold text-6xl sm:text-8xl md:text-9xl tracking-tighter leading-[0.85] text-text-primary mb-4">
+            <h1 class="page-title text-6xl sm:text-8xl md:text-9xl mb-4" data-scramble>
               HELLO<span class="text-text-tertiary">.</span>
             </h1>
             <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary flex items-center gap-3 mt-6">
@@ -45,35 +50,35 @@ const skillCategories = [
             </p>
           </header>
 
-          <!-- Stats Row -->
+          <!-- Stats Row with count-up -->
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4 reveal-item">
-            <div class="p-6 rounded-2xl border border-border-subtle bg-void-subtle text-center hover:border-accent/20 transition-all duration-500">
-              <span class="text-4xl font-display font-bold text-text-primary block mb-2">{profile.stats.experience}</span>
+            <div class="stat-card" data-cursor-text="EXP">
+              <span class="text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.experience)} data-count-suffix="+">0</span>
               <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Years Exp</span>
             </div>
-            <div class="p-6 rounded-2xl border border-border-subtle bg-void-subtle text-center hover:border-accent/20 transition-all duration-500">
-              <span class="text-4xl font-display font-bold text-text-primary block mb-2">{profile.stats.projects}</span>
+            <div class="stat-card" data-cursor-text="PRJ">
+              <span class="text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.projects)} data-count-suffix="+">0</span>
               <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Projects</span>
             </div>
-            <div class="p-6 rounded-2xl border border-border-subtle bg-void-subtle text-center hover:border-accent/20 transition-all duration-500 col-span-2 md:col-span-1">
+            <div class="stat-card col-span-2 md:col-span-1" data-cursor-text="∞">
               <span class="text-4xl font-display font-bold text-text-primary block mb-2">&infin;</span>
               <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Curiosity</span>
             </div>
           </div>
 
           <!-- Skills Section -->
-          <section class="reveal-item">
-            <div class="flex items-center gap-6 mb-10">
-              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Skills</span>
-              <div class="flex-1 h-px bg-border-subtle"></div>
+          <section class="reveal-item" data-scroll-skew>
+            <div class="page-section-label reveal-item reveal-delay-1">
+              <span>Skills</span>
+              <div class="section-line-animated"></div>
             </div>
             <div class="space-y-8">
-              {skillCategories.map(({ label, items }) => (
-                <div>
+              {skillCategories.map(({ label, items }, catIdx) => (
+                <div class="reveal-item" style={`transition-delay: ${catIdx * 0.15}s`}>
                   <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mb-4">{label}</h4>
                   <div class="flex flex-wrap gap-2">
-                    {items.map((item) => (
-                      <div class="px-4 py-2 rounded-full border border-border-subtle bg-void-subtle flex items-center gap-2.5 hover:border-accent/20 hover:bg-void-elevated transition-all duration-300 group cursor-default">
+                    {items.map((item, i) => (
+                      <div class="skill-pill reveal-scale" style={`transition-delay: ${catIdx * 0.15 + i * 0.05}s`} data-magnetic>
                         <Icon name={item.icon} class="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors duration-300" />
                         <span class="font-mono text-xs text-text-secondary group-hover:text-text-primary transition-colors duration-300">{item.name}</span>
                       </div>
@@ -85,14 +90,14 @@ const skillCategories = [
           </section>
 
           <!-- Gear Section -->
-          <section class="reveal-item">
-            <div class="flex items-center gap-6 mb-10">
-              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Gear</span>
-              <div class="flex-1 h-px bg-border-subtle"></div>
+          <section class="reveal-item" data-scroll-skew>
+            <div class="page-section-label reveal-item">
+              <span>Gear</span>
+              <div class="section-line-animated"></div>
             </div>
             <div class="flex flex-wrap gap-2">
-              {profile.gear.map((item) => (
-                <div class="px-4 py-2 rounded-full border border-border-subtle bg-void-subtle flex items-center gap-2.5 hover:border-accent/20 transition-all duration-300 group cursor-default">
+              {profile.gear.map((item, i) => (
+                <div class="skill-pill reveal-scale" style={`transition-delay: ${i * 0.06}s`} data-magnetic>
                   <Icon name={item.icon} class="w-3.5 h-3.5 text-text-tertiary group-hover:text-text-secondary transition-colors duration-300" />
                   <span class="font-mono text-xs text-text-secondary group-hover:text-text-primary transition-colors duration-300">{item.name}</span>
                 </div>
@@ -102,17 +107,17 @@ const skillCategories = [
 
           <!-- Timeline Section -->
           <section class="reveal-item">
-            <div class="flex items-center gap-6 mb-10">
-              <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Journey</span>
-              <div class="flex-1 h-px bg-border-subtle"></div>
+            <div class="page-section-label reveal-item">
+              <span>Journey</span>
+              <div class="section-line-animated"></div>
             </div>
-            <div class="p-8 md:p-12 rounded-2xl border border-border-subtle bg-void-subtle">
+            <div class="p-8 md:p-12 rounded-2xl border border-border-subtle bg-void-subtle animated-border">
               <Timeline events={profile.timeline} />
             </div>
           </section>
 
           <!-- Philosophy -->
-          <section class="reveal-item py-20">
+          <section class="reveal-item py-20" data-scroll-skew>
             <div class="max-w-3xl">
               <h3 class="flex items-center gap-3 mb-10">
                 <span class="w-8 h-px bg-accent"></span>
@@ -121,7 +126,7 @@ const skillCategories = [
               <p class="text-3xl sm:text-4xl md:text-5xl leading-[1.1] text-text-primary font-display font-bold tracking-tight mb-6">
                 技術は課題解決の手段。
               </p>
-              <div class="h-px w-full bg-border-subtle my-8"></div>
+              <div class="h-px w-full bg-border-subtle my-8 section-line revealed" style="animation: line-expand 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;"></div>
               <div class="text-lg text-text-secondary leading-relaxed space-y-2">
                 <p>常にユーザーの視点に立ち、シンプルかつ堅牢な実装で、</p>
                 <p class="text-text-primary font-bold">"長く愛されるシステムを作ります。"</p>
@@ -134,3 +139,59 @@ const skillCategories = [
 
   <Footer />
 </Layout>
+
+<script>
+  // Count-up animation for about page stats
+  function initAboutCountUp() {
+    const counters = document.querySelectorAll<HTMLElement>('.count-up');
+    if (!counters.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.dataset.countTarget || '0');
+          const suffix = el.dataset.countSuffix || '';
+          let current = 0;
+          const duration = 2000;
+          const start = performance.now();
+
+          function update(now: number) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out expo
+            const eased = 1 - Math.pow(2, -10 * progress);
+            current = Math.round(target * eased);
+            el.textContent = current + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => observer.observe(c));
+  }
+
+  // Mouse-follow glow on stat cards
+  function initStatCardGlow() {
+    document.querySelectorAll<HTMLElement>('.stat-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--glow-x', `${x}%`);
+        card.style.setProperty('--glow-y', `${y}%`);
+      });
+    });
+  }
+
+  function initAboutPage() {
+    initAboutCountUp();
+    initStatCardGlow();
+  }
+
+  document.addEventListener('DOMContentLoaded', initAboutPage);
+  document.addEventListener('astro:after-swap', initAboutPage);
+</script>

@@ -2,13 +2,24 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="relative z-10 border-t border-border-subtle">
+<footer class="relative z-10 border-t border-border-subtle overflow-hidden">
+  <!-- Animated gradient line at the top -->
+  <div class="absolute top-0 left-0 right-0 h-px overflow-hidden" aria-hidden="true">
+    <div class="footer-gradient-line"></div>
+  </div>
+
   <div class="max-w-7xl mx-auto px-6 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
 
     <!-- Left -->
     <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-tertiary">
       &copy; {year} gae
     </p>
+
+    <!-- Center - animated dot -->
+    <div class="hidden sm:flex items-center gap-3" aria-hidden="true">
+      <div class="w-1.5 h-1.5 rounded-full bg-accent" style="animation: pulse-accent 3s ease-in-out infinite;"></div>
+      <span class="font-mono text-[8px] uppercase tracking-[0.3em] text-text-tertiary">Live</span>
+    </div>
 
     <!-- Right -->
     <p class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-tertiary">
@@ -17,3 +28,35 @@ const year = new Date().getFullYear();
 
   </div>
 </footer>
+
+<style>
+  .footer-gradient-line {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-border-subtle) 20%,
+      rgba(200, 255, 0, 0.3) 50%,
+      var(--color-border-subtle) 80%,
+      transparent 100%
+    );
+    animation: footer-line-sweep 6s linear infinite;
+  }
+
+  @keyframes footer-line-sweep {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(33.33%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-gradient-line {
+      animation: none !important;
+      left: 0;
+      width: 100%;
+    }
+  }
+</style>

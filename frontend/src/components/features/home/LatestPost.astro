@@ -31,11 +31,11 @@ function formatDate(date: Date): string {
     </div>
 
     {latestPost ? (
-      <a href={`/blog/${latestPost.slug}`} class="reveal-item block group">
+      <a href={`/blog/${latestPost.slug}`} class="reveal-item block group" data-cursor-text="Read">
 
         {/* Cover Image with parallax wrapper */}
         {latestPost.data.cover && (
-          <div class="relative overflow-hidden rounded-2xl mb-10 parallax-container">
+          <div class="relative overflow-hidden rounded-2xl mb-10 parallax-container latest-post-image-wrap">
             <Image
               src={latestPost.data.cover}
               alt={latestPost.data.coverAlt || ''}
@@ -43,6 +43,10 @@ function formatDate(date: Date): string {
             />
             {/* Overlay gradient */}
             <div class="absolute inset-0 bg-linear-to-t from-void/60 via-transparent to-transparent pointer-events-none"></div>
+            {/* Shimmer line on hover */}
+            <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              <div class="image-shimmer"></div>
+            </div>
           </div>
         )}
 
@@ -130,3 +134,35 @@ function formatDate(date: Date): string {
   document.addEventListener('DOMContentLoaded', initParallax);
   document.addEventListener('astro:after-swap', initParallax);
 </script>
+
+<style>
+  /* Shimmer line that sweeps across the image on hover */
+  .image-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(200, 255, 0, 0.06) 40%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(200, 255, 0, 0.06) 60%,
+      transparent 100%
+    );
+    animation: image-shimmer-sweep 2s ease-in-out infinite;
+  }
+
+  @keyframes image-shimmer-sweep {
+    0% { left: -60%; }
+    100% { left: 120%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .image-shimmer {
+      animation: none !important;
+      display: none;
+    }
+  }
+</style>

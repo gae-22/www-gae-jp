@@ -1,0 +1,77 @@
+---
+/**
+ * TextScramble — Global text scramble effect for hover interactions.
+ * Adds a glitch/decode effect to elements with [data-scramble].
+ * Characters cycle through random chars before revealing the original text.
+ */
+---
+
+<script>
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,./<>?~`';
+
+  class TextScrambler {
+    el: HTMLElement;
+    original: string;
+    isAnimating: boolean;
+    frameId: number | null;
+
+    constructor(el: HTMLElement) {
+      this.el = el;
+      this.original = el.textContent || '';
+      this.isAnimating = false;
+      this.frameId = null;
+    }
+
+    scramble() {
+      if (this.isAnimating) return;
+      this.isAnimating = true;
+      const length = this.original.length;
+      let iteration = 0;
+      const maxIterations = length * 2;
+
+      const animate = () => {
+        let result = '';
+        for (let i = 0; i < length; i++) {
+          if (this.original[i] === ' ') {
+            result += ' ';
+            continue;
+          }
+          if (i < iteration / 2) {
+            result += this.original[i];
+          } else {
+            result += CHARS[Math.floor(Math.random() * CHARS.length)];
+          }
+        }
+        this.el.textContent = result;
+        iteration++;
+
+        if (iteration < maxIterations) {
+          this.frameId = requestAnimationFrame(animate);
+        } else {
+          this.el.textContent = this.original;
+          this.isAnimating = false;
+        }
+      };
+
+      animate();
+    }
+
+    reset() {
+      if (this.frameId) cancelAnimationFrame(this.frameId);
+      this.el.textContent = this.original;
+      this.isAnimating = false;
+    }
+  }
+
+  function initTextScramble() {
+    const elements = document.querySelectorAll<HTMLElement>('[data-scramble]');
+    elements.forEach(el => {
+      const scrambler = new TextScrambler(el);
+      el.addEventListener('mouseenter', () => scrambler.scramble());
+      el.addEventListener('mouseleave', () => scrambler.reset());
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initTextScramble);
+  document.addEventListener('astro:after-swap', initTextScramble);
+</script>

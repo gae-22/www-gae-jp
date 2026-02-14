@@ -32,8 +32,10 @@ const currentPath = Astro.url.pathname;
           <li>
             <a
               href={item.href}
+              data-scramble
+              data-magnetic
               class:list={[
-                "font-mono text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 relative",
+                "font-mono text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 relative inline-block",
                 isActive
                   ? "text-accent"
                   : "text-text-secondary hover:text-text-primary"

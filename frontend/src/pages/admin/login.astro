@@ -5,7 +5,7 @@ import Layout from '~/layouts/Layout.astro';
 const errorMessage = Astro.url.searchParams.get('error');
 ---
 
-<Layout title="Admin Login | gae">
+<Layout title="Admin Login | gae" disableEffects={true}>
   <main class="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-slate-100">
     <div class="w-full max-w-md p-8">
       <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">

@@ -7,12 +7,19 @@ const lines = [
 ];
 ---
 
-<section class="relative z-10 py-40 md:py-56 px-6">
-  <div class="max-w-3xl mx-auto">
+<section class="relative z-10 py-40 md:py-56 px-6 overflow-hidden">
+  <!-- Floating accent dots — always moving -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="about-float-dot about-float-dot-1"></div>
+    <div class="about-float-dot about-float-dot-2"></div>
+    <div class="about-float-dot about-float-dot-3"></div>
+  </div>
+
+  <div class="max-w-3xl mx-auto relative">
 
     <!-- Label with line -->
     <div class="flex items-center gap-6 mb-16 reveal-item">
-      <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
+      <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent" style="animation: float-subtle 5s ease-in-out infinite;">
         About
       </span>
       <div class="flex-1 h-px bg-border-subtle"></div>
@@ -35,19 +42,64 @@ const lines = [
 
     <!-- Bottom stat pills -->
     <div class="mt-20 flex flex-wrap gap-4 reveal-item reveal-delay-2">
-      <div class="px-5 py-2.5 rounded-full border border-border-subtle">
+      <div class="px-5 py-2.5 rounded-full border border-border-subtle animated-border hover:border-accent/20 transition-colors duration-500">
         <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">4+ years experience</span>
       </div>
-      <div class="px-5 py-2.5 rounded-full border border-border-subtle">
+      <div class="px-5 py-2.5 rounded-full border border-border-subtle animated-border hover:border-accent/20 transition-colors duration-500">
         <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">30+ projects</span>
       </div>
-      <div class="px-5 py-2.5 rounded-full border border-border-subtle">
+      <div class="px-5 py-2.5 rounded-full border border-border-subtle animated-border hover:border-accent/20 transition-colors duration-500">
         <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">Full-Stack</span>
       </div>
     </div>
 
   </div>
 </section>
+
+<style>
+  /* Floating accent dots in About section */
+  .about-float-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.1;
+  }
+  .about-float-dot-1 {
+    width: 6px;
+    height: 6px;
+    top: 20%;
+    right: 15%;
+    animation: about-dot-float 12s ease-in-out infinite;
+  }
+  .about-float-dot-2 {
+    width: 4px;
+    height: 4px;
+    top: 60%;
+    left: 8%;
+    animation: about-dot-float 15s ease-in-out infinite reverse;
+  }
+  .about-float-dot-3 {
+    width: 3px;
+    height: 3px;
+    bottom: 25%;
+    right: 25%;
+    animation: about-dot-float 18s ease-in-out infinite;
+    animation-delay: -5s;
+  }
+
+  @keyframes about-dot-float {
+    0%, 100% { transform: translate(0, 0); opacity: 0.1; }
+    25% { transform: translate(20px, -15px); opacity: 0.2; }
+    50% { transform: translate(-10px, 10px); opacity: 0.08; }
+    75% { transform: translate(15px, 20px); opacity: 0.15; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-float-dot {
+      animation: none !important;
+    }
+  }
+</style>
 
 <script>
   function initWordReveal() {

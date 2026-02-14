@@ -1,20 +1,30 @@
 ---
 /**
- * AmbientBackground — Continuously moving ambient gradient orbs.
- * Creates subtle, slow-moving color blobs that drift across the viewport
- * giving the page a "living, breathing" feeling even when idle.
+ * AmbientBackground — 2026 Cutting-Edge Mesh Gradient + Floating Particles.
  *
- * Always visible behind content. Pure CSS — no JS required.
+ * 1. Continuously morphing mesh gradient with 5 control points
+ * 2. Interactive particles that drift and respond to scroll
+ * 3. Radial aurora sweep that rotates slowly
+ *
+ * Always visible behind content. CSS + minimal JS for interactivity.
  */
 ---
 
 <div class="ambient-bg" aria-hidden="true">
-  <!-- Primary accent orb — slow diagonal drift -->
+  <!-- Mesh gradient layer — constantly morphing -->
+  <div class="mesh-gradient"></div>
+
+  <!-- Aurora sweep — rotating conic gradient -->
+  <div class="aurora-sweep"></div>
+
+  <!-- Orb blobs (enhanced) -->
   <div class="ambient-orb ambient-orb-1"></div>
-  <!-- Secondary orb — opposite drift, dimmer -->
   <div class="ambient-orb ambient-orb-2"></div>
-  <!-- Tertiary orb — vertical slow pulse -->
   <div class="ambient-orb ambient-orb-3"></div>
+  <div class="ambient-orb ambient-orb-4"></div>
+
+  <!-- Particle canvas -->
+  <canvas id="particle-canvas" class="particle-canvas"></canvas>
 </div>
 
 <style>
@@ -26,100 +36,242 @@
     overflow: hidden;
   }
 
+  /* ── Mesh Gradient — 4-point morphing gradient ── */
+  .mesh-gradient {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(200, 255, 0, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(120, 200, 255, 0.025) 0%, transparent 50%),
+      radial-gradient(ellipse at 40% 80%, rgba(200, 255, 0, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
+    animation: mesh-morph 30s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* ── Aurora Sweep — slow rotating conic ── */
+  .aurora-sweep {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(200, 255, 0, 0.015) 60deg,
+      transparent 120deg,
+      rgba(120, 200, 255, 0.01) 200deg,
+      transparent 260deg,
+      rgba(200, 255, 0, 0.01) 320deg,
+      transparent 360deg
+    );
+    animation: aurora-rotate 40s linear infinite;
+    will-change: transform;
+  }
+
+  /* ── Orbs — enhanced with more variety ── */
   .ambient-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(100px);
     will-change: transform, opacity;
+    mix-blend-mode: screen;
   }
 
-  /* ── Orb 1: Acid lime accent, large, slow diagonal drift ── */
   .ambient-orb-1 {
-    width: clamp(300px, 40vw, 600px);
-    height: clamp(300px, 40vw, 600px);
-    background: radial-gradient(circle, rgba(200, 255, 0, 0.06) 0%, transparent 70%);
-    top: -10%;
-    left: -10%;
-    animation: orb-drift-1 25s ease-in-out infinite alternate;
+    width: clamp(300px, 45vw, 700px);
+    height: clamp(300px, 45vw, 700px);
+    background: radial-gradient(circle, rgba(200, 255, 0, 0.07) 0%, transparent 70%);
+    top: -15%;
+    left: -15%;
+    animation: orb-drift-1 28s ease-in-out infinite alternate;
   }
 
-  /* ── Orb 2: Cool white/blue tint, medium, reverse drift ── */
   .ambient-orb-2 {
-    width: clamp(250px, 35vw, 500px);
-    height: clamp(250px, 35vw, 500px);
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-    bottom: -10%;
-    right: -10%;
-    animation: orb-drift-2 30s ease-in-out infinite alternate;
+    width: clamp(250px, 38vw, 550px);
+    height: clamp(250px, 38vw, 550px);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, transparent 70%);
+    bottom: -15%;
+    right: -15%;
+    animation: orb-drift-2 33s ease-in-out infinite alternate;
   }
 
-  /* ── Orb 3: Subtle accent, small, vertical breathe ── */
   .ambient-orb-3 {
-    width: clamp(200px, 25vw, 400px);
-    height: clamp(200px, 25vw, 400px);
-    background: radial-gradient(circle, rgba(200, 255, 0, 0.035) 0%, transparent 70%);
-    top: 50%;
+    width: clamp(200px, 28vw, 450px);
+    height: clamp(200px, 28vw, 450px);
+    background: radial-gradient(circle, rgba(200, 255, 0, 0.04) 0%, transparent 70%);
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: orb-breathe 20s ease-in-out infinite;
+    animation: orb-breathe 22s ease-in-out infinite;
+  }
+
+  .ambient-orb-4 {
+    width: clamp(180px, 22vw, 350px);
+    height: clamp(180px, 22vw, 350px);
+    background: radial-gradient(circle, rgba(100, 180, 255, 0.03) 0%, transparent 70%);
+    top: 15%;
+    right: 10%;
+    animation: orb-drift-3 35s ease-in-out infinite alternate;
+  }
+
+  .particle-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
   /* ── Keyframes ── */
+  @keyframes mesh-morph {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25% { transform: translate(5%, -3%) rotate(3deg) scale(1.02); }
+    50% { transform: translate(-3%, 5%) rotate(-2deg) scale(0.98); }
+    75% { transform: translate(2%, 2%) rotate(4deg) scale(1.03); }
+    100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  }
+
+  @keyframes aurora-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
   @keyframes orb-drift-1 {
-    0% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.6;
-    }
-    25% {
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(30vw, 40vh) scale(1.15);
-      opacity: 0.5;
-    }
-    75% {
-      opacity: 0.9;
-    }
-    100% {
-      transform: translate(15vw, 80vh) scale(0.9);
-      opacity: 0.6;
-    }
+    0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    20% { opacity: 0.85; }
+    50% { transform: translate(35vw, 45vh) scale(1.2); opacity: 0.5; }
+    80% { opacity: 0.9; }
+    100% { transform: translate(15vw, 85vh) scale(0.85); opacity: 0.6; }
   }
 
   @keyframes orb-drift-2 {
-    0% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.5;
-    }
-    33% {
-      transform: translate(-25vw, -30vh) scale(1.1);
-      opacity: 0.7;
-    }
-    66% {
-      transform: translate(-40vw, -10vh) scale(0.95);
-      opacity: 0.4;
-    }
-    100% {
-      transform: translate(-15vw, -50vh) scale(1.05);
-      opacity: 0.6;
-    }
+    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    33% { transform: translate(-30vw, -35vh) scale(1.15); opacity: 0.7; }
+    66% { transform: translate(-45vw, -10vh) scale(0.9); opacity: 0.4; }
+    100% { transform: translate(-18vw, -55vh) scale(1.08); opacity: 0.6; }
+  }
+
+  @keyframes orb-drift-3 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+    30% { transform: translate(-20vw, 25vh) scale(1.1); opacity: 0.6; }
+    60% { transform: translate(10vw, 50vh) scale(0.95); opacity: 0.5; }
+    100% { transform: translate(-5vw, 10vh) scale(1.05); opacity: 0.4; }
   }
 
   @keyframes orb-breathe {
-    0%, 100% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0.4;
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(1.3);
-      opacity: 0.7;
-    }
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+    50% { transform: translate(-50%, -50%) scale(1.35); opacity: 0.7; }
   }
 
-  /* ── Reduced motion ── */
   @media (prefers-reduced-motion: reduce) {
-    .ambient-orb {
+    .ambient-orb,
+    .mesh-gradient,
+    .aurora-sweep {
       animation: none !important;
+    }
+    .particle-canvas {
+      display: none;
     }
   }
 </style>
+
+<script>
+  function initParticles() {
+    const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animId: number;
+    let particles: Array<{
+      x: number; y: number;
+      vx: number; vy: number;
+      size: number; opacity: number;
+      pulse: number; pulseSpeed: number;
+    }> = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticles() {
+      const count = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 25000), 60);
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 1.5 + 0.5,
+          opacity: Math.random() * 0.3 + 0.1,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: Math.random() * 0.02 + 0.005,
+        });
+      }
+    }
+
+    function draw() {
+      ctx!.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.pulse += p.pulseSpeed;
+
+        // Wrap around screen
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        const currentOpacity = p.opacity * (0.5 + 0.5 * Math.sin(p.pulse));
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(200, 255, 0, ${currentOpacity})`;
+        ctx!.fill();
+      });
+
+      // Draw connections between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx!.beginPath();
+            ctx!.moveTo(particles[i].x, particles[i].y);
+            ctx!.lineTo(particles[j].x, particles[j].y);
+            ctx!.strokeStyle = `rgba(200, 255, 0, ${0.03 * (1 - dist / 120)})`;
+            ctx!.lineWidth = 0.5;
+            ctx!.stroke();
+          }
+        }
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    resize();
+    createParticles();
+    draw();
+
+    window.addEventListener('resize', () => {
+      resize();
+      createParticles();
+    });
+
+    // Cleanup on page nav
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(animId);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initParticles);
+  document.addEventListener('astro:after-swap', initParticles);
+</script>

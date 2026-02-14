@@ -1,0 +1,166 @@
+---
+/**
+ * CustomCursor — 2026 Magnetic cursor with blend mode.
+ * Desktop-only. Follows mouse with elastic easing.
+ * Scales up on hover over interactive elements.
+ * Magnetic attraction to buttons/links.
+ */
+---
+
+<!-- Cursor label + magnetic effect (no visible dot/ring) -->
+<div id="cursor" class="custom-cursor" aria-hidden="true">
+  <div id="cursor-text" class="cursor-label"></div>
+</div>
+
+<style>
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9997;
+    pointer-events: none;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .custom-cursor.cursor-text-visible .cursor-label {
+    opacity: 1;
+  }
+
+  /* Hidden on mobile/touch */
+  @media (hover: none), (pointer: coarse) {
+    .custom-cursor {
+      display: none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .custom-cursor {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initCustomCursor() {
+    const cursor = document.getElementById('cursor');
+    const label = document.getElementById('cursor-text');
+    if (!cursor || !label) return;
+
+    // Don't init on touch devices
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    let mouseX = 0, mouseY = 0;
+    let labelX = 0, labelY = 0;
+    let visible = false;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!visible) {
+        visible = true;
+        cursor.style.opacity = '1';
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      visible = false;
+      cursor.style.opacity = '0';
+    });
+
+    // Magnetic effect for interactive elements
+    const magneticElements = () => document.querySelectorAll<HTMLElement>(
+      'a, button, [data-magnetic], .bento-card, .project-card'
+    );
+
+    function applyMagnetic(el: HTMLElement, x: number, y: number) {
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const distX = x - centerX;
+      const distY = y - centerY;
+      const dist = Math.sqrt(distX * distX + distY * distY);
+      const maxDist = Math.max(rect.width, rect.height) * 0.7;
+
+      if (dist < maxDist) {
+        const strength = 0.3;
+        const pullX = distX * strength;
+        const pullY = distY * strength;
+        el.style.transform = `translate(${pullX}px, ${pullY}px)`;
+        el.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+        return true;
+      } else {
+        el.style.transform = '';
+        return false;
+      }
+    }
+
+    // Check hover states
+    function checkHover() {
+      const el = document.elementFromPoint(mouseX, mouseY) as HTMLElement | null;
+      if (!el) {
+        cursor.className = 'custom-cursor';
+        return;
+      }
+
+      const interactive = el.closest('a, button, [data-magnetic], .bento-card, .project-card');
+      const cursorLabel = el.closest('[data-cursor-text]') as HTMLElement;
+
+      if (cursorLabel) {
+        cursor.className = 'custom-cursor cursor-text-visible';
+        label.textContent = cursorLabel.dataset.cursorText || '';
+      } else if (interactive) {
+        cursor.className = 'custom-cursor cursor-hover';
+        // Apply magnetic
+        if (interactive instanceof HTMLElement) {
+          applyMagnetic(interactive, mouseX, mouseY);
+        }
+      } else {
+        cursor.className = 'custom-cursor';
+      }
+    }
+
+    // Reset magnetic on mouse leave from elements
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target as HTMLElement;
+      const prev = e.relatedTarget as HTMLElement | null;
+      if (prev) {
+        const prevInteractive = prev.closest('a, button, [data-magnetic], .bento-card, .project-card') as HTMLElement;
+        if (prevInteractive && prevInteractive !== target.closest('a, button, [data-magnetic], .bento-card, .project-card')) {
+          prevInteractive.style.transform = '';
+          prevInteractive.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        }
+      }
+    });
+
+    // Animation loop
+    function animate() {
+      labelX += (mouseX - labelX) * 0.1;
+      labelY += (mouseY - labelY) * 0.1;
+
+      label.style.left = `${labelX}px`;
+      label.style.top = `${labelY}px`;
+
+      checkHover();
+      requestAnimationFrame(animate);
+    }
+
+    cursor.style.opacity = '0';
+    animate();
+  }
+
+  document.addEventListener('DOMContentLoaded', initCustomCursor);
+  document.addEventListener('astro:after-swap', initCustomCursor);
+</script>

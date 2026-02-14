@@ -15,33 +15,42 @@ const posts = (await getCollection('blog', ({ data }) => {
 <Layout title="Blog | gae" description="Design, Development, and the Future of Web.">
   <Header />
 
-  <main class="min-h-screen pt-32 pb-32 px-6">
-    <div class="max-w-7xl mx-auto">
+  <main class="min-h-screen pt-32 pb-32 px-6 relative overflow-hidden">
+
+    {/* Floating accent dots */}
+    <div class="floating-dot" style="top: 10%; right: 8%; animation-delay: -3s; animation-duration: 15s;"></div>
+    <div class="floating-dot" style="top: 50%; left: 3%; animation-delay: -7s; animation-duration: 18s; opacity: 0.2;"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
 
       <!-- Page Header -->
-      <section class="mb-24 max-w-3xl">
-          <div class="flex items-center gap-6 mb-6">
-            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Journal</span>
-            <div class="flex-1 h-px bg-border-subtle"></div>
+      <section class="mb-24 max-w-3xl" data-scroll-skew>
+          <div class="page-section-label reveal-item">
+            <span>Journal</span>
+            <div class="section-line-animated"></div>
           </div>
-          <h1 class="font-display font-extrabold text-6xl md:text-8xl tracking-tighter text-text-primary mb-6">
+          <h1 class="page-title text-6xl md:text-8xl mb-6 reveal-item" data-scramble>
               Blog<span class="text-accent">.</span>
           </h1>
-          <p class="text-lg text-text-secondary leading-relaxed">
+          <p class="text-lg text-text-secondary leading-relaxed reveal-item reveal-delay-2">
             Technical deep dives, design thoughts, and updates on my engineering journey.
+          </p>
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mt-4 reveal-item reveal-delay-3">
+            {posts.length} {posts.length === 1 ? 'article' : 'articles'} published
           </p>
       </section>
 
       <!-- Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {posts.map((post, index) => (
-             <PostCard post={post} class="reveal-item" />
+             <PostCard post={post} class={`reveal-item`} style={`transition-delay: ${index * 0.1}s`} />
         ))}
       </div>
 
       {posts.length === 0 && (
-          <div class="text-center py-40 rounded-2xl border border-dashed border-border-subtle">
+          <div class="text-center py-40 rounded-2xl border border-dashed border-border-subtle reveal-item">
               <p class="font-display text-xl text-text-tertiary">No stories yet.</p>
+              <p class="font-mono text-xs text-text-tertiary mt-2 uppercase tracking-wider">Check back soon</p>
           </div>
       )}
     </div>

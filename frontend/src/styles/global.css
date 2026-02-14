@@ -25,13 +25,13 @@
     --color-void-elevated: #1a1a1a;
 
     /* Text */
-    --color-text-primary: #fafafa;
-    --color-text-secondary: #737373;
-    --color-text-tertiary: #404040;
+    --color-text-primary: #f0f0f0;
+    --color-text-secondary: #a0a0a0;
+    --color-text-tertiary: #6b6b6b;
 
     /* Border */
-    --color-border-subtle: rgba(255, 255, 255, 0.06);
-    --color-border-hover: rgba(255, 255, 255, 0.12);
+    --color-border-subtle: rgba(255, 255, 255, 0.1);
+    --color-border-hover: rgba(255, 255, 255, 0.18);
 
     /* Accent */
     --color-accent: #c8ff00;
@@ -48,24 +48,6 @@
     --ease-expo-in-out: cubic-bezier(0.87, 0, 0.13, 1);
 
     /* Keyframes */
-    @keyframes marquee {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(-50%);
-        }
-    }
-
-    @keyframes marquee-reverse {
-        0% {
-            transform: translateX(-50%);
-        }
-        100% {
-            transform: translateX(0);
-        }
-    }
-
     @keyframes hero-reveal {
         0% {
             clip-path: inset(100% 0 0 0);
@@ -353,15 +335,20 @@
         pointer-events: none;
         opacity: 0;
         transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        background: linear-gradient(
-            135deg,
-            rgba(200, 255, 0, 0.06) 0%,
-            transparent 50%,
-            rgba(200, 255, 0, 0.03) 100%
+        background: radial-gradient(
+            400px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+            rgba(200, 255, 0, 0.08) 0%,
+            transparent 50%
         );
     }
     .bento-card:hover .bento-card-glow {
         opacity: 1;
+    }
+
+    /* Card tilt on hover — 3D perspective */
+    .bento-card {
+        transform-style: preserve-3d;
+        perspective: 800px;
     }
 
     /* Page loader */
@@ -400,7 +387,7 @@
         font-size: 10px;
         text-transform: uppercase;
         letter-spacing: 0.25em;
-        color: var(--color-text-tertiary);
+        color: var(--color-text-secondary);
         margin-bottom: 16px;
     }
 
@@ -425,7 +412,7 @@
     /* Word reveal for About section */
     .word-reveal {
         display: inline;
-        color: var(--color-text-tertiary);
+        color: var(--color-text-secondary);
         transition: color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .word-reveal.word-active {
@@ -543,6 +530,339 @@ body::after {
     outline-offset: 4px;
 }
 
+/* ─── Continuous Ambient Animations (always moving) ─── */
+
+/* Pulsing accent dots — used across sections */
+@keyframes pulse-glow {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(200, 255, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 12px 4px rgba(200, 255, 0, 0.15);
+    }
+}
+
+/* Gradient border animation for special elements */
+@keyframes border-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animated-border {
+    position: relative;
+    border: none;
+}
+.animated-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        90deg,
+        var(--color-border-subtle),
+        rgba(200, 255, 0, 0.2),
+        var(--color-border-subtle),
+        rgba(200, 255, 0, 0.15),
+        var(--color-border-subtle)
+    );
+    background-size: 300% 300%;
+    animation: border-flow 8s ease infinite;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Floating text label animation */
+@keyframes float-subtle {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-3px) rotate(0.5deg);
+    }
+    75% {
+        transform: translateY(3px) rotate(-0.5deg);
+    }
+}
+
+/* Global interactive link glow on hover */
+a:not(.bento-card):not(.project-card):hover {
+    text-shadow: 0 0 20px rgba(200, 255, 0, 0.1);
+}
+
+/* ─── Page Header Shared Styles ─── */
+
+/* Animated section label with sliding line */
+.page-section-label {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.page-section-label span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--color-accent);
+    white-space: nowrap;
+}
+.page-section-label .section-line-animated {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-border-hover), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.page-section-label.revealed .section-line-animated {
+    transform: scaleX(1);
+}
+
+/* Page title — consistent across all pages */
+.page-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: var(--color-text-primary);
+}
+
+/* Floating accent dot — reusable */
+.floating-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    opacity: 0.3;
+    animation: float-subtle 12s ease-in-out infinite;
+}
+
+/* Stats card with count-up + glow */
+.stat-card {
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-void-subtle);
+    text-align: center;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        300px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+        rgba(200, 255, 0, 0.06) 0%,
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+.stat-card:hover {
+    border-color: rgba(200, 255, 0, 0.2);
+    transform: translateY(-4px);
+}
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+/* Skill / Tag Pill — consistent hover with glow */
+.skill-pill {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-void-subtle);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default;
+}
+.skill-pill:hover {
+    border-color: rgba(200, 255, 0, 0.2);
+    background: var(--color-void-elevated);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(200, 255, 0, 0.06);
+}
+
+/* Shimmer effect for images on hover */
+.shimmer-hover {
+    position: relative;
+    overflow: hidden;
+}
+.shimmer-hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.06) 45%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.06) 55%,
+        transparent 60%
+    );
+    transform: translateX(-100%);
+    transition: none;
+    pointer-events: none;
+}
+.shimmer-hover:hover::after {
+    animation: shimmer-sweep 1.5s ease forwards;
+}
+
+@keyframes shimmer-sweep {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Reading progress bar — for blog posts */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 100;
+    background: transparent;
+    pointer-events: none;
+}
+.reading-progress-bar {
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        var(--color-accent),
+        rgba(200, 255, 0, 0.6)
+    );
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.15s linear;
+}
+
+/* TOC active link */
+.toc-link {
+    display: block;
+    color: var(--color-text-secondary);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+.toc-link::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-accent);
+    transform: scaleY(0);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.toc-link.active {
+    color: var(--color-accent);
+}
+.toc-link.active::before {
+    transform: scaleY(1);
+}
+.toc-link:hover {
+    color: var(--color-accent);
+}
+
+/* Glitch text for 404 */
+@keyframes glitch-1 {
+    0%,
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+    }
+    20% {
+        clip-path: inset(20% 0 60% 0);
+        transform: translate(-4px, 2px);
+    }
+    40% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translate(4px, -2px);
+    }
+    60% {
+        clip-path: inset(40% 0 30% 0);
+        transform: translate(-2px, 4px);
+    }
+    80% {
+        clip-path: inset(80% 0 5% 0);
+        transform: translate(2px, -4px);
+    }
+}
+@keyframes glitch-2 {
+    0%,
+    100% {
+        clip-path: inset(0 0 0 0);
+        transform: translate(0);
+    }
+    20% {
+        clip-path: inset(50% 0 20% 0);
+        transform: translate(4px, -2px);
+    }
+    40% {
+        clip-path: inset(10% 0 70% 0);
+        transform: translate(-4px, 2px);
+    }
+    60% {
+        clip-path: inset(70% 0 10% 0);
+        transform: translate(2px, -4px);
+    }
+    80% {
+        clip-path: inset(5% 0 80% 0);
+        transform: translate(-2px, 4px);
+    }
+}
+
+.glitch-text {
+    position: relative;
+}
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+}
+.glitch-text:hover::before {
+    opacity: 0.8;
+    color: var(--color-accent);
+    animation: glitch-1 0.3s linear infinite;
+}
+.glitch-text:hover::after {
+    opacity: 0.8;
+    color: rgba(120, 200, 255, 0.8);
+    animation: glitch-2 0.3s linear infinite reverse;
+}
+
+/* ─── Focus styles ─── (end) */
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
     .hero-line,
@@ -566,9 +886,6 @@ body::after {
     }
     .section-line {
         transform: scaleX(1);
-    }
-    .marquee-track {
-        animation: none !important;
     }
     .page-loader {
         display: none;
