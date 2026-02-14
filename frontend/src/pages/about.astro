@@ -61,48 +61,24 @@ const skillCategories = [
               </div>
 
               <!-- Profile & Roles -->
-              <div class="md:col-span-4 flex flex-col gap-6">
+              <div class="md:col-span-4 h-full">
                   <!-- Photo / Avatar Card -->
-                  <div class="tilt-card flex-1 bg-white/80 backdrop-blur-md rounded-4xl p-8 flex flex-col justify-center items-center text-center relative overflow-hidden group border border-white/50 shadow-sm hover:shadow-xl transition-all duration-700 ease-out transform-gpu">
-                       <div class="absolute inset-0 bg-linear-to-b from-slate-50 to-white opacity-50"></div>
-                       <!-- Subtle aurora glow behind avatar -->
-                       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-indigo-100/50 rounded-full blur-3xl group-hover:bg-indigo-200/50 transition-colors duration-700"></div>
+                  <div class="h-full tilt-card bg-white/60 backdrop-blur-xl rounded-4xl p-8 relative overflow-hidden group border border-white/60 shadow-sm hover:shadow-xl transition-all duration-700 ease-out transform-gpu rotate-1 hover:rotate-0">
+                       <div class="absolute inset-0 bg-linear-to-b from-slate-50/50 to-white/50 opacity-50"></div>
 
-                       <div class="relative z-10">
-                           <div class="w-40 h-40 rounded-full p-1 bg-linear-to-b from-white to-white/0 mx-auto mb-6 backdrop-blur-sm shadow-lg group-hover:scale-105 transition-transform duration-500">
-                                <div class="w-full h-full rounded-full overflow-hidden bg-white relative">
-                                    <img src="/gae.svg" alt="gae" class="w-full h-full object-cover p-2 hover:opacity-90 transition-opacity" />
-                                </div>
-                           </div>
-                           <h2 class="text-3xl font-display font-bold text-zinc-900 mb-2 tracking-tight">{profile.name}</h2>
-                           <p class="text-zinc-500 text-sm font-medium tracking-wide flex items-center justify-center gap-2">
+                       <!-- Text Content (Top Left) -->
+                       <div class="relative z-20 flex flex-col items-start h-full justify-start">
+                           <h2 class="text-4xl font-display font-black text-zinc-900 mb-1 tracking-tighter">{profile.name}</h2>
+                           <p class="text-zinc-500 text-sm font-medium tracking-wide flex items-center gap-2">
                                 <Icon name="lucide:code-2" class="w-4 h-4 text-violet-500" />
                                 Fullstack Developer
                            </p>
                        </div>
-                  </div>
 
-                  <!-- Quick Roles (Infinite Marquee) -->
-                  <div class="bg-white/60 backdrop-blur-md rounded-4xl p-4 border border-white/50 relative overflow-hidden shadow-sm hover:shadow-lg transition-all duration-500 group">
-                      <div class="absolute inset-y-0 left-0 w-12 bg-linear-to-r from-white/60 to-transparent z-10 pointer-events-none"></div>
-                      <div class="absolute inset-y-0 right-0 w-12 bg-linear-to-l from-white/60 to-transparent z-10 pointer-events-none"></div>
-
-                      <div class="flex overflow-hidden w-full select-none gap-4 mask-image-linear-gradient">
-                          <div class="flex gap-4 animate-infinite-scroll min-w-full justify-around shrink-0 py-2">
-                             {[...profile.roles, ...profile.roles, ...profile.roles].map((role: string) => (
-                                 <span class="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-zinc-100 text-xs font-bold text-zinc-600 hover:text-violet-600 hover:border-violet-100 hover:shadow-sm transition-all cursor-default">
-                                   {role}
-                                 </span>
-                             ))}
-                          </div>
-                          <div class="flex gap-4 animate-infinite-scroll min-w-full justify-around shrink-0 py-2" aria-hidden="true">
-                             {[...profile.roles, ...profile.roles, ...profile.roles].map((role: string) => (
-                                 <span class="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-zinc-100 text-xs font-bold text-zinc-600 hover:text-violet-600 hover:border-violet-100 hover:shadow-sm transition-all cursor-default">
-                                   {role}
-                                 </span>
-                             ))}
-                          </div>
-                      </div>
+                       <!-- Large Image (Bottom Right, Overflowing) -->
+                       <div class="absolute -bottom-10 -right-10 w-80 h-80 sm:w-80 sm:h-80 z-10 transition-all duration-700 group-hover:scale-105 group-hover:-rotate-2 rotate-6 origin-bottom-right">
+                            <img src="/gae.svg" alt="gae" class="w-full h-full object-contain drop-shadow-2xl opacity-90 mask-image-b-r" />
+                       </div>
                   </div>
               </div>
           </div>
@@ -224,42 +200,37 @@ const skillCategories = [
           <div class="grid grid-cols-1 gap-6 reveal-item">
 
                 <!-- Philosophy (Refined Light Glass & Typography) -->
-               <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-10 border border-white/60 flex flex-col justify-between relative overflow-hidden group shadow-sm hover:shadow-xl transition-all duration-500 hover:bg-white/80 hover:rotate-0 rotate-1 transform-gpu">
-                   <div class="absolute inset-0 bg-linear-to-br from-violet-50/30 via-transparent to-blue-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+               <div class="bg-white/60 backdrop-blur-xl rounded-4xl p-10 md:p-12 border border-white/60 flex flex-col justify-between relative overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-700 hover:bg-white/80">
+                   <div class="absolute inset-0 bg-linear-to-br from-violet-50/20 via-transparent to-blue-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
-                   <div class="absolute right-0 bottom-0 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none transform group-hover:scale-105 origin-bottom-right">
-                       <Icon name="lucide:sparkles" class="w-80 h-80 -mr-20 -mb-20 text-indigo-900" />
+                   <div class="absolute -right-20 -bottom-20 w-96 h-96 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] transform group-hover:rotate-12 group-hover:scale-110 pointer-events-none origin-center">
+                       <Icon name="lucide:sparkles" class="w-full h-full text-indigo-900" />
                    </div>
 
                    <div class="relative z-10">
-                       <h3 class="text-[10px] font-bold text-zinc-400 mb-8 uppercase tracking-[0.2em] flex items-center gap-4">
-                            <span class="w-8 h-px bg-zinc-300"></span>
-                            Philosophy
+                       <h3 class="flex items-center gap-3 mb-8">
+                            <span class="w-8 h-px bg-zinc-300 group-hover:w-12 group-hover:bg-violet-300 transition-all duration-500"></span>
+                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] group-hover:text-violet-500 transition-colors duration-500">Philosophy</span>
                        </h3>
 
-                       <p class="text-2xl sm:text-3xl leading-[1.6] text-zinc-800 font-display font-medium">
-                           "技術は<br/>
-                           <span class="text-zinc-900 inline-block bg-white/50 px-3 py-0 rounded-lg border border-zinc-200/50 shadow-sm backdrop-blur-sm mx-1 my-1">課題解決</span>の手段。<br />
-                           <span class="text-base sm:text-lg text-zinc-500 font-normal mt-4 block leading-relaxed tracking-wide">
-                               常にユーザーの視点に立ち、<br/>
-                               シンプルかつ堅牢な実装で、
-                           </span>
-                           <span class="mt-4 block font-bold text-zinc-900 relative decoration-indigo-200/50 underline underline-offset-4 decoration-4 hover:decoration-indigo-300 transition-colors">
-                               長く愛される
-                           </span>
-                           <span class="text-base sm:text-lg text-zinc-500 font-normal">システムを作ります。"</span>
-                       </p>
+                       <div class="space-y-6">
+                           <p class="text-3xl sm:text-4xl md:text-5xl leading-[1.1] text-zinc-800 font-display font-black tracking-tight">
+                               技術は<br/>
+                               <span class="text-transparent bg-clip-text bg-linear-to-r from-zinc-900 to-zinc-600 inline-block decoration-indigo-200/50 underline underline-offset-8 decoration-4 group-hover:decoration-indigo-300 transition-all">課題解決</span>の手段。
+                           </p>
+
+                           <div class="w-full h-px bg-linear-to-r from-zinc-200/50 to-transparent my-6"></div>
+
+                           <div class="text-base sm:text-lg text-zinc-500 font-medium leading-relaxed tracking-wide space-y-1">
+                               <p>常にユーザーの視点に立ち、<br/>シンプルかつ堅牢な実装で、</p>
+                               <p class="text-zinc-800 font-bold group-hover:text-violet-700 transition-colors duration-500">"長く愛されるシステムを作ります。"</p>
+                           </div>
+                       </div>
                    </div>
 
-                   <div class="relative z-10 mt-8 flex justify-end">
-                        <Icon name="lucide:quote" class="w-8 h-8 text-zinc-200 rotate-180" />
-                   </div>
                </div>
-
           </div>
-
       </div>
-
   </main>
 
   <Footer />
