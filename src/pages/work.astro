@@ -34,7 +34,7 @@ const projects = projectsEntry?.data ?? [];
         </p>
       </header>
 
-      <section class="flex flex-col gap-4 sm:gap-6">
+      <section class="flex flex-col gap-4 sm:gap-5">
         {projects.map((project, index) => {
           const thumbSrc = (project.thumb as any)?.src ?? project.thumb;
           return (
@@ -44,17 +44,17 @@ const projects = projectsEntry?.data ?? [];
                data-cursor-text="View"
                data-magnetic>
 
-              <div class="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+              <div class="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-5 sm:gap-6">
 
                 {/* Left: Number + Info */}
                 <div class="flex-1">
-                  <div class="flex items-baseline gap-3 sm:gap-6 mb-4 sm:mb-6">
+                  <div class="flex items-baseline gap-3 sm:gap-5 mb-4 sm:mb-5">
                     <span class="project-number font-mono text-3xl sm:text-5xl md:text-6xl font-bold text-text-tertiary transition-colors duration-600">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <div class="hidden md:block flex-1 h-px bg-border-subtle group-hover:bg-border-hover transition-colors duration-500"></div>
                   </div>
-                  <h2 class="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-text-primary mb-2 sm:mb-3 group-hover:text-accent transition-colors duration-300" data-scramble>
+                  <h2 class="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-text-primary mb-2 sm:mb-2.5 group-hover:text-accent transition-colors duration-300 tracking-tight" data-scramble>
                     {project.title}
                   </h2>
                   <p class="font-body text-sm text-text-secondary max-w-md leading-relaxed">

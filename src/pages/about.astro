@@ -23,8 +23,8 @@ const skillCategories = [
 <Layout title="About | gae" description="About gae.">
   <Header />
 
-  <main class="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 relative overflow-hidden">
-      <div class="max-w-5xl mx-auto space-y-12 sm:space-y-16 relative z-10">
+  <main class="min-h-screen pt-24 sm:pt-32 pb-20 sm:pb-24 px-4 sm:px-6 relative overflow-hidden">
+      <div class="max-w-5xl mx-auto space-y-14 sm:space-y-20 relative z-10">
 
           {/* Floating accent dots */}
           <div class="floating-dot" style="top: 8%; right: 12%; animation-delay: 0s; animation-duration: 14s;"></div>
@@ -37,10 +37,10 @@ const skillCategories = [
               <span>About</span>
               <div class="section-line-animated"></div>
             </div>
-            <h1 class="page-title text-5xl sm:text-6xl md:text-9xl mb-4" data-scramble>
+            <h1 class="page-title text-5xl sm:text-6xl md:text-9xl mb-4 tracking-tighter" data-scramble>
               HELLO<span class="text-text-tertiary">.</span>
             </h1>
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary flex items-center gap-3 mt-6">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary flex items-center gap-3 mt-5">
               <span class="relative flex h-2 w-2">
                 <span class="absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" style="animation: pulse-accent 2s ease-in-out infinite;"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
@@ -50,17 +50,17 @@ const skillCategories = [
           </header>
 
           <!-- Stats Row with count-up -->
-          <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 reveal-item">
+          <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 reveal-item">
             <div class="stat-card" data-cursor-text="EXP">
-              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.experience)} data-count-suffix="+">0</span>
+              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2.5 count-up" data-count-target={String(profile.stats.experience)} data-count-suffix="+">0</span>
               <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Years Exp</span>
             </div>
             <div class="stat-card" data-cursor-text="PRJ">
-              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.projects)} data-count-suffix="+">0</span>
+              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2.5 count-up" data-count-target={String(profile.stats.projects)} data-count-suffix="+">0</span>
               <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Projects</span>
             </div>
             <div class="stat-card col-span-2 md:col-span-1" data-cursor-text="∞">
-              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2">&infin;</span>
+              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2.5">&infin;</span>
               <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Curiosity</span>
             </div>
           </div>
@@ -71,11 +71,11 @@ const skillCategories = [
               <span>Skills</span>
               <div class="section-line-animated"></div>
             </div>
-            <div class="space-y-8">
+            <div class="space-y-10">
               {skillCategories.map(({ label, items }, catIdx) => (
                 <div class="reveal-item" style={`transition-delay: ${catIdx * 0.15}s`}>
-                  <h4 class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mb-4">{label}</h4>
-                  <div class="flex flex-wrap gap-2">
+                  <h4 class="font-mono text-[10px] uppercase tracking-[0.25em] text-text-tertiary mb-4">{label}</h4>
+                  <div class="flex flex-wrap gap-2.5">
                     {items.map((item, i) => (
                       <div class="skill-pill reveal-scale" style={`transition-delay: ${catIdx * 0.15 + i * 0.05}s`} data-magnetic>
                         <Icon name={item.icon} class="w-4 h-4 text-text-secondary group-hover:text-accent transition-colors duration-300" />
@@ -94,7 +94,7 @@ const skillCategories = [
               <span>Gear</span>
               <div class="section-line-animated"></div>
             </div>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2.5">
               {profile.gear.map((item, i) => (
                 <div class="skill-pill reveal-scale" style={`transition-delay: ${i * 0.06}s`} data-magnetic>
                   <Icon name={item.icon} class="w-3.5 h-3.5 text-text-tertiary group-hover:text-text-secondary transition-colors duration-300" />
@@ -110,25 +110,25 @@ const skillCategories = [
               <span>Journey</span>
               <div class="section-line-animated"></div>
             </div>
-            <div class="p-6 sm:p-8 md:p-12 rounded-2xl border border-border-subtle bg-void-subtle animated-border">
+            <div class="p-6 sm:p-8 md:p-12 rounded-2xl border border-border-subtle bg-void-subtle/80 animated-border">
               <Timeline events={profile.timeline} />
             </div>
           </section>
 
           <!-- Philosophy -->
-          <section class="reveal-item py-12 sm:py-20" data-scroll-skew>
+          <section class="reveal-item py-14 sm:py-24" data-scroll-skew>
             <div class="max-w-3xl">
-              <h3 class="flex items-center gap-3 mb-8 sm:mb-10">
+              <h3 class="flex items-center gap-3 mb-8 sm:mb-12">
                 <span class="w-8 h-px bg-accent"></span>
                 <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Philosophy</span>
               </h3>
-              <p class="text-2xl sm:text-3xl md:text-5xl leading-[1.1] text-text-primary font-display font-bold tracking-tight mb-4 sm:mb-6">
+              <p class="text-2xl sm:text-3xl md:text-5xl leading-[1.1] text-text-primary font-display font-bold tracking-tight mb-5 sm:mb-6">
                 技術は課題解決の手段。
               </p>
-              <div class="h-px w-full bg-border-subtle my-8 section-line revealed" style="animation: line-expand 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;"></div>
-              <div class="text-lg text-text-secondary leading-relaxed space-y-2">
+              <div class="h-px w-full bg-border-subtle my-8 sm:my-10 section-line revealed" style="animation: line-expand 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;"></div>
+              <div class="text-lg text-text-secondary leading-relaxed space-y-3">
                 <p>常にユーザーの視点に立ち、シンプルかつ堅牢な実装で、</p>
-                <p class="text-text-primary font-bold">"長く愛されるシステムを作ります。"</p>
+                <p class="text-text-primary font-bold">&ldquo;長く愛されるシステムを作ります。&rdquo;</p>
               </div>
             </div>
           </section>

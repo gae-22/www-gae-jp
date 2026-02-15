@@ -24,24 +24,24 @@ const posts = (await getCollection('blog', ({ data }) => {
     <div class="max-w-7xl mx-auto relative z-10">
 
       <!-- Page Header -->
-      <section class="mb-16 sm:mb-24 max-w-3xl" data-scroll-skew>
+      <section class="mb-16 sm:mb-28 max-w-3xl" data-scroll-skew>
           <div class="page-section-label reveal-item">
             <span>Journal</span>
             <div class="section-line-animated"></div>
           </div>
-          <h1 class="page-title text-5xl sm:text-6xl md:text-8xl mb-4 sm:mb-6 reveal-item" data-scramble>
+          <h1 class="page-title text-5xl sm:text-6xl md:text-8xl mb-4 sm:mb-6 reveal-item tracking-tighter" data-scramble>
               Blog<span class="text-accent">.</span>
           </h1>
           <p class="text-base sm:text-lg text-text-secondary leading-relaxed reveal-item reveal-delay-2">
             Technical deep dives, design thoughts, and updates on my engineering journey.
           </p>
-          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mt-4 reveal-item reveal-delay-3">
+          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mt-5 reveal-item reveal-delay-3">
             {posts.length} {posts.length === 1 ? 'article' : 'articles'} published
           </p>
       </section>
 
       <!-- Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
         {posts.map((post, index) => (
              <PostCard post={post} class={`reveal-item`} style={`transition-delay: ${index * 0.1}s`} />
         ))}

@@ -17,7 +17,7 @@ const { post, variant = 'basic', class: className, style } = Astro.props;
   <article class="project-card h-full flex flex-col overflow-hidden">
 
     <!-- Cover Image -->
-    <div class="w-full aspect-video overflow-hidden relative bg-void-elevated shimmer-hover">
+    <div class="w-full aspect-16/10 overflow-hidden relative bg-void-elevated shimmer-hover">
         {post.data.cover ? (
             <Image
                 src={post.data.cover}
@@ -31,7 +31,7 @@ const { post, variant = 'basic', class: className, style } = Astro.props;
         )}
 
         {/* Date Badge */}
-        <div class="absolute top-4 left-4 bg-void/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider text-text-secondary border border-border-subtle">
+        <div class="absolute top-3.5 left-3.5 bg-void/80 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-text-secondary border border-border-subtle/80">
              <time datetime={post.data.publishedAt.toISOString()}>
               {post.data.publishedAt.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
             </time>
@@ -39,24 +39,24 @@ const { post, variant = 'basic', class: className, style } = Astro.props;
     </div>
 
     <!-- Content -->
-    <div class="p-6 flex flex-col flex-1">
+    <div class="p-5 sm:p-6 flex flex-col flex-1">
       <div class="flex gap-2 mb-3">
           {post.data.tags.slice(0, 2).map(tag => (
-              <span class="text-[10px] font-mono uppercase tracking-wider text-accent bg-accent-dim px-2 py-0.5 rounded">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-accent bg-accent-dim px-2.5 py-0.5 rounded">
                   {tag}
               </span>
           ))}
       </div>
 
-      <h3 class="text-xl font-heading font-bold text-text-primary mb-3 leading-tight group-hover:text-accent transition-colors duration-300">
+      <h3 class="text-lg sm:text-xl font-heading font-bold text-text-primary mb-2.5 leading-snug group-hover:text-accent transition-colors duration-300">
         {post.data.title}
       </h3>
 
-      <p class="text-sm text-text-secondary leading-relaxed line-clamp-2 mb-6 flex-1">
+      <p class="text-sm text-text-secondary leading-relaxed line-clamp-2 mb-5 flex-1">
         {post.data.description}
       </p>
 
-      <div class="flex items-center gap-2 text-xs font-mono text-accent">
+      <div class="flex items-center gap-2 text-xs font-mono text-accent mt-auto">
         <span class="group-hover:translate-x-1 transition-transform duration-300">Read Article</span>
         <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
       </div>

@@ -31,9 +31,9 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
         <div class="floating-dot" style="top: 45%; left: 2%; animation-delay: -8s; animation-duration: 20s; opacity: 0.15;"></div>
 
         <!-- Header -->
-        <header class="pt-28 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6 max-w-4xl mx-auto text-center reveal-item">
+        <header class="pt-28 sm:pt-40 pb-14 sm:pb-24 px-4 sm:px-6 max-w-4xl mx-auto text-center reveal-item">
 
-            <div class="flex items-center justify-center gap-3 sm:gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-6 sm:mb-8 reveal-item reveal-delay-1">
+            <div class="flex items-center justify-center gap-3 sm:gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-7 sm:mb-10 reveal-item reveal-delay-1">
                 <time datetime={publishedAt.toISOString()}>
                     {publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </time>
@@ -41,11 +41,11 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
                 <span>{post.data.tags[0] || 'Article'}</span>
             </div>
 
-            <h1 class="text-3xl sm:text-4xl md:text-6xl font-display font-bold leading-tight text-text-primary mb-6 sm:mb-8 text-balance reveal-item reveal-delay-2">
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-display font-bold leading-tight text-text-primary mb-7 sm:mb-10 text-balance reveal-item reveal-delay-2">
                 {title}
             </h1>
 
-            <div class="flex items-center justify-center gap-2 mb-4 reveal-item reveal-delay-3">
+            <div class="flex items-center justify-center gap-2.5 mb-4 reveal-item reveal-delay-3">
                 {post.data.tags.map(tag => (
                     <span class="text-[10px] font-mono uppercase tracking-wider text-accent bg-accent-dim px-2.5 py-1 rounded-full">
                         {tag}
@@ -54,7 +54,7 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
             </div>
 
             {cover && (
-                <div class="w-full aspect-video rounded-2xl overflow-hidden mt-12 relative border border-border-subtle shimmer-hover reveal-scale reveal-delay-3">
+                <div class="w-full aspect-video rounded-2xl overflow-hidden mt-12 sm:mt-14 relative border border-border-subtle shimmer-hover reveal-scale reveal-delay-3">
                     <Image src={cover} alt={coverAlt || ""} class="w-full h-full object-cover" />
                 </div>
             )}
@@ -68,7 +68,7 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
             <aside class="hidden lg:block lg:col-span-3 lg:col-start-1 reveal-left reveal-delay-3">
                 <div class="sticky top-32">
                     <h4 class="text-[10px] font-mono uppercase tracking-[0.2em] text-text-tertiary mb-6">Contents</h4>
-                    <ul id="toc-list" class="space-y-3 text-sm pl-4">
+                    <ul id="toc-list" class="space-y-3.5 text-sm pl-4">
                         {headings.filter(h => h.depth <= 3).map((heading) => (
                             <li>
                                 <a href={`#${heading.slug}`} class:list={[
@@ -102,8 +102,8 @@ const { title, description, publishedAt, cover, coverAlt } = post.data;
                     <slot />
                 </div>
 
-                <div class="mt-20 pt-10 border-t border-border-subtle">
-                     <a href="/blog" class="link-hover inline-flex items-center gap-2 text-sm font-mono text-accent transition-colors" data-magnetic>
+                <div class="mt-20 sm:mt-24 pt-10 border-t border-border-subtle">
+                     <a href="/blog" class="link-hover inline-flex items-center gap-2.5 text-sm font-mono text-accent transition-colors" data-magnetic>
                         <Icon name="lucide:arrow-left" class="w-4 h-4" />
                         Back to Blog
                      </a>

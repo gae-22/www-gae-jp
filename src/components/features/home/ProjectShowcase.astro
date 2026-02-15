@@ -7,11 +7,11 @@ const allProjects = projectsEntry?.[0]?.data || [];
 const projects = allProjects.slice(0, 4);
 ---
 
-<section id="work" class="relative z-10 py-40 md:py-56 px-6">
+<section id="work" class="relative z-10 py-28 sm:py-44 md:py-56 px-4 sm:px-6">
   <div class="max-w-5xl mx-auto">
 
     <!-- Section Label with line -->
-    <div class="flex items-center gap-6 mb-20 reveal-item">
+    <div class="flex items-center gap-4 sm:gap-6 mb-16 sm:mb-20 reveal-item">
       <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">
         Selected Work
       </span>
@@ -22,26 +22,26 @@ const projects = allProjects.slice(0, 4);
     </div>
 
     <!-- Project List -->
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-5 sm:gap-6">
       {projects.map((project, i) => (
         <a
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          class="reveal-item project-card block p-8 md:p-12 group"
+          class="reveal-item project-card block p-6 sm:p-8 md:p-12 group"
           style={`transition-delay: ${i * 0.12}s`}
         >
-          <div class="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+          <div class="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-5 sm:gap-6">
 
             {/* Left: Number + Info */}
             <div class="flex-1">
-              <div class="flex items-baseline gap-6 mb-6">
-                <span class="project-number font-mono text-5xl md:text-6xl font-bold text-text-tertiary transition-colors duration-600">
+              <div class="flex items-baseline gap-4 sm:gap-6 mb-4 sm:mb-5">
+                <span class="project-number font-mono text-4xl sm:text-5xl md:text-6xl font-bold text-text-tertiary transition-colors duration-600">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div class="hidden md:block flex-1 h-px bg-border-subtle group-hover:bg-border-hover transition-colors duration-500"></div>
               </div>
-              <h3 class="font-heading text-2xl md:text-3xl font-bold text-text-primary mb-3 group-hover:text-accent transition-colors duration-300">
+              <h3 class="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-text-primary mb-2.5 group-hover:text-accent transition-colors duration-300 tracking-tight">
                 {project.title}
               </h3>
               <p class="font-body text-sm text-text-secondary max-w-md leading-relaxed">
@@ -76,8 +76,8 @@ const projects = allProjects.slice(0, 4);
     </div>
 
     {/* View all link */}
-    <div class="mt-16 text-center reveal-item">
-      <a href="/work" class="link-hover font-mono text-sm text-accent inline-flex items-center gap-2">
+    <div class="mt-12 sm:mt-16 text-center reveal-item">
+      <a href="/work" class="link-hover font-mono text-sm text-accent inline-flex items-center gap-2.5">
         All Projects
         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />

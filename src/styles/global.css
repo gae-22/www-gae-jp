@@ -267,7 +267,7 @@
         position: relative;
         background-color: var(--color-void-subtle);
         border: 1px solid var(--color-border-subtle);
-        border-radius: 16px;
+        border-radius: 18px;
         transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         overflow: hidden;
     }
@@ -286,7 +286,7 @@
     }
     .project-card:hover {
         border-color: rgba(200, 255, 0, 0.2);
-        transform: translateY(-6px);
+        transform: translateY(-5px);
     }
     .project-card:hover::before {
         opacity: 1;
@@ -321,13 +321,13 @@
         position: relative;
         background-color: var(--color-void-subtle);
         border: 1px solid var(--color-border-subtle);
-        border-radius: 20px;
+        border-radius: 22px;
         transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         overflow: hidden;
     }
     .bento-card:hover {
-        border-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.12);
+        transform: translateY(-3px);
     }
     .bento-card-glow {
         position: absolute;
@@ -676,7 +676,7 @@ a:not(.bento-card):not(.project-card):hover {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 .page-section-label span {
     font-family: var(--font-mono);
@@ -728,8 +728,8 @@ a:not(.bento-card):not(.project-card):hover {
 /* Stats card with count-up + glow */
 .stat-card {
     position: relative;
-    padding: 1.5rem;
-    border-radius: 16px;
+    padding: 1.75rem;
+    border-radius: 18px;
     border: 1px solid var(--color-border-subtle);
     background: var(--color-void-subtle);
     text-align: center;
@@ -751,7 +751,7 @@ a:not(.bento-card):not(.project-card):hover {
 }
 .stat-card:hover {
     border-color: rgba(200, 255, 0, 0.2);
-    transform: translateY(-4px);
+    transform: translateY(-3px);
 }
 .stat-card:hover::before {
     opacity: 1;
@@ -763,24 +763,18 @@ a:not(.bento-card):not(.project-card):hover {
     display: flex;
     align-items: center;
     gap: 0.625rem;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    border: 1px solid var(--color-border-subtle);
-    background: var(--color-void-subtle);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: default;
-}
-.skill-pill:hover {
-    border-color: rgba(200, 255, 0, 0.2);
-    background: var(--color-void-elevated);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(200, 255, 0, 0.06);
-}
-
-/* Shimmer effect for images on hover */
-.shimmer-hover {
-    position: relative;
-    overflow: hidden;
+        padding: 0.5rem 1.125rem;
+        border-radius: 9999px;
+        border: 1px solid var(--color-border-subtle);
+        background: var(--color-void-subtle);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: default;
+    }
+    .skill-pill:hover {
+        border-color: rgba(200, 255, 0, 0.2);
+        background: var(--color-void-elevated);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(200, 255, 0, 0.06);
 }
 .shimmer-hover::after {
     content: '';
