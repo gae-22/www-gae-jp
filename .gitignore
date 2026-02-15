@@ -1,7 +1,7 @@
 # Build output
 dist/
 .output/
-.vercel/
+.task
 tsconfig.tsbuildinfo
 
 # Generated types
