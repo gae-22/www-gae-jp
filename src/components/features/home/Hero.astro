@@ -236,6 +236,11 @@ const currentYear = new Date().getFullYear();
     const lines = document.querySelectorAll<HTMLElement>('.hero-line-js');
     if (!lines.length) return;
 
+    // Reset any previous state (important for View Transitions)
+    lines.forEach((line) => {
+      line.classList.remove('revealed');
+    });
+
     // Wait for page loader to finish, then reveal lines with stagger
     function reveal() {
       lines.forEach((line, i) => {
@@ -296,4 +301,5 @@ const currentYear = new Date().getFullYear();
 
   document.addEventListener('DOMContentLoaded', initHero);
   document.addEventListener('astro:after-swap', initHero);
+  document.addEventListener('astro:page-load', initHero);
 </script>
