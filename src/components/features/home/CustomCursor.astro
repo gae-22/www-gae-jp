@@ -55,9 +55,12 @@
 
 <script>
   function initCustomCursor() {
-    const cursor = document.getElementById('cursor');
-    const label = document.getElementById('cursor-text');
-    if (!cursor || !label) return;
+    const cursorEl = document.getElementById('cursor');
+    const labelEl = document.getElementById('cursor-text');
+    if (!cursorEl || !labelEl) return;
+
+    const cursor = cursorEl as HTMLElement;
+    const label = labelEl as HTMLElement;
 
     // Don't init on touch devices
     if (window.matchMedia('(hover: none)').matches) return;
