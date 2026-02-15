@@ -68,18 +68,24 @@ const currentPath = Astro.url.pathname;
 <!-- Mobile Menu Overlay -->
 <div id="mobile-menu" class="fixed inset-0 z-40 bg-void flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
   <nav class="flex flex-col items-center gap-10">
-    <a href="/" class="font-display text-4xl font-bold text-text-primary hover:text-accent transition-colors duration-300 mobile-nav-link">
-      Home
-    </a>
-    {navItems.map((item, i) => (
-      <a
-        href={item.href}
-        class="font-display text-4xl font-bold text-text-primary hover:text-accent transition-colors duration-300 mobile-nav-link"
-        style={`transition-delay: ${(i + 1) * 0.05}s`}
-      >
-        {item.label}
-      </a>
-    ))}
+    {navItems.map((item, i) => {
+      const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+      return (
+        <a
+          href={item.href}
+          class:list={[
+            "font-display text-4xl font-bold transition-colors duration-300 mobile-nav-link",
+            isActive
+              ? "text-accent"
+              : "text-text-primary hover:text-accent"
+          ]}
+          style={`transition-delay: ${i * 0.05}s`}
+        >
+          {item.label}
+          {isActive && <span class="block w-8 h-0.5 bg-accent mx-auto mt-2 rounded-full"></span>}
+        </a>
+      );
+    })}
     <a href="https://github.com/gae-22" target="_blank" rel="noopener noreferrer"
        class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.15em] text-text-secondary hover:text-text-primary transition-colors duration-300 mt-6">
       <Icon name="lucide:github" class="w-5 h-5" />

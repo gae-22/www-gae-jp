@@ -44,14 +44,16 @@ const currentYear = new Date().getFullYear();
         </h1>
       </div>
       <div class="hero-line-js overflow-hidden" style="clip-path: inset(100% 0 0 0); opacity: 0;">
-        <h1 class="text-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold text-text-primary leading-[0.85] tracking-[-0.04em] flex items-center gap-4">
+        <h1 class="text-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold text-text-primary leading-[0.85] tracking-[-0.04em]">
           Engineer
-          <!-- Available indicator per spec -->
-          <span class="inline-flex items-center gap-2 ml-4">
-            <span class="inline-block w-2 h-2 rounded-full bg-accent" style="animation: pulse-accent 2s ease-in-out infinite;" aria-hidden="true"></span>
-            <span class="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-accent leading-none">Available</span>
-          </span>
         </h1>
+      </div>
+      <!-- Available indicator — separate line on mobile, inline on desktop -->
+      <div class="hero-line-js overflow-hidden mt-4 md:mt-6" style="clip-path: inset(100% 0 0 0); opacity: 0;">
+        <span class="inline-flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-accent" style="animation: pulse-accent 2s ease-in-out infinite;" aria-hidden="true"></span>
+          <span class="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-accent leading-none">Available for work</span>
+        </span>
       </div>
     </div>
 
