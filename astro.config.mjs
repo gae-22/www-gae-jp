@@ -75,6 +75,14 @@ export default defineConfig({
     },
     vite: {
         plugins: [tailwindcss()],
+        preview: {
+            allowedHosts: [
+                'gae-jp.net',
+                'www.gae-jp.net',
+                '127.0.0.1',
+                'localhost',
+            ],
+        },
     },
 
     integrations: [
@@ -97,6 +105,7 @@ export default defineConfig({
             include: {
                 logos: ['*'],
                 lucide: ['*'],
+                'simple-icons': ['*'],
                 'vscode-icons': ['*'],
             },
         }),

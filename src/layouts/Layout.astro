@@ -25,10 +25,9 @@ interface Props {
 	description?: string;
     image?: string;
     jsonLd?: Record<string, any>;
-    disableEffects?: boolean;
 }
 
-const { title, description = "gae's Website", image = '/gae.svg', jsonLd, disableEffects = false } = Astro.props;
+const { title, description = "gae's Website", image = '/gae.svg', jsonLd } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.url);
@@ -83,22 +82,13 @@ const socialImageURL = new URL(image, Astro.url);
             animation-delay: 0.15s;
           }
         </style>
-
-        <script is:inline define:vars={{ publicApiUrl: process.env.PUBLIC_API_URL || import.meta.env.PUBLIC_API_URL || 'http://localhost:4000' }}>
-            window._PUBLIC_API_URL = publicApiUrl;
-        </script>
 	</head>
     <body class="min-h-screen relative overflow-x-hidden text-text-primary bg-void">
 
-        {/* Shared ambient effects — disabled for admin pages */}
-        {!disableEffects && (
-          <>
-            <AmbientBackground />
-            <CustomCursor />
-            <SmoothScroll />
-            <TextScramble />
-          </>
-        )}
+        <AmbientBackground />
+        <CustomCursor />
+        <SmoothScroll />
+        <TextScramble />
 
         <!-- Content -->
 		<slot />
