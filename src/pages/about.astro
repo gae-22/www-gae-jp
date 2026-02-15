@@ -23,8 +23,8 @@ const skillCategories = [
 <Layout title="About | gae" description="About gae.">
   <Header />
 
-  <main class="min-h-screen pt-32 pb-20 px-4 sm:px-6 relative overflow-hidden">
-      <div class="max-w-5xl mx-auto space-y-16 relative z-10">
+  <main class="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 relative overflow-hidden">
+      <div class="max-w-5xl mx-auto space-y-12 sm:space-y-16 relative z-10">
 
           {/* Floating accent dots */}
           <div class="floating-dot" style="top: 8%; right: 12%; animation-delay: 0s; animation-duration: 14s;"></div>
@@ -37,7 +37,7 @@ const skillCategories = [
               <span>About</span>
               <div class="section-line-animated"></div>
             </div>
-            <h1 class="page-title text-6xl sm:text-8xl md:text-9xl mb-4" data-scramble>
+            <h1 class="page-title text-5xl sm:text-6xl md:text-9xl mb-4" data-scramble>
               HELLO<span class="text-text-tertiary">.</span>
             </h1>
             <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-text-secondary flex items-center gap-3 mt-6">
@@ -50,18 +50,18 @@ const skillCategories = [
           </header>
 
           <!-- Stats Row with count-up -->
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 reveal-item">
+          <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 reveal-item">
             <div class="stat-card" data-cursor-text="EXP">
-              <span class="text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.experience)} data-count-suffix="+">0</span>
-              <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Years Exp</span>
+              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.experience)} data-count-suffix="+">0</span>
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Years Exp</span>
             </div>
             <div class="stat-card" data-cursor-text="PRJ">
-              <span class="text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.projects)} data-count-suffix="+">0</span>
-              <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Projects</span>
+              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2 count-up" data-count-target={String(profile.stats.projects)} data-count-suffix="+">0</span>
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Projects</span>
             </div>
             <div class="stat-card col-span-2 md:col-span-1" data-cursor-text="∞">
-              <span class="text-4xl font-display font-bold text-text-primary block mb-2">&infin;</span>
-              <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Curiosity</span>
+              <span class="text-3xl sm:text-4xl font-display font-bold text-text-primary block mb-2">&infin;</span>
+              <span class="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-text-tertiary">Curiosity</span>
             </div>
           </div>
 
@@ -110,19 +110,19 @@ const skillCategories = [
               <span>Journey</span>
               <div class="section-line-animated"></div>
             </div>
-            <div class="p-8 md:p-12 rounded-2xl border border-border-subtle bg-void-subtle animated-border">
+            <div class="p-6 sm:p-8 md:p-12 rounded-2xl border border-border-subtle bg-void-subtle animated-border">
               <Timeline events={profile.timeline} />
             </div>
           </section>
 
           <!-- Philosophy -->
-          <section class="reveal-item py-20" data-scroll-skew>
+          <section class="reveal-item py-12 sm:py-20" data-scroll-skew>
             <div class="max-w-3xl">
-              <h3 class="flex items-center gap-3 mb-10">
+              <h3 class="flex items-center gap-3 mb-8 sm:mb-10">
                 <span class="w-8 h-px bg-accent"></span>
                 <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Philosophy</span>
               </h3>
-              <p class="text-3xl sm:text-4xl md:text-5xl leading-[1.1] text-text-primary font-display font-bold tracking-tight mb-6">
+              <p class="text-2xl sm:text-3xl md:text-5xl leading-[1.1] text-text-primary font-display font-bold tracking-tight mb-4 sm:mb-6">
                 技術は課題解決の手段。
               </p>
               <div class="h-px w-full bg-border-subtle my-8 section-line revealed" style="animation: line-expand 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;"></div>

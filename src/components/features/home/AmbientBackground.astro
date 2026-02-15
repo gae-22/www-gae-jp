@@ -176,6 +176,24 @@
       display: none;
     }
   }
+
+  /* Mobile optimizations: reduce background complexity */
+  @media (max-width: 767px) {
+    .mesh-gradient {
+      animation-duration: 45s;
+    }
+    .aurora-sweep {
+      animation-duration: 60s;
+      opacity: 0.7;
+    }
+    .ambient-orb {
+      filter: blur(80px);
+    }
+    .ambient-orb-3,
+    .ambient-orb-4 {
+      display: none;
+    }
+  }
 </style>
 
 <script>
@@ -200,7 +218,9 @@
     }
 
     function createParticles() {
-      const count = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 25000), 60);
+      const isMobile = window.innerWidth < 768;
+      const maxParticles = isMobile ? 20 : 60;
+      const count = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 25000), maxParticles);
       particles = [];
       for (let i = 0; i < count; i++) {
         particles.push({
@@ -237,19 +257,22 @@
         ctx!.fill();
       });
 
-      // Draw connections between nearby particles
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx!.beginPath();
-            ctx!.moveTo(particles[i].x, particles[i].y);
-            ctx!.lineTo(particles[j].x, particles[j].y);
-            ctx!.strokeStyle = `rgba(200, 255, 0, ${0.03 * (1 - dist / 120)})`;
-            ctx!.lineWidth = 0.5;
-            ctx!.stroke();
+      // Draw connections between nearby particles (skip on mobile for performance)
+      const isMobileNow = window.innerWidth < 768;
+      if (!isMobileNow) {
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              ctx!.beginPath();
+              ctx!.moveTo(particles[i].x, particles[i].y);
+              ctx!.lineTo(particles[j].x, particles[j].y);
+              ctx!.strokeStyle = `rgba(200, 255, 0, ${0.03 * (1 - dist / 120)})`;
+              ctx!.lineWidth = 0.5;
+              ctx!.stroke();
+            }
           }
         }
       }

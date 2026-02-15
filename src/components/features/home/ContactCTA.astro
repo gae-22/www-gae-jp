@@ -8,7 +8,7 @@ const socialLinks = [
 ];
 ---
 
-<section class="relative z-10 min-h-svh flex flex-col items-center justify-center px-6 overflow-hidden">
+<section class="relative z-10 min-h-[80svh] sm:min-h-svh flex flex-col items-center justify-center px-4 sm:px-6 overflow-hidden">
 
   <!-- Animated background gradient for CTA section -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -24,31 +24,31 @@ const socialLinks = [
   <div class="max-w-5xl mx-auto text-center">
 
     <!-- Small label -->
-    <div class="reveal-item mb-16">
+    <div class="reveal-item mb-10 sm:mb-16">
       <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-text-tertiary">
         Get in touch
       </span>
     </div>
 
     <!-- Main CTA Text -->
-    <div class="reveal-item reveal-delay-1 mb-16">
-      <h2 class="text-display text-[clamp(3.5rem,12vw,10rem)] leading-[0.85] tracking-[-0.04em]">
+    <div class="reveal-item reveal-delay-1 mb-10 sm:mb-16">
+      <h2 class="text-display text-[clamp(2.5rem,10vw,10rem)] sm:text-[clamp(3.5rem,12vw,10rem)] leading-[0.88] sm:leading-[0.85] tracking-[-0.04em]">
         <span class="block font-extralight text-text-secondary cta-float" style="animation: cta-float 6s ease-in-out infinite;">Let's</span>
         <span class="block font-extrabold text-text-primary cta-float" style="animation: cta-float 6s ease-in-out infinite; animation-delay: -3s;">Talk.</span>
       </h2>
     </div>
 
     <!-- Email — prominent -->
-    <div class="reveal-item reveal-delay-2 mb-16">
+    <div class="reveal-item reveal-delay-2 mb-10 sm:mb-16">
       <a href="mailto:gaedev22@gmail.com"
-         class="link-hover font-mono text-base md:text-xl text-accent tracking-wide"
+         class="link-hover font-mono text-sm sm:text-base md:text-xl text-accent tracking-wide break-all sm:break-normal"
          data-scramble data-cursor-text="Copy">
         gaedev22@gmail.com
       </a>
     </div>
 
     <!-- Social Links — horizontal with separators -->
-    <div class="reveal-item reveal-delay-3 flex items-center justify-center gap-6 md:gap-10">
+    <div class="reveal-item reveal-delay-3 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-10">
       {socialLinks.map((link, i) => (
         <>
           {i > 0 && <span class="w-px h-4 bg-border-hover"></span>}

@@ -57,40 +57,45 @@ const currentPath = Astro.url.pathname;
     </ul>
 
     <!-- Mobile Menu Button -->
-    <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2 group" aria-label="Toggle menu" aria-expanded="false">
-      <span class="menu-line w-6 h-px bg-text-primary transition-all duration-300 origin-center"></span>
-      <span class="menu-line w-6 h-px bg-text-primary transition-all duration-300"></span>
+    <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2 group relative w-10 h-10 items-center justify-center" aria-label="Toggle menu" aria-expanded="false">
+      <span class="menu-line w-5 h-px bg-text-primary transition-all duration-300 origin-center"></span>
+      <span class="menu-line w-5 h-px bg-text-primary transition-all duration-300"></span>
     </button>
 
   </nav>
 </header>
 
 <!-- Mobile Menu Overlay -->
-<div id="mobile-menu" class="fixed inset-0 z-40 bg-void flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
-  <nav class="flex flex-col items-center gap-10">
+<div id="mobile-menu" class="fixed inset-0 z-40 pointer-events-none" aria-hidden="true">
+  <!-- Backdrop -->
+  <div class="mobile-menu-backdrop absolute inset-0 bg-void/95 backdrop-blur-xl opacity-0 transition-opacity duration-500"></div>
+  <!-- Content -->
+  <nav class="mobile-menu-content absolute inset-0 flex flex-col items-center justify-center gap-8 opacity-0 translate-y-4 transition-all duration-500 ease-out">
     {navItems.map((item, i) => {
       const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
       return (
         <a
           href={item.href}
           class:list={[
-            "font-display text-4xl font-bold transition-colors duration-300 mobile-nav-link",
+            "font-display text-5xl font-bold transition-all duration-500 mobile-nav-link",
             isActive
               ? "text-accent"
               : "text-text-primary hover:text-accent"
           ]}
-          style={`transition-delay: ${i * 0.05}s`}
+          style={`transition-delay: ${0.05 + i * 0.06}s; transform: translateY(20px); opacity: 0;`}
         >
           {item.label}
           {isActive && <span class="block w-8 h-0.5 bg-accent mx-auto mt-2 rounded-full"></span>}
         </a>
       );
     })}
-    <a href="https://github.com/gae-22" target="_blank" rel="noopener noreferrer"
-       class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.15em] text-text-secondary hover:text-text-primary transition-colors duration-300 mt-6">
-      <Icon name="lucide:github" class="w-5 h-5" />
-      <span>GitHub</span>
-    </a>
+    <div class="flex items-center gap-6 mt-6" style="transition-delay: 0.35s; transform: translateY(20px); opacity: 0;">
+      <a href="https://github.com/gae-22" target="_blank" rel="noopener noreferrer"
+         class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.15em] text-text-secondary hover:text-text-primary transition-colors duration-300">
+        <Icon name="lucide:github" class="w-5 h-5" />
+        <span>GitHub</span>
+      </a>
+    </div>
   </nav>
 </div>
 
@@ -102,6 +107,8 @@ const currentPath = Astro.url.pathname;
     const progressBar = document.getElementById('scroll-progress-bar');
     if (!header || !menuToggle || !mobileMenu) return;
 
+    const toggle = menuToggle!;
+    const menu = mobileMenu!;
     let isOpen = false;
 
     // Scroll effect + progress bar
@@ -128,35 +135,83 @@ const currentPath = Astro.url.pathname;
     onScroll();
 
     // Mobile menu toggle
-    const lines = menuToggle.querySelectorAll<HTMLElement>('.menu-line');
-    menuToggle.addEventListener('click', () => {
-      isOpen = !isOpen;
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-      if (isOpen) {
-        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-        document.body.style.overflow = 'hidden';
-        lines[0].style.transform = 'rotate(45deg) translateY(4px)';
-        lines[1].style.transform = 'rotate(-45deg) translateY(-4px)';
-      } else {
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-        document.body.style.overflow = '';
-        lines[0].style.transform = '';
-        lines[1].style.transform = '';
+    const lines = toggle.querySelectorAll<HTMLElement>('.menu-line');
+    const backdrop = menu.querySelector<HTMLElement>('.mobile-menu-backdrop');
+    const menuContent = menu.querySelector<HTMLElement>('.mobile-menu-content');
+    const navLinks = menu.querySelectorAll<HTMLElement>('.mobile-nav-link, .mobile-menu-content > div');
+
+    function openMenu() {
+      isOpen = true;
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-hidden', 'false');
+      menu.classList.remove('pointer-events-none');
+      menu.classList.add('pointer-events-auto');
+      document.body.style.overflow = 'hidden';
+      lines[0].style.transform = 'rotate(45deg) translateY(4px)';
+      lines[1].style.transform = 'rotate(-45deg) translateY(-4px)';
+      // Animate backdrop
+      if (backdrop) {
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
       }
+      // Animate content container
+      if (menuContent) {
+        menuContent.classList.remove('opacity-0', 'translate-y-4');
+        menuContent.classList.add('opacity-100', 'translate-y-0');
+      }
+      // Stagger animate nav links
+      navLinks.forEach((link, i) => {
+        setTimeout(() => {
+          link.style.transform = 'translateY(0)';
+          link.style.opacity = '1';
+        }, 80 + i * 60);
+      });
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lines[0].style.transform = '';
+      lines[1].style.transform = '';
+      // Reset nav links immediately
+      navLinks.forEach((link) => {
+        link.style.transform = 'translateY(20px)';
+        link.style.opacity = '0';
+      });
+      // Animate backdrop
+      if (backdrop) {
+        backdrop.classList.add('opacity-0');
+        backdrop.classList.remove('opacity-100');
+      }
+      // Animate content container
+      if (menuContent) {
+        menuContent.classList.add('opacity-0', 'translate-y-4');
+        menuContent.classList.remove('opacity-100', 'translate-y-0');
+      }
+      // Delay pointer-events removal
+      setTimeout(() => {
+        if (!isOpen) {
+          menu.classList.add('pointer-events-none');
+          menu.classList.remove('pointer-events-auto');
+        }
+      }, 500);
+    }
+
+    toggle.addEventListener('click', () => {
+      if (isOpen) closeMenu();
+      else openMenu();
     });
 
     // Close on link click
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        isOpen = false;
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-        document.body.style.overflow = '';
-        lines[0].style.transform = '';
-        lines[1].style.transform = '';
-      });
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) closeMenu();
     });
   }
 

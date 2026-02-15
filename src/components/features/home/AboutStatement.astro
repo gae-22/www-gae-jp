@@ -7,7 +7,7 @@ const lines = [
 ];
 ---
 
-<section class="relative z-10 py-40 md:py-56 px-6 overflow-hidden">
+<section class="relative z-10 py-24 sm:py-40 md:py-56 px-4 sm:px-6 overflow-hidden">
   <!-- Floating accent dots — always moving -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <div class="about-float-dot about-float-dot-1"></div>
@@ -18,7 +18,7 @@ const lines = [
   <div class="max-w-3xl mx-auto relative">
 
     <!-- Label with line -->
-    <div class="flex items-center gap-6 mb-16 reveal-item">
+    <div class="flex items-center gap-4 sm:gap-6 mb-10 sm:mb-16 reveal-item">
       <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent" style="animation: float-subtle 5s ease-in-out infinite;">
         About
       </span>
@@ -28,7 +28,7 @@ const lines = [
     <!-- Statement — word-by-word reveal on scroll -->
     <div id="about-statement" class="space-y-3">
       {lines.map((line, lineIdx) => (
-        <p class="text-xl md:text-2xl lg:text-[1.75rem] font-body font-normal leading-loose tracking-[0.02em]" data-line={lineIdx}>
+        <p class="text-lg sm:text-xl md:text-2xl lg:text-[1.75rem] font-body font-normal leading-relaxed sm:leading-loose tracking-[0.02em]" data-line={lineIdx}>
           {line.split('').map((char, charIdx) => (
             <span
               class="word-reveal"

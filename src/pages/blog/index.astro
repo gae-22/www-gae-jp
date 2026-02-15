@@ -15,7 +15,7 @@ const posts = (await getCollection('blog', ({ data }) => {
 <Layout title="Blog | gae" description="Design, Development, and the Future of Web.">
   <Header />
 
-  <main class="min-h-screen pt-32 pb-32 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-24 sm:pt-32 pb-20 sm:pb-32 px-4 sm:px-6 relative overflow-hidden">
 
     {/* Floating accent dots */}
     <div class="floating-dot" style="top: 10%; right: 8%; animation-delay: -3s; animation-duration: 15s;"></div>
@@ -24,15 +24,15 @@ const posts = (await getCollection('blog', ({ data }) => {
     <div class="max-w-7xl mx-auto relative z-10">
 
       <!-- Page Header -->
-      <section class="mb-24 max-w-3xl" data-scroll-skew>
+      <section class="mb-16 sm:mb-24 max-w-3xl" data-scroll-skew>
           <div class="page-section-label reveal-item">
             <span>Journal</span>
             <div class="section-line-animated"></div>
           </div>
-          <h1 class="page-title text-6xl md:text-8xl mb-6 reveal-item" data-scramble>
+          <h1 class="page-title text-5xl sm:text-6xl md:text-8xl mb-4 sm:mb-6 reveal-item" data-scramble>
               Blog<span class="text-accent">.</span>
           </h1>
-          <p class="text-lg text-text-secondary leading-relaxed reveal-item reveal-delay-2">
+          <p class="text-base sm:text-lg text-text-secondary leading-relaxed reveal-item reveal-delay-2">
             Technical deep dives, design thoughts, and updates on my engineering journey.
           </p>
           <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mt-4 reveal-item reveal-delay-3">
@@ -41,7 +41,7 @@ const posts = (await getCollection('blog', ({ data }) => {
       </section>
 
       <!-- Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
         {posts.map((post, index) => (
              <PostCard post={post} class={`reveal-item`} style={`transition-delay: ${index * 0.1}s`} />
         ))}

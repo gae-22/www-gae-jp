@@ -22,14 +22,18 @@
     lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
       infinite: false,
     });
 
     let scrollVelocity = 0;
+    const isMobile = window.innerWidth < 768;
 
     lenis.on('scroll', (e: any) => {
       scrollVelocity = e.velocity;
+
+      // Skip velocity-based skew on mobile for performance
+      if (isMobile) return;
 
       // Apply velocity-based skew to marked elements
       const skewElements = document.querySelectorAll<HTMLElement>('[data-scroll-skew]');
@@ -86,5 +90,13 @@
   [data-scroll-skew] {
     transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform;
+  }
+
+  /* Disable scroll skew on mobile for performance */
+  @media (max-width: 767px) {
+    [data-scroll-skew] {
+      will-change: auto;
+      transition: none;
+    }
   }
 </style>

@@ -72,8 +72,14 @@ const rows: Row[] = [
   .marquee-row {
     display: flex;
     align-items: center;
-    height: 2.5rem;          /* 40px */
+    height: 2.25rem;         /* 36px on mobile */
     overflow: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .marquee-row {
+      height: 2.5rem;        /* 40px */
+    }
   }
 
   @media (min-width: 768px) {
