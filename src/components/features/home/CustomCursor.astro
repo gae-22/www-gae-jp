@@ -164,6 +164,17 @@
     animate();
   }
 
-  document.addEventListener('DOMContentLoaded', initCustomCursor);
-  document.addEventListener('astro:after-swap', initCustomCursor);
+  function deferCursorInit() {
+    // Skip entirely on touch/mobile — no cursor needed
+    if (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches) return;
+
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(initCustomCursor);
+    } else {
+      setTimeout(initCustomCursor, 200);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', deferCursorInit);
+  document.addEventListener('astro:after-swap', deferCursorInit);
 </script>

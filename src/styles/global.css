@@ -496,9 +496,20 @@
     @media (max-width: 767px) {
         .reveal-item {
             transform: translateY(30px);
+            will-change: auto;
+            transition-duration: 0.8s;
         }
         .reveal-left {
             transform: translateX(-30px);
+            will-change: auto;
+            transition-duration: 0.8s;
+        }
+        .reveal-scale {
+            will-change: auto;
+            transition-duration: 0.8s;
+        }
+        .fade-up {
+            animation-duration: 0.8s;
         }
     }
 }

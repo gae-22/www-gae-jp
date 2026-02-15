@@ -3,14 +3,12 @@ import '~/styles/global.css';
 
 import '@fontsource/outfit/200.css';
 import '@fontsource/outfit/400.css';
-import '@fontsource/outfit/500.css';
 import '@fontsource/outfit/700.css';
 import '@fontsource/outfit/800.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/zen-kaku-gothic-new/400.css';
-import '@fontsource/zen-kaku-gothic-new/500.css';
 import '@fontsource/zen-kaku-gothic-new/700.css';
 
 import { ViewTransitions } from 'astro:transitions';
@@ -135,10 +133,13 @@ const socialImageURL = new URL(image, Astro.url);
                 window.addEventListener('scroll', onScroll, { passive: true });
             }
 
-            // Init all
+            // Init — defer non-critical setup
             function initAll() {
-                initRevealObserver();
-                initScrollHide();
+                // Reveal observer can wait for next frame
+                requestAnimationFrame(() => {
+                    initRevealObserver();
+                    initScrollHide();
+                });
             }
 
             // Run on initial load

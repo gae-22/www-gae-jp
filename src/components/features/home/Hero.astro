@@ -33,23 +33,23 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <div class="hero-lines" aria-label="gae Software Engineer">
-      <div class="hero-line-js overflow-hidden" style="clip-path: inset(100% 0 0 0); opacity: 0;">
+      <div class="hero-line-js overflow-hidden">
         <h1 class="text-display text-[clamp(2.75rem,12vw,11rem)] sm:text-[clamp(3.5rem,13vw,11rem)] font-extrabold text-text-primary leading-[0.88] sm:leading-[0.85] tracking-[-0.03em] sm:tracking-[-0.04em]">
           gae
         </h1>
       </div>
-      <div class="hero-line-js overflow-hidden" style="clip-path: inset(100% 0 0 0); opacity: 0;">
+      <div class="hero-line-js overflow-hidden">
         <h1 class="text-display text-[clamp(2.75rem,12vw,11rem)] sm:text-[clamp(3.5rem,13vw,11rem)] font-extralight text-text-secondary leading-[0.88] sm:leading-[0.85] tracking-[-0.03em] sm:tracking-[-0.04em]">
           Software
         </h1>
       </div>
-      <div class="hero-line-js overflow-hidden" style="clip-path: inset(100% 0 0 0); opacity: 0;">
+      <div class="hero-line-js overflow-hidden">
         <h1 class="text-display text-[clamp(2.75rem,12vw,11rem)] sm:text-[clamp(3.5rem,13vw,11rem)] font-extrabold text-text-primary leading-[0.88] sm:leading-[0.85] tracking-[-0.03em] sm:tracking-[-0.04em]">
           Engineer
         </h1>
       </div>
       <!-- Available indicator — separate line on mobile, inline on desktop -->
-      <div class="hero-line-js overflow-hidden mt-3 sm:mt-4 md:mt-6" style="clip-path: inset(100% 0 0 0); opacity: 0;">
+      <div class="hero-line-js overflow-hidden mt-3 sm:mt-4 md:mt-6">
         <span class="inline-flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-accent" style="animation: pulse-accent 2s ease-in-out infinite;" aria-hidden="true"></span>
           <span class="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-accent leading-none">Available for work</span>
@@ -132,15 +132,24 @@ const currentYear = new Date().getFullYear();
     /* Removed animation to avoid hiding content */
   }
 
-  /* JS-driven hero line reveal */
+  /* CSS-driven hero line reveal — no JS dependency for LCP */
   .hero-line-js {
-    transition: clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: clip-path, opacity;
+    animation: hero-line-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
-  .hero-line-js.revealed {
-    clip-path: inset(0% 0 0 0) !important;
-    opacity: 1 !important;
+  .hero-line-js:nth-child(1) { animation-delay: 0.05s; }
+  .hero-line-js:nth-child(2) { animation-delay: 0.15s; }
+  .hero-line-js:nth-child(3) { animation-delay: 0.25s; }
+  .hero-line-js:nth-child(4) { animation-delay: 0.35s; }
+
+  @keyframes hero-line-in {
+    from {
+      clip-path: inset(100% 0 0 0);
+      opacity: 0;
+    }
+    to {
+      clip-path: inset(0% 0 0 0);
+      opacity: 1;
+    }
   }
 
   @keyframes hero-float-1 {
@@ -200,6 +209,7 @@ const currentYear = new Date().getFullYear();
     .hero-blob {
       filter: blur(60px);
       opacity: 0.5;
+      will-change: auto;
     }
     .hero-blob-1 {
       animation-duration: 30s;
@@ -215,6 +225,17 @@ const currentYear = new Date().getFullYear();
     }
   }
 
+  /* Faster hero reveal on mobile for better LCP */
+  @media (max-width: 767px) {
+    .hero-line-js {
+      animation-duration: 0.6s;
+    }
+    .hero-line-js:nth-child(1) { animation-delay: 0s; }
+    .hero-line-js:nth-child(2) { animation-delay: 0.06s; }
+    .hero-line-js:nth-child(3) { animation-delay: 0.12s; }
+    .hero-line-js:nth-child(4) { animation-delay: 0.18s; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-grid-line::after,
     .hero-scan-line,
@@ -222,60 +243,19 @@ const currentYear = new Date().getFullYear();
       animation: none !important;
       opacity: 0 !important;
     }
-    /* Ensure hero text is always visible under reduced motion */
     .hero-line-js {
+      animation: none !important;
       clip-path: none !important;
       opacity: 1 !important;
-      transition: none !important;
     }
   }
 </style>
 
 <script>
-  function initHeroReveal() {
-    const lines = document.querySelectorAll<HTMLElement>('.hero-line-js');
-    if (!lines.length) return;
-
-    // Reset any previous state (important for View Transitions)
-    lines.forEach((line) => {
-      line.classList.remove('revealed');
-    });
-
-    // Wait for page loader to finish, then reveal lines with stagger
-    function reveal() {
-      lines.forEach((line, i) => {
-        setTimeout(() => {
-          line.classList.add('revealed');
-        }, 300 + i * 200);
-      });
-    }
-
-    // Check if loader is still active
-    const loader = document.getElementById('page-loader');
-    if (loader) {
-      // Wait for loader to start exiting, then reveal
-      const observer = new MutationObserver((mutations) => {
-        for (const m of mutations) {
-          if ((m.target as HTMLElement).classList.contains('loader-exit')) {
-            reveal();
-            observer.disconnect();
-            return;
-          }
-        }
-      });
-      observer.observe(loader, { attributes: true, attributeFilter: ['class'] });
-      // Fallback: if loader is already gone or takes too long
-      setTimeout(() => {
-        observer.disconnect();
-        reveal();
-      }, 3000);
-    } else {
-      // No loader (return visit or already removed)
-      reveal();
-    }
-  }
-
   function initHeroMouseGradient() {
+    // Skip on touch/mobile devices — desktop-only effect
+    if (window.matchMedia('(hover: none)').matches) return;
+
     const hero = document.getElementById('hero');
     const gradient = document.getElementById('hero-mouse-gradient');
     if (!hero || !gradient) return;
@@ -294,12 +274,6 @@ const currentYear = new Date().getFullYear();
     });
   }
 
-  function initHero() {
-    initHeroReveal();
-    initHeroMouseGradient();
-  }
-
-  document.addEventListener('DOMContentLoaded', initHero);
-  document.addEventListener('astro:after-swap', initHero);
-  document.addEventListener('astro:page-load', initHero);
+  document.addEventListener('DOMContentLoaded', initHeroMouseGradient);
+  document.addEventListener('astro:after-swap', initHeroMouseGradient);
 </script>

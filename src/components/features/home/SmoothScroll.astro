@@ -47,8 +47,8 @@
       lenis!.raf(time);
       requestAnimationFrame(raf);
 
-      // Reset skew smoothly when velocity approaches 0
-      if (Math.abs(scrollVelocity) < 0.01) {
+      // Reset skew smoothly when velocity approaches 0 (desktop only)
+      if (!isMobile && Math.abs(scrollVelocity) < 0.01) {
         const skewElements = document.querySelectorAll<HTMLElement>('[data-scroll-skew]');
         skewElements.forEach(el => {
           el.style.transform = 'skewY(0deg)';
@@ -67,8 +67,16 @@
     }
   });
 
-  document.addEventListener('DOMContentLoaded', initSmoothScroll);
-  document.addEventListener('astro:after-swap', initSmoothScroll);
+  // Defer Lenis init slightly to reduce main thread blocking at startup
+  function deferSmoothScroll() {
+    // Use rAF to let critical paint happen first
+    requestAnimationFrame(() => {
+      initSmoothScroll();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', deferSmoothScroll);
+  document.addEventListener('astro:after-swap', deferSmoothScroll);
 </script>
 
 <style is:global>

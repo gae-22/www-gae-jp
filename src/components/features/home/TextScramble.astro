@@ -72,6 +72,14 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', initTextScramble);
-  document.addEventListener('astro:after-swap', initTextScramble);
+  function deferTextScrambleInit() {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(initTextScramble);
+    } else {
+      setTimeout(initTextScramble, 200);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', deferTextScrambleInit);
+  document.addEventListener('astro:after-swap', deferTextScrambleInit);
 </script>

@@ -181,13 +181,16 @@
   @media (max-width: 767px) {
     .mesh-gradient {
       animation-duration: 45s;
+      will-change: auto;
     }
     .aurora-sweep {
       animation-duration: 60s;
       opacity: 0.7;
+      will-change: auto;
     }
     .ambient-orb {
       filter: blur(80px);
+      will-change: auto;
     }
     .ambient-orb-3,
     .ambient-orb-4 {
@@ -219,7 +222,7 @@
 
     function createParticles() {
       const isMobile = window.innerWidth < 768;
-      const maxParticles = isMobile ? 20 : 60;
+      const maxParticles = isMobile ? 8 : 60;
       const count = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 25000), maxParticles);
       particles = [];
       for (let i = 0; i < count; i++) {
@@ -236,7 +239,20 @@
       }
     }
 
+    let frameCount = 0;
+
     function draw() {
+      const isMobileNow = window.innerWidth < 768;
+
+      // On mobile, render every other frame (~30fps) to reduce CPU
+      if (isMobileNow) {
+        frameCount++;
+        if (frameCount % 2 !== 0) {
+          animId = requestAnimationFrame(draw);
+          return;
+        }
+      }
+
       ctx!.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach(p => {
@@ -258,7 +274,6 @@
       });
 
       // Draw connections between nearby particles (skip on mobile for performance)
-      const isMobileNow = window.innerWidth < 768;
       if (!isMobileNow) {
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
@@ -295,6 +310,14 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', initParticles);
-  document.addEventListener('astro:after-swap', initParticles);
+  function deferParticleInit() {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(initParticles);
+    } else {
+      setTimeout(initParticles, 200);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', deferParticleInit);
+  document.addEventListener('astro:after-swap', deferParticleInit);
 </script>
