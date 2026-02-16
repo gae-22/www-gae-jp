@@ -1,0 +1,122 @@
+---
+title: 'このサイトの技術スタックと構成'
+description: 'www-gae-jp.net` とデザインシステムについて'
+publishedAt: '2026-02-16'
+tags: ['Tech', 'Astro', 'Architecture']
+featured: false
+cover: './images/profile-cover.png'
+coverAlt: 'Void Kinetic 2026 design system visualization'
+---
+
+# www.gae-jp.net
+
+このウェブサイト（www-gae-jp.net）のリニューアルにあたり、最新のWeb標準技術と独自の「Void Kinetic」デザインシステムを採用しました。
+本記事では、このサイトの全体像（アーキテクチャ概要）と、それを構成する詳細な技術要素について解説します。
+
+## 1. 概要 (Overview)
+
+このサイトは **「静的生成（SSG）による圧倒的なパフォーマンス」** と **「動的なインタラクション」** の両立を目標としています。
+
+### 主な技術スタック
+
+- **Framework**: [Astro 5](https://astro.build) (Static Mode)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com) (CSS Variablesベース)
+- **Language**: TypeScript
+- **Interaction**: Lenis (Smooth Scroll), Intersection Observer API
+- **Infrastructure**: Node.js Standalone Adapter
+
+### デザインコンセプト
+
+**"Void Kinetic 2026"**
+「虚無（Void）」のような漆黒の背景と、「動的（Kinetic）」なライムグリーンのアクセントカラーを組み合わせ、没入感のあるデジタル体験を目指しました。
+
+---
+
+## 2. 詳細解説 (Details)
+
+### Core Framework: Astro 5
+
+基盤となるフレームワークには **Astro 5** を採用しました。
+Astroの最大の特徴は "Zero JavaScript by Default" です。
+
+- **パフォーマンス**:
+  HTMLをビルド時に静的に生成し、クライアントサイドで実行されるJavaScriptを必要最小限に抑えています。これにより、Lighthouseのスコアでも高得点を維持し、TTFB（Time to First Byte）を極小化しています。
+- **Content Collections**:
+  ブログ記事やプロジェクト実績はMarkdown/MDXで管理し、`zod` スキーマによる型安全なデータ管理を実現しています。
+- **View Transitions**:
+  Astro標準のView Transitions APIを利用し、MPA（Multi Page Application）でありながらSPAかのようなシームレスな画面遷移を提供しています。
+
+### Styling: Tailwind CSS v4
+
+スタイリングには、リリースされたばかりの **Tailwind CSS v4** を利用しています。
+v4ではRust製のコンパイラによる高速なビルドに加え、CSS変数（Custom Properties）を中心としたテーマ設定が可能になりました。
+
+```css
+/* global.css */
+@theme {
+    --color-void: #0a0a0a;
+    --color-accent: #c8ff00;
+    --font-heading: 'Outfit', sans-serif;
+
+    @keyframes hero-reveal {
+        0% {
+            clip-path: inset(100% 0 0 0);
+        }
+        100% {
+            clip-path: inset(0 0 0 0);
+        }
+    }
+}
+```
+
+このように、デザイン・トークンをCSS変数として定義し、コンポーネント間で統一されたデザインシステムを構築しています。
+
+### UX Engineering: Smooth & Interactive
+
+「触っていて気持ちいい」体験を作るために、以下の技術を組み合わせています。
+
+1.  **Lenis (Smooth Scroll)**:
+    ブラウザ標準のスクロールをジャックし、慣性を付与することで「浮遊感」のあるスクロール体験を実現しています。
+2.  **Intersection Observer**:
+    スクロールに合わせて要素がフワッと出現する「Scroll Reveal」アニメーションを実装。重たいライブラリを使わず、標準Web APIのみで実装することで軽量化を図っています。
+3.  **Typography**:
+    `@fontsource` を利用してフォントファイル（Outfit, Zen Kaku Gothic New）をセルフホストし、レイアウトシフト（CLS）を防止しています。
+
+---
+
+## 3. Architecture & Directory Structure
+
+このプロジェクトは、メンテナンス性とスケーラビリティを考慮し、**Feature-based（機能単位）** なディレクトリ構成を採用しています。
+
+### Directory Layout
+
+```text
+src/
+├── components/
+│   ├── features/       # 機能ごとにコンポーネントをグループ化
+│   │   ├── home/       # トップページ専用コンポーネント (Hero, BentoGrid...)
+│   │   └── blog/       # ブログ機能専用コンポーネント (PostCard, CodeBlock...)
+│   └── layout/         # 全体共通のレイアウト部品 (Header, Footer)
+├── content/
+│   ├── blog/           # ブログ記事 (MDX)
+│   └── config.ts       # Content Collectionsのスキーマ定義
+├── layouts/            # ページ全体のラッパー (Layout.astro)
+├── pages/              # ファイルベースルーティング
+└── styles/             # グローバルスタイル (Tailwind v4 entry)
+```
+
+### Key Architectural Decisions
+
+1.  **Feature-first Organization**:
+    `components/ui/button.astro` のように粒度で分けるのではなく、`components/features/home/Hero.astro` のように **「どの機能で使われるか」** を基準に配置しています。これにより、特定の機能に関連するコードが分散するのを防ぎます。
+
+2.  **Type-safe Content**:
+    `src/content/config.ts` で `zod` を用いてフロントマターの型定義を厳格に行っています。これにより、ビルド時にメタデータの欠落や型不整合を検知できます。
+
+3.  **Global Styles & Tokens**:
+    `src/styles/global.css` にて `@theme` ブロックを使用し、デザイン・トークンを一元管理しています。各コンポーネントはこのトークンを参照することで、デザインの一貫性を保ちます。
+
+## まとめ
+
+このサイトは、単に情報を伝えるだけでなく、**「モダンなWeb技術の実験場」** としても機能しています。
+Astroの静的な速さと、CSS/JSによる動的な表現。この2つのバランスを追求し続けたいと考えています。
