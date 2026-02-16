@@ -1,0 +1,418 @@
+---
+import type { ErrorCode } from '~/data/errorCodes';
+
+interface Props {
+    error: ErrorCode;
+}
+
+const { error } = Astro.props;
+
+// Design Type Logic
+const isStandard = ['standard', 'server_error'].includes(error.designType);
+const isTerminal = error.designType === 'terminal';
+const isJoke = error.designType === 'joke';
+const isSecurity = error.designType === 'security';
+const isNetwork = error.designType === 'network';
+const isMaintenance = error.designType === 'maintenance';
+const isTimeout = error.designType === 'timeout';
+const isLimit = error.designType === 'limit';
+
+// Specific overrides
+const isTeapot = error.code === 418;
+const isCensored = error.code === 451;
+const isPayment = error.code === 402;
+const isChill = error.code === 420;
+const isDisappointed = error.code === 417;
+const isEarly = error.code === 425;
+const isConflict = error.code === 409;
+---
+
+<main class="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-void px-4">
+
+    {/* === STANDARD & SERVER ERROR === */}
+    {isStandard && (
+        <>
+            <div class="floating-dot" style="top: 20%; right: 20%; animation-delay: 0s; animation-duration: 14s;"></div>
+            <div class="floating-dot" style="top: 60%; left: 15%; animation-delay: -5s; animation-duration: 18s; opacity: 0.2;"></div>
+            <div class="floating-dot" style="top: 40%; right: 30%; animation-delay: -10s; animation-duration: 16s; opacity: 0.15;"></div>
+
+            <div class="relative z-10 text-center space-y-7 sm:space-y-10">
+                <div class="relative inline-block">
+                    <h1 class={`text-[5rem] sm:text-[8rem] md:text-[12rem] font-display font-bold leading-none select-none glitch-text reveal-scale tracking-tighter ${error.designType === 'server_error' ? 'text-red-500/80' : 'text-text-tertiary'}`} data-text={error.code}>
+                        {error.code}
+                    </h1>
+                        {error.designType === 'server_error' && (
+                        <div class="absolute -inset-4 border border-red-500/20 animate-pulse rounded-lg pointer-events-none"></div>
+                    )}
+                </div>
+
+                <div class="space-y-3.5 sm:space-y-5 max-w-lg mx-auto reveal-item reveal-delay-2">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-text-primary tracking-tight">{error.title}</h2>
+                        <p class="text-text-secondary text-base sm:text-lg leading-relaxed font-mono">
+                        {error.name}
+                    </p>
+                    <p class="text-text-secondary text-base sm:text-lg leading-relaxed">
+                        {error.message}
+                    </p>
+                    <p class="text-text-tertiary text-sm leading-relaxed border-t border-white/10 pt-4 mt-4">
+                        {error.description}
+                    </p>
+                </div>
+
+                <div class="pt-5 reveal-item reveal-delay-3">
+                    <a href="/" class="link-hover font-mono text-sm text-accent inline-flex items-center gap-2.5">
+                        TOPへ戻る
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </>
+    )}
+
+    {/* === SECURITY (Access Denied / Lock) === */}
+    {isSecurity && (
+        <div class="relative z-10 text-center max-w-2xl reveal-scale">
+                <div class="mb-8 relative inline-block">
+                <div class="w-24 h-24 mx-auto border-2 border-red-500 rounded-full flex items-center justify-center animate-[pulse_2s_infinite]">
+                        <svg class="w-10 h-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                </div>
+                <div class="absolute inset-0 border-2 border-red-500/30 rounded-full scale-125 animate-[ping_2s_infinite]"></div>
+                </div>
+                <h1 class="text-red-500 font-mono text-xl tracking-[0.5em] mb-2 uppercase">Systems Locked</h1>
+                <div class="text-[4rem] sm:text-[6rem] font-bold font-display text-white leading-none mb-6 glitch-text" data-text={error.code}>{error.code}</div>
+                <h2 class="text-2xl font-bold text-text-primary mb-4">{error.title}</h2>
+                <p class="text-text-secondary mb-8">{error.description}</p>
+                <div class="p-4 bg-red-950/20 border border-red-900/50 rounded font-mono text-xs text-red-400 text-left w-full max-w-md mx-auto">
+                > ACCESS_LEVEL: UNAUTHORIZED<br/>
+                > IP_ADDRESS: LOGGED<br/>
+                > INCIDENT_REPORT: INITIATED<br/>
+                > _
+                </div>
+                <div class="mt-8">
+                    <a href="/" class="text-text-secondary hover:text-white transition-colors text-sm border-b border-white/20 hover:border-white pb-1">Return to Safety</a>
+                </div>
+        </div>
+    )}
+
+    {/* === NETWORK (Graph / Connectivity) === */}
+    {isNetwork && (
+        <div class="relative z-10 w-full max-w-4xl flex flex-col items-center reveal-item">
+                {/* Visual Representation of Network Failure */}
+            <div class="flex items-center justify-center gap-4 sm:gap-12 mb-12 w-full opacity-80">
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-12 h-12 bg-void-elevated border border-white/20 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    </div>
+                    <span class="text-xs font-mono text-text-tertiary">Client</span>
+                </div>
+
+                {/* Connection Line 1 */}
+                <div class="h-px bg-white/20 flex-1 relative">
+                    <div class="absolute inset-x-0 -top-1 h-3 flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-[ping_1.5s_infinite]"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center gap-2">
+                        <div class="w-16 h-16 bg-void-elevated border border-accent/50 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(200,255,0,0.1)]">
+                            <svg class="w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                    </div>
+                    <span class="text-xs font-mono text-accent">Cloudflare</span>
+                </div>
+
+                {/* Connection Line 2 (Broken) */}
+                    <div class="h-px bg-red-500/50 flex-1 relative">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="bg-void px-2 text-xs text-red-500 text-nowrap">FAILED</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center gap-2">
+                    <div class="w-12 h-12 bg-red-950/20 border border-red-500/50 rounded-lg flex items-center justify-center animate-pulse">
+                            <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                    </div>
+                    <span class="text-xs font-mono text-red-500">Origin</span>
+                </div>
+            </div>
+
+            <div class="text-center space-y-4">
+                <h1 class="text-4xl font-display font-bold text-white"><span class="text-red-500">{error.code}</span> Network Error</h1>
+                <p class="text-text-secondary max-w-xl mx-auto">{error.description}</p>
+                <div class="pt-8">
+                        <button onclick="window.location.reload()" class="px-6 py-2 border border-accent/50 text-accent hover:bg-accent/10 transition-colors rounded text-sm font-mono mr-4">
+                        RETRY CONNECTION
+                    </button>
+                    <a href="/" class="text-text-tertiary hover:text-white transition-colors text-sm">Cancel</a>
+                </div>
+            </div>
+        </div>
+    )}
+
+    {/* === MAINTENANCE (503) === */}
+    {isMaintenance && (
+        <div class="relative z-10 text-center max-w-xl reveal-scale">
+                <div class="text-6xl mb-6 animate-spin-slow inline-block">⚙️</div>
+                <h1 class="text-3xl font-bold text-white mb-2">{error.title}</h1>
+                <p class="text-accent font-mono text-sm mb-6">> SYSTEM_UPDATE_IN_PROGRESS...</p>
+                <div class="w-full h-1 bg-void-elevated rounded-full overflow-hidden mb-8">
+                    <div class="h-full bg-accent/50 w-2/3 animate-[progress-fill_3s_ease-in-out_infinite]"></div>
+                </div>
+                <p class="text-text-secondary mb-8 leading-relaxed">{error.description}</p>
+                <div class="flex justify-center gap-4">
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="text-text-tertiary hover:text-white transition-colors text-sm flex items-center gap-2">
+                    Check Status on X <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                </div>
+        </div>
+    )}
+
+        {/* === TIMEOUT (408, 504) === */}
+        {isTimeout && (
+        <div class="relative z-10 text-center reveal-item">
+            <div class="relative w-32 h-32 mx-auto mb-8 border-4 border-void-elevated rounded-full flex items-center justify-center">
+                <svg class="w-full h-full absolute inset-0 text-accent/30 -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="283" stroke-dashoffset="0" class="animate-[dash_10s_linear_forwards]" />
+                </svg>
+                <div class="text-3xl font-mono text-white animate-pulse">00:00</div>
+            </div>
+            <h1 class="text-3xl font-display font-bold text-white mb-4">{error.code} Timeout</h1>
+            <p class="text-text-secondary max-w-md mx-auto mb-8">{error.description}</p>
+                <button onclick="window.location.reload()" class="text-accent underline underline-offset-4 hover:text-white transition-colors">
+                Try Again
+            </button>
+        </div>
+    )}
+
+    {/* === LIMIT (429) === */}
+    {isLimit && (
+            <div class="relative z-10 text-center reveal-scale max-w-lg">
+            <div class="mb-6">
+                <div class="w-full h-4 bg-void-elevated rounded-full overflow-hidden border border-red-900/30">
+                    <div class="h-full bg-linear-to-r from-green-500 via-yellow-500 to-red-500 w-full"></div>
+                </div>
+                    <div class="flex justify-between text-xs font-mono text-text-tertiary mt-2">
+                    <span>Safe</span>
+                    <span>Warning</span>
+                    <span class="text-red-500 animate-pulse">CRITICAL</span>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold text-white mb-2">System Overload</h1>
+            <p class="text-red-400 font-mono text-sm mb-6">> ERROR_CODE: {error.code}_TOO_MANY_REQUESTS</p>
+            <p class="text-text-secondary mb-8">{error.description}</p>
+            <div class="p-4 bg-void-elevated rounded border border-white/5 inline-block">
+                <span class="text-text-tertiary text-sm">Auto-retry in: </span>
+                <span class="text-white font-mono font-bold">10s</span>
+            </div>
+        </div>
+    )}
+
+
+    {/* === JOKE / SPECIAL THEMES (Legacy Types) === */}
+    {/* Terminal Design (405) */}
+    {isTerminal && (
+        <div class="w-full max-w-3xl p-6 font-mono text-green-500 bg-black/90 border border-green-500/30 rounded-lg shadow-[0_0_20px_rgba(0,255,0,0.1)] reveal-scale">
+            <div class="flex items-center gap-2 mb-4 border-b border-green-500/30 pb-2">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <span class="text-xs text-green-500/50 ml-2">{error.name}</span>
+            </div>
+            <div class="space-y-2">
+                <p>> ERROR CODE: {error.code}</p>
+                <p>> STATUS: {error.title}</p>
+                <p>> MESSAGE: {error.message}</p>
+                <p>> ...</p>
+                <p>> ACCESS DENIED.</p>
+                <div class="mt-8">
+                    <a href="/" class="text-white hover:underline decoration-green-500 underline-offset-4">> RETURN_HOME()</a>
+                </div>
+            </div>
+        </div>
+    )}
+
+    {/* Teapot (418) */}
+    {isTeapot && (
+        <div class="text-center space-y-6 reveal-scale">
+            <div class="text-[8rem]">🫖</div>
+            <h1 class="text-4xl font-display font-bold text-accent">{error.code} {error.name}</h1>
+            <p class="text-xl text-text-secondary">{error.message}</p>
+            <div class="p-4 border border-accent/20 rounded bg-accent/5 inline-block text-left font-mono text-sm text-accent/80">
+                    {error.description}<br/>
+                    Source: {error.originalSource}
+            </div>
+            <div class="mt-8">
+                    <a href="/" class="text-accent underline underline-offset-4">Refuse to brew coffee</a>
+            </div>
+        </div>
+    )}
+
+    {/* Censored (451) */}
+    {isCensored && (
+        <div class="max-w-xl p-8 border border-red-900/50 bg-red-950/10 rounded relative overflow-hidden reveal-scale">
+                <div class="absolute top-0 left-0 w-full h-1 bg-red-600"></div>
+                <h1 class="text-6xl font-black text-red-600 mb-4">CENSORED</h1>
+                <h2 class="text-2xl font-bold text-text-primary mb-6">{error.code} {error.name}</h2>
+                <p class="text-text-secondary leading-loose">
+                <span class="bg-text-primary text-transparent select-none">This content</span> has been <span class="bg-text-primary text-transparent select-none">removed</span> due to <span class="bg-text-primary text-transparent select-none">legal reasons</span>.
+                Authority: {error.originalSource}.
+                <span class="bg-text-primary text-transparent select-none">We apologize for the inconvenience</span>.
+                </p>
+                <div class="mt-8 text-center">
+                <a href="/" class="text-red-500 hover:text-red-400 font-bold uppercase tracking-widest text-sm border-b border-red-500">Exit Restricted Area</a>
+                </div>
+        </div>
+    )}
+
+    {/* Payment (402) */}
+    {isPayment && (
+        <div class="max-w-lg w-full bg-void-elevated border border-accent/20 rounded-xl p-8 text-center shadow-[0_0_40px_rgba(200,255,0,0.1)] reveal-scale">
+            <div class="text-5xl mb-4">💎</div>
+            <h1 class="text-3xl font-display font-bold text-white mb-2">{error.code} Payment Required</h1>
+            <p class="text-text-secondary mb-6">{error.message}</p>
+
+            <div class="space-y-3 mb-8">
+                <div class="h-4 bg-void-subtle rounded w-3/4 mx-auto"></div>
+                <div class="h-4 bg-void-subtle rounded w-full mx-auto"></div>
+                <div class="h-4 bg-void-subtle rounded w-5/6 mx-auto"></div>
+                <div class="blur-sm select-none opacity-50">
+                    <p>{error.description}</p>
+                </div>
+            </div>
+
+            <div class="bg-linear-to-t from-void-elevated via-void-elevated to-transparent absolute inset-x-0 bottom-0 h-32 flex items-center justify-center pb-8">
+                    <a href="/" class="px-6 py-3 bg-accent text-void font-bold rounded-full hover:bg-white transition-colors">
+                    Unlock (Free) -> Go Home
+                    </a>
+            </div>
+        </div>
+    )}
+
+    {/* Chill (420) */}
+    {isChill && (
+        <div class="text-center space-y-8 reveal-scale">
+                <div class="text-[6rem] animate-pulse relative">
+                🌿
+                <div class="absolute -top-4 -right-4 text-4xl opacity-50">💨</div>
+                </div>
+                <h1 class="text-5xl font-display text-green-400 font-light overflow-visible">{error.code} {error.name}</h1>
+                <p class="text-xl text-green-200/80 font-serif italic">{error.message}</p>
+                <p class="text-sm text-green-500/50 max-w-md mx-auto">{error.description}</p>
+                <div class="mt-12">
+                <a href="/" class="text-green-400 hover:text-green-300 transition-colors">Just... relax...</a>
+                </div>
+        </div>
+    )}
+
+    {/* Disappointed (417) */}
+    {isDisappointed && (
+        <div class="text-center space-y-6 reveal-scale">
+                <div class="text-[8rem] grayscale opacity-50 transform rotate-90 inline-block">:(</div>
+                <h1 class="text-4xl font-bold text-text-secondary">{error.code} Expectation Failed</h1>
+                <p class="text-lg text-text-tertiary">{error.message}</p>
+                <p class="text-sm text-text-tertiary max-w-md mx-auto">{error.description}</p>
+                <a href="/" class="inline-block px-4 py-2 border border-text-tertiary text-text-tertiary rounded hover:bg-text-tertiary hover:text-void transition-colors text-sm">
+                Sorry... go back
+                </a>
+        </div>
+    )}
+
+        {/* Early (425) */}
+    {isEarly && (
+        <div class="max-w-2xl text-center space-y-6 reveal-scale border-2 border-red-600 p-12 rounded-lg bg-black">
+                <h1 class="text-red-600 text-3xl font-mono uppercase tracking-[0.5em] animate-pulse">WARNING</h1>
+                <h2 class="text-5xl font-display font-black text-white">{error.code} TOO EARLY</h2>
+                <p class="text-red-400 font-mono typing-effect">{error.message}</p>
+                <div class="w-full bg-red-900/30 h-2 rounded-full overflow-hidden">
+                <div class="h-full bg-red-600 w-1/12 animate-pulse"></div>
+                </div>
+                <p class="text-xs text-red-800">BOSS_BATTLE_INIT... FAILED. LEVEL TOO LOW.</p>
+                <a href="/" class="inline-block mt-4 text-white border-b border-white pb-1 hover:text-red-500 hover:border-red-500 transition-colors">RETREAT</a>
+        </div>
+    )}
+
+    {/* Conflict (409) - Git style */}
+    {isConflict && (
+        <div class="w-full max-w-3xl p-6 font-mono text-sm bg-void-elevated border border-yellow-500/30 rounded shadow-lg reveal-scale text-left">
+            <div class="text-yellow-500 mb-4 text-xl font-bold">! {error.code} {error.name}</div>
+            <div class="space-y-1 text-text-secondary">
+                <div class="text-blue-400">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</div>
+                <div class="pl-4">Current Page State</div>
+                <div class="text-yellow-500">=======</div>
+                <div class="pl-4 text-green-400">Incoming Change</div>
+                <div class="pl-4 text-green-400">{error.message}</div>
+                <div class="pl-4 text-green-400">// {error.description}</div>
+                <div class="text-blue-400">&gt;&gt;&gt;&gt;&gt;&gt;&gt; {error.title}</div>
+            </div>
+            <div class="mt-8 pt-4 border-t border-yellow-500/20 text-center">
+                <a href="/" class="px-4 py-2 bg-yellow-600/20 text-yellow-500 rounded hover:bg-yellow-600/30 transition-colors">
+                    Resolve Conflict (Go Home)
+                </a>
+            </div>
+        </div>
+    )}
+
+</main>
+
+<style>
+    /* Glitch text effect */
+    .glitch-text {
+        position: relative;
+    }
+    .glitch-text::before,
+    .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+    }
+    .glitch-text::before {
+        color: var(--color-accent);
+        z-index: -1;
+        transform: translate(-2px, -2px);
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+    }
+    .glitch-text::after {
+        color: #ff0055;
+        z-index: -2;
+        transform: translate(2px, 2px);
+        clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim-1 {
+        0% { clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-2px, -2px); }
+        50% { clip-path: polygon(0 10%, 100% 10%, 100% 25%, 0 25%); transform: translate(2px, 1px); }
+        100% { clip-path: polygon(0 30%, 100% 30%, 100% 75%, 0 75%); transform: translate(-1px, -1px); }
+    }
+    @keyframes glitch-anim-2 {
+        0% { clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); transform: translate(2px, 2px); }
+        50% { clip-path: polygon(0 40%, 100% 40%, 100% 80%, 0 80%); transform: translate(-1px, -2px); }
+        100% { clip-path: polygon(0 60%, 100% 60%, 100% 90%, 0 90%); transform: translate(1px, 2px); }
+    }
+
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+        animation: spin-slow 8s linear infinite;
+    }
+
+    @keyframes progress-fill {
+        0% { width: 0%; transform: translateX(-100%); }
+        50% { width: 100%; transform: translateX(0); }
+        100% { width: 0%; transform: translateX(100%); }
+    }
+
+    @keyframes dash {
+        to { stroke-dashoffset: 283; }
+    }
+</style>

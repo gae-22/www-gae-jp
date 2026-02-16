@@ -1,0 +1,28 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/layout/Header.astro';
+import Footer from '~/components/layout/Footer.astro';
+import ErrorTemplate from '~/components/errors/ErrorTemplate.astro';
+import { errorCodes } from '~/data/errorCodes';
+import type { ErrorCode } from '~/data/errorCodes';
+
+export async function getStaticPaths() {
+    return errorCodes.map((error) => ({
+        params: { code: error.code.toString() },
+        props: { error },
+    }));
+}
+
+interface Props {
+    error: ErrorCode;
+}
+
+const { error } = Astro.props;
+const pageTitle = `${error.code} | ${error.name}`;
+---
+
+<Layout title={pageTitle}>
+    <Header />
+    <ErrorTemplate error={error} />
+    <Footer />
+</Layout>
