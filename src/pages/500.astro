@@ -1,0 +1,21 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/layout/Header.astro';
+import Footer from '~/components/layout/Footer.astro';
+import ErrorTemplate from '~/components/errors/ErrorTemplate.astro';
+import { errorCodes } from '~/data/errorCodes';
+
+const error500 = errorCodes.find((e) => e.code === 500);
+
+if (!error500) {
+    throw new Error('500 error code definition not found in errorCodes.ts');
+}
+
+const pageTitle = `${error500.code} | ${error500.name}`;
+---
+
+<Layout title={pageTitle}>
+    <Header />
+    <ErrorTemplate error={error500} />
+    <Footer />
+</Layout>
