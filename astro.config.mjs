@@ -33,7 +33,7 @@ function remarkCodeBlockComponent() {
                     {
                         type: 'mdxJsxAttribute',
                         name: 'code',
-                        value: node.value,
+                        value: encodeURIComponent(node.value),
                     },
                     { type: 'mdxJsxAttribute', name: 'lang', value: lang },
                     { type: 'mdxJsxAttribute', name: 'title', value: title },
